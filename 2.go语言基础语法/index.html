@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>2.go语言基础语法 - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="2.go语言基础语法" />
+<meta property="og:description" content="变量 变量的声明 变量的声明形式有: identifier := value 简短变量初始化，一般用于声明并初始化局部变量，变量类型根据表达式自动推导，也可以初始化一组变量：i,j" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-19T17:18:31+08:00" />
+<meta property="article:modified_time" content="2022-01-19T17:18:31+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="2.go语言基础语法"/>
+<meta name="twitter:description" content="变量 变量的声明 变量的声明形式有: identifier := value 简短变量初始化，一般用于声明并初始化局部变量，变量类型根据表达式自动推导，也可以初始化一组变量：i,j"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" /><link rel="prev" href="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" /><link rel="next" href="https://tabuless.github.io/1.go%E8%AF%AD%E8%A8%80%E7%BB%93%E6%9E%84/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "2.go语言基础语法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  20402 ,
+        "url": "https:\/\/tabuless.github.io\/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95\/","datePublished": "2022-01-19T17:18:31+08:00","dateModified": "2022-01-19T17:18:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">2.go语言基础语法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 20402 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 41 分钟&nbsp;<span id="/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="leancloud_visitors" data-flag-title="2.go语言基础语法">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#变量的声明">变量的声明</a>
+      <ul>
+        <li>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#new函数">new函数</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#go数据类型">go数据类型</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#类型的可赋值性与可比性">类型的可赋值性与可比性</a></li>
+          </ul>
+        </li>
+        <li><a href="#基础类型">基础类型</a>
+          <ul>
+            <li><a href="#整数integer">整数（Integer）</a></li>
+            <li><a href="#浮点数floating-point-numbers">浮点数（Floating-Point Numbers）</a></li>
+            <li><a href="#复数complex-numbers">复数(Complex Numbers)</a></li>
+            <li><a href="#布尔型booleans">布尔型（Booleans）</a></li>
+            <li><a href="#字符串strings">字符串(Strings)</a>
+              <ul>
+                <li><a href="#字符串字面量string-literals">字符串字面量（String Literals）</a></li>
+                <li><a href="#字符串与rune切片">字符串与rune切片</a></li>
+                <li><a href="#字符串和byte切片">字符串和Byte切片</a></li>
+                <li><a href="#字符串和数字的转换">字符串和数字的转换</a></li>
+              </ul>
+            </li>
+            <li><a href="#常量constants">常量（Constants）</a>
+              <ul>
+                <li><a href="#iota-常量生成器the-constant-generator-iota">iota 常量生成器(The Constant Generator iota)</a></li>
+                <li><a href="#无类型常量untyped-constants">无类型常量(Untyped Constants)</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#复合数据类型composite-types">复合数据类型(Composite Types)</a>
+          <ul>
+            <li><a href="#数组arrays">数组(Arrays)</a></li>
+            <li><a href="#结构体structs">结构体(Structs)</a></li>
+          </ul>
+        </li>
+        <li><a href="#引用类型">引用类型</a>
+          <ul>
+            <li><a href="#切片slice">切片(slice)</a></li>
+            <li><a href="#字典map">字典(map)</a></li>
+            <li><a href="#函数functions">函数(functions)</a>
+              <ul>
+                <li><a href="#函数的声明">函数的声明</a></li>
+                <li><a href="#多返回值">多返回值</a></li>
+                <li><a href="#错误">错误</a></li>
+                <li><a href="#函数变量">函数变量</a></li>
+                <li><a href="#匿名函数anonymous-functions">匿名函数（Anonymous Functions）</a></li>
+                <li><a href="#变长函数variadic-functions">变长函数(Variadic Functions)</a></li>
+                <li><a href="#延迟调用函数deferred-function-calls">延迟调用函数（Deferred Function Calls）</a></li>
+                <li><a href="#panic内置函数又名宕机">Panic内置函数（又名宕机）</a></li>
+                <li><a href="#recover内置函数恢复">Recover内置函数（恢复）</a></li>
+              </ul>
+            </li>
+            <li><a href="#指针pointer">指针(pointer)</a>
+              <ul>
+                <li><a href="#与c语言的不同点">与c语言的不同点</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#go语句">go语句</a>
+      <ul>
+        <li><a href="#类型声明语句">类型声明语句</a></li>
+        <li><a href="#赋值语句">赋值语句</a>
+          <ul>
+            <li><a href="#一般赋值语句">一般赋值语句</a></li>
+            <li><a href="#加减乘除二元运算符赋值语句">加减乘除二元运算符赋值语句</a></li>
+            <li><a href="#自增与自减">自增与自减</a></li>
+            <li><a href="#元组赋值">元组赋值</a></li>
+            <li><a href="#隐式赋值">隐式赋值</a></li>
+          </ul>
+        </li>
+        <li><a href="#比较语句">比较语句</a>
+          <ul>
+            <li><a href="#range">range</a></li>
+          </ul>
+        </li>
+        <li><a href="#循环语句">循环语句</a></li>
+        <li><a href="#条件判断语句">条件判断语句</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="变量">变量</h1>
+<h2 id="变量的声明">变量的声明</h2>
+<p>变量的声明形式有:</p>
+<ol>
+<li>
+<p><code>identifier := value</code></p>
+<p>简短变量初始化，一般用于声明并初始化局部变量，变量类型根据表达式自动推导，也可以初始化一组变量：<code>i,j:=0,0</code>,但是要注意代码的可读性，<code>:=</code>变量声明语句，所以左边必须有<strong>至少一个</strong>新的变量（不必全是），否则无法通过编译</p>
+</li>
+<li>
+<p><code>var identifier type = value</code></p>
+<p>显式地标明变量的类型，当变量类型与初值类型相同时，类型冗余，但如果两者类型不同，变量类型就必须了</p>
+<p>这个形式还可以进行部分的省略：</p>
+<ul>
+<li>
+<p>省略<code>=value</code> :<code>var indentifier type</code></p>
+<p>依赖于字符串的默认初始化零值机制:如果变量没有显式初始化，则被隐式地赋予其类型的零值（zero value），数值类型是0，字符串类型是空字符串<code>&quot;&quot;</code>，布尔型为<code>false</code>,接口或引用类型为<code>nil</code>,数组或者结构体等俱黑类型对应的零值为每个元素或者字段均为对应类型的零值。也可一次性初始化多个该类型的变量，如：<code>var i,j,k int</code>，</p>
+</li>
+<li>
+<p>省略<code>type</code>:<code>var identifier = value</code></p>
+<p>用得很少，除非同时声明多个变量,用这个语句声明多个变量的形式：<code>var a,b,c,d=true,2,3,&quot;four&quot;</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>函数的返回值进行初始化</p>
+<p>如：<code>var f,err=os.Open(name)</code></p>
+</li>
+</ol>
+<p>实践中一般使用前两种形式中的某个，初始值重要的话就显式地指定变量的类型，否则使用隐式初始化。</p>
+<p><strong>注意</strong>：</p>
+<p>在习惯上，go语言推荐使用驼峰命名法。</p>
+<h5 id="new函数">new函数</h5>
+<p>另外一个创建变量的方法是调用内建函数new函数，表达式<code>new(T)</code>将创建一个T类型的匿名变量，初始化为对应类型的零值，然后返回变量地址，返回指针类型为<code>*T</code>。</p>
+<p>new创建变量和普通变量声明语句方式创建变量没什么区别，除了不需要声明一个临时变量的名字外。</p>
+<p>new函数只是一个预定义的函数，不是一个关键字，因此可以将new这个名字重新定义为别的类型。</p>
+<h2 id="go数据类型">go数据类型</h2>
+<p>Go语言将数据类型分为四类：基础类型、复合类型、引用类型和接口类型</p>
+<ul>
+<li><strong>基础类型</strong>，包括:数字、字符串和布尔型</li>
+<li><strong>复合数据类型</strong>包括：数组和结构体</li>
+<li><strong>引用类型</strong>包括：指针、切片、字典、函数、通道</li>
+</ul>
+<p>go语言不支持隐式类型转换，如<code>int a = b</code>(其中b为float型),即使两个自定义的类型底层类型是一样的两个也不能直接进行互相赋值，需要进行一个显式的类型转换才能进行相互转换：</p>
+<p>对于每一个类型<code>T</code>都有一个对应的类型转换操作<code>T(x)</code>,用于将x转换为T类型（当T为指针类型，需要加上括号，如<code>(*int)(x)</code>）,类型转换可以是不同类型的，如将浮点型转换为整型,但是从高精度转换为低精度可能会出现精度丢失以及溢出等问题</p>
+<h4 id="类型的可赋值性与可比性">类型的可赋值性与可比性</h4>
+<p>可赋值性根据不同类型有不同的规则，在自定义的新类型需要解释相应的赋值规则，对已有类型的规则很简单：类型必须精确匹配，而nil值可以被赋值给任何接口变量与引用类型，而常量有更加灵活的可赋值性规则来规避显式转换。<code>==</code>与<code>!=</code>的结果与可赋值性相关：第一个操作数相对第二个操作数类型必须数可赋值的或者反过来赋值的。与可赋值性同理，我们也可以对新的自定义的可比较类型的相关规则进行定义。</p>
+<h3 id="基础类型">基础类型</h3>
+<h4 id="整数integer">整数（Integer）</h4>
+<p>整型按照长度分，有以下两个大类：</p>
+<ul>
+<li>
+<p><code>int8,int16,int32,int64</code></p>
+<p>有符号整数采用补码（2’s-complement）形式表示，对于n位的有符号整数，取值范围是$[−2^{n−1},2^{n−1}−1]$</p>
+</li>
+<li>
+<p><code>uint8（byte）,uint16,uint32(rune),uint64</code>
+无符号数所有的位用于存储值，范围为$[0,2^n-1]$</p>
+<ul>
+<li>
+<p>byte是uint8类型的等价类型，byte类型一般用于强调数值是一个原始的数据而不是一个小的整数</p>
+</li>
+<li>
+<p>int16类似c中的short</p>
+</li>
+<li>
+<p>Unicode字符rune类型是和int32等价的类型，通常用于表示一个Unicode码点。这两个名称可以互换使用</p>
+</li>
+<li>
+<p>int64类似c中的long型</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>int，uint</code></p>
+<p>大小是32或64bit，取决于不同的编译器以及不同的硬件平台</p>
+</li>
+<li>
+<p><code>uintptr</code></p>
+<p>无符号的整数类型，没有指定具体的bit大小但是足以容纳指针。uintptr类型只有在底层编程时才需要</p>
+</li>
+</ul>
+<p>上述的所有类型即使是等价类型，如果需要互相赋值，则必须显示的转换。</p>
+<blockquote>
+<p>tips:</p>
+<ol>
+<li>
+<p>如果没有特殊的要求，最好使用有符号数，否则如果遇到某些索引判断时会出现判断出错问题，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">	<span class="kd">var</span> <span class="nx">i</span> <span class="kt">uint</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="p">=</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因为无符号数的负溢出，会变成正数，此时循环永远不会终止，会导致错误，类似的问题还有很多，所以无符号数往往只有在位运算或其它特殊的运算场景才会使用（就像bit集合、分析二进制文件格式或者是哈希和加密操作等）</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="浮点数floating-point-numbers">浮点数（Floating-Point Numbers）</h4>
+<p>Go语言提供了两种精度的浮点数，float32和float64。它们的算术规范由<a href="https://zh.wikipedia.org/zh-hans/IEEE_754?oldformat=true" target="_blank" rel="noopener noreffer">IEEE754</a>国际标准定义，被所有现代的CPU支持。</p>
+<blockquote>
+<p>浮点数的范围极限值可以在math包找到。详见 <a href="a.%e5%b8%b8%e7%94%a8%e7%9a%84go%e6%a0%87%e5%87%86%e5%ba%93.md" rel="">a.常用的go标准库.md</a> 。</p>
+</blockquote>
+<h4 id="复数complex-numbers">复数(Complex Numbers)</h4>
+<p>Go语言提供了两种精度的复数类型：<code>complex64</code>和<code>complex128</code>，分别由float32和float64组成实部和虚部。</p>
+<p>内置的complex函数用于构建复数，内建的real和imag函数分别返回复数的实部和虚部：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">x</span> <span class="kt">complex128</span> <span class="p">=</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">// 1+2i
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">y</span> <span class="kt">complex128</span> <span class="p">=</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">// 3+4i
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">x</span><span class="o">*</span><span class="nx">y</span><span class="p">)</span> <span class="c1">// &#34;(-5+10i)&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">real</span><span class="p">(</span><span class="nx">x</span><span class="o">*</span><span class="nx">y</span><span class="p">))</span> <span class="c1">// &#34;-5&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">imag</span><span class="p">(</span><span class="nx">x</span><span class="o">*</span><span class="nx">y</span><span class="p">))</span> <span class="c1">// &#34;10&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="布尔型booleans">布尔型（Booleans）</h4>
+<p>布尔类型值只有两种:<code>true</code>,<code>false</code>。一元操作符<code>!</code>对应逻辑非操作。</p>
+<p>布尔值可以和<code>&amp;&amp;</code>（AND）和<code>||</code>（OR）操作符结合，和C语言类似：如果运算符左边值已经可以确定整个布尔表达式的值，那么运算符右边的值将不在被求值。</p>
+<p>因为<code>&amp;&amp;</code>的优先级比<code>||</code>高（助记：<code>&amp;&amp;</code>对应逻辑乘法，<code>||</code>对应逻辑加法，乘法比加法优先级要高）如下的代码不需要加括号：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="sc">&#39;a&#39;</span> <span class="o">&lt;=</span> <span class="nx">c</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;z&#39;</span> <span class="o">||</span>
+	<span class="sc">&#39;A&#39;</span> <span class="o">&lt;=</span> <span class="nx">c</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;Z&#39;</span><span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="字符串strings">字符串(Strings)</h4>
+<p>一个字符串是一个<strong>不可改变</strong>的字节序列。字符串可以包含任意的数据（包括byte值0），文本字符串通常被解释为采用UTF8的编码Unicode码点（rune）序列。</p>
+<p>内置的<code>len</code>函数可以返回一个字符串中的字节数目，而不是rune字符数目,对于rune字符数，可以使用<code>unicode/utf8</code>来进行统计：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;unicode/utf8&#34;</span>
+<span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;Hello, 世界&#34;</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span> <span class="c1">// &#34;13&#34;:&#34;Hello, &#34;共7个；&#34;世界&#34;共6个；\0为1个
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">utf8</span><span class="p">.</span><span class="nf">RuneCountInString</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span> <span class="c1">// &#34;9&#34;:&#34;Hello, &#34;共7个；&#34;世界&#34;共2个
+</span></code></pre></td></tr></table>
+</div>
+</div><p>索引操作<code>s[i]</code>返回第i个字节的<strong>字节</strong>值，子<strong>字符串</strong>操作<code>s[i:j]</code>基于原始的s字符串的第i个字节开始到第j个字节（并不包含j本身）生成一个新字符串不管是i还是j都可以被忽略，如果i被省略的话将使用0代替，如果j被省略的话将使用len(s)代替。</p>
+<p>关于字符串的不可改性：一个字符串包含的字节序列永远不会被改变，当然我们也可以给一个字符串变量分配一个新字符串值,但是并不会导致原始的字符串值被改变：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;left foot&#34;</span>
+<span class="nx">t</span> <span class="o">:=</span> <span class="nx">s</span>
+<span class="nx">s</span> <span class="o">+=</span> <span class="s">&#34;, right foot&#34;</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="c1">// &#34;left foot, right foot&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="c1">// &#34;left foot&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>因为字符串是不可修改的，因此尝试修改字符串内部数据的操作也是被禁止的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;L&#39;</span> <span class="c1">// compile error: cannot assign to s[0]
+</span></code></pre></td></tr></table>
+</div>
+</div><p>不变性意味如果两个字符串共享相同的底层数据的话也是安全的，这使得复制任何长度的字符串代价是低廉的。同样，一个字符串s和对应的子字符串切片s[7:]的操作也可以安全地共享相同的内存，因此字符串切片操作代价也是低廉的。在这两种情况下都没有必要分配新的内存。下图是字符串共享时在内存中的布局，它们共用了底层存储的数据：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201202155406856.png"
+        data-srcset="/images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201202155406856.png, /images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201202155406856.png 1.5x, /images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201202155406856.png 2x"
+        data-sizes="auto"
+        alt="/images/post/go/2.go语言基础语法/image-20201202155406856.png"
+        title="字符串共享" /></p>
+<h5 id="字符串字面量string-literals">字符串字面量（String Literals）</h5>
+<p>字符串的值可以用字符串字面量(String Literals， 有的翻译也叫面值),形式上就是带双引号的字节序列：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="s">&#34;hello 世界！&#34;</span>
+<span class="s">&#34;こんにちは世界！&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因为Go语言源文件总是用UTF8编码，并且Go语言的文本字符串也以UTF8编码的方式处理，因此我们可以将Unicode码点也写到字符串字面量中：在一个双引号包含的字符串字面量中，可以用以反斜杠\开头的转义序列插入任意的数据：</p>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\a</td>
+<td>响铃（或警告）</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>退格符</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>换页符</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行符（跳到下一行的同一个位置）</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车符（返回行首）</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表符</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td>\'</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>\&quot;</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>\\</td>
+<td>反斜杠</td>
+</tr>
+<tr>
+<td>\xhh</td>
+<td>十六进制数对应的单字节字符，两个h表示十六进制数字，大写或小写都可以（必须是两位，因为表示的是一个字节，范围为0~255）</td>
+</tr>
+<tr>
+<td>\ooo</td>
+<td>八进制数对应的单字节字符，三个o表示八进制数字，大写或小写都可以（必须是三位，不能超过<code>\377</code>，<code>\377</code>对应十进制为255）</td>
+</tr>
+<tr>
+<td>\uhhhh</td>
+<td>unicode字符对应的数值，对应16bit的码点值</td>
+</tr>
+<tr>
+<td>\Uhhhhhhhh</td>
+<td>unicode字符对应的数值，对应32bit的码点值</td>
+</tr>
+</tbody>
+</table>
+<p>一个原生的字符串字面量使用反引号而不是双引号，在原生的字符串面值中，没有转义操作，全部的内容都是字面的意思，因此一个程序中的原生字符串面值可能跨越多行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="nx">GoUsage</span> <span class="p">=</span> <span class="s">`Go is a tool for managing Go source code.
+</span><span class="s">Usage:
+</span><span class="s">go command [arguments]
+</span><span class="s">...`</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>唯一的特殊处理是会删除回车以保证在所有平台上的值都是一样的，包括那些把回车也放入文本文件的系统(Windows系统会把回车和换行一起放入文本文件中)</p>
+<blockquote>
+<p>原生字符串面值用于编写正则表达式会很方便,同时被广泛应用于HTML模板、JSON面值、命令行提示信息以及那些需要扩展到多行的场景。</p>
+</blockquote>
+<p>有很多Unicode字符很难直接从键盘输入，则可以用上面的<code>\u</code>和<code>\U</code>进行转义输入，以下的字符串表示的内容完全一致：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="s">&#34;世界&#34;</span>
+<span class="s">&#34;\xe4\xb8\x96\xe7\x95\x8c&#34;</span>
+<span class="s">&#34;\u4e16\u754c&#34;</span>
+<span class="s">&#34;\U00004e16\U0000754c&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>拿<code>世</code>举例：<code>\xe4\xb8\x96</code>对应的二进制为：<strong>1110</strong>0100 <strong>10</strong>111000 <strong>10</strong>010110，是一个标准的unicode二进制码，<code>\u4e16</code>则是unicode的对应的值的对应的二进制：01001110 00010110。</p>
+<h5 id="字符串与rune切片">字符串与rune切片</h5>
+<p>string接受到[]rune的类型转换，可以将一个UTF8编码的字符串解码为Unicode字符序列：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;プログラム&#34;</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;% x\n&#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span> <span class="c1">// e3 83 97 e3 83 ...是标准的UTF-8编码
+</span><span class="c1"></span><span class="nx">r</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%x\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span> <span class="c1">//[30d7 30ed 30b0 30e9 30e0]对应每一个字符的unicode编码值
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果是将一个[]rune类型的Unicode字符slice或数组转为string，则对它们进行UTF8编码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">r</span><span class="p">))</span> <span class="c1">// &#34;プログラム&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>将一个整数转型为字符串意思是生成以只包含对应Unicode码点字符的UTF8字符串：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="mi">65</span><span class="p">))</span> <span class="c1">// &#34;A&#34;, not &#34;65&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="mh">0x4eac</span><span class="p">))</span> <span class="c1">// &#34;京&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果对应码点的字符是无效的，则用'\uFFFD&rsquo;无效字符作为替换:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="mi">1234567</span><span class="p">))</span><span class="c1">//&#34;�&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><h5 id="字符串和byte切片">字符串和Byte切片</h5>
+<p>标准库中有四个包对字符串处理尤为重要：bytes、strings、strconv和unicode包。strings包提供了许多如字符串的查询、替换、比较、截断、拆分和合并等功能。</p>
+<ul>
+<li>
+<p><strong>bytes</strong>包也提供了很多类似功能的函数，用于操作字节切片(<code>[]byte</code>类型，与字符串有相同的结构)。</p>
+<blockquote>
+<p>因为字符串是只读的，因此按照增量的方式构建字符串会导致很多分配和复制，在这种情况下，使用bytes.Buffer类型将会更有效。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>strconv</strong>包提供了布尔型、整型数、浮点数和对应字符串的相互转换，还提供了双引号转义相关的转换。</p>
+</li>
+<li>
+<p><strong>unicode</strong>包提供了<code>IsDigit</code>、<code>IsLetter</code>、<code>IsUpper</code>和<code>IsLower</code>等类似功能，它们用于给字符分类。</p>
+<p>每个函数以单个rune类型作为参数，然后返回一个布尔值。转换函数（如<code>ToUpper</code>和<code>ToLower</code>）将用于表示英文字母的rune字符的大小写转换。所有的这些函数都是遵循Unicode标准定义的字母、数字等分类规范。<strong>strings</strong>包也有类似的函数，它们是<code>ToUpper</code>和<code>ToLower</code>，将原始字符串的每个字符都做相应的转换，然后返回新的字符串。</p>
+</li>
+</ul>
+<p>字符串和字节slice之间可以相互转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;abc&#34;</span>
+<span class="nx">b</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="nx">s2</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>一个<code>[]byte(s)</code>转换是分配了一个新的字节数组用于保存字符串数据的拷贝，然后引用这个底层的字节数组。将一个字节slice转到字符串的string(b)操作则是构造一个字符串拷贝，以确保s2字符串是只读的。</p>
+<blockquote>
+<p>编译器的优化可以避免在一些场景下分配和复制字符串数据，但总的来说需要确保在变量b被修改的情况下，原始的s字符串也不会改变</p>
+</blockquote>
+<p>为了避免转换中不必要的内存分配，bytes包和strings同时提供了许多实用函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Contains</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">substr</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span>
+<span class="kd">func</span> <span class="nf">Count</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span>
+<span class="kd">func</span> <span class="nf">Fields</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="kt">string</span>
+<span class="kd">func</span> <span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span>
+<span class="kd">func</span> <span class="nf">Index</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span>
+<span class="kd">func</span> <span class="nf">Join</span><span class="p">(</span><span class="nx">a</span> <span class="p">[]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bytes包中也对应的六个函数,它们之间唯一的区别是字符串类型参数被替换成了字节slice类型的参数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Contains</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">subslice</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span>
+<span class="kd">func</span> <span class="nf">Count</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">int</span>
+<span class="kd">func</span> <span class="nf">Fields</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">byte</span>
+<span class="kd">func</span> <span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">prefix</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span>
+<span class="kd">func</span> <span class="nf">Index</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">int</span>
+<span class="kd">func</span> <span class="nf">Join</span><span class="p">(</span><span class="nx">s</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">sep</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">[]</span><span class="kt">byte</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>bytes包还提供了Buffer类型用于字节slice的缓存。一个Buffer开始是空的，但是随着string、byte或[]byte等类型数据的写入可以动态增长，一个bytes.Buffer变量并不需要初始化，因为零值也是有效的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// intsToString is like fmt.Sprint(values) but adds commas.
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">intsToString</span><span class="p">(</span><span class="nx">values</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">buf</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+    <span class="nx">buf</span><span class="p">.</span><span class="nf">WriteByte</span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">values</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+        	<span class="nx">buf</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">)</span>
+    	<span class="p">}</span>
+    	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">buf</span><span class="p">,</span> <span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">buf</span><span class="p">.</span><span class="nf">WriteByte</span><span class="p">(</span><span class="sc">&#39;]&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">intsToString</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}))</span> <span class="c1">// &#34;[1, 2, 3]&#34;
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当向bytes.Buffer添加任意字符的UTF8编码时，最好使用bytes.Buffer的<code>WriteRune</code>方法，但是<code>WriteByte</code>方法对于写入类似'[&lsquo;和&rsquo;]&lsquo;等ASCII字符则会更加有效。</p>
+<h5 id="字符串和数字的转换">字符串和数字的转换</h5>
+<p>字符串与数字之间的转换由strconv包提供这类转换功能。</p>
+<p>将一个整数转为字符串，一种方法是用fmt.Sprintf返回一个格式化的字符串；另一个方法是用strconv.Itoa：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">x</span> <span class="o">:=</span> <span class="mi">123</span>
+<span class="nx">y</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="c1">// &#34;123 123&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>FormatInt</code>和<code>FormatUint</code>函数可以用不同的进制来格式化数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">strconv</span><span class="p">.</span><span class="nf">FormatInt</span><span class="p">(</span><span class="nb">int64</span><span class="p">(</span><span class="nx">x</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span> <span class="c1">// &#34;1111011&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果要将一个字符串解析为整数，可以使用<code>strconv</code>包的<code>Atoi</code>或<code>ParseInt</code>函数，还有用于解析无符号整数的<code>ParseUint</code>函数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">x</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Atoi</span><span class="p">(</span><span class="s">&#34;123&#34;</span><span class="p">)</span> <span class="c1">// x is an int
+</span><span class="c1"></span><span class="nx">y</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">ParseInt</span><span class="p">(</span><span class="s">&#34;123&#34;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="c1">// base 10, up to 64 bits
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>ParseInt</code>函数的第三个参数是用于指定整型数的大小；例如16表示int16，0则表示int。在任何情况下，返回的结果y总是int64类型，你可以通过强制类型转换将它转为更小的整数类型。</p>
+<h4 id="常量constants">常量（Constants）</h4>
+<p>常量表达式的值在编译期计算，而不是在运行期。每种常量的潜在类型都是基础类型：<code>boolean</code>、<code>string</code>或数字。一个常量的声明语句定义了常量的名字，常量的值不可修改，这样可以防止在运行期被意外或恶意的修改。常量比变量更适合用于表达像π之类的数学常数，因为它们的值不会发生变化。</p>
+<p>常量的声明可以用<code>const</code>关键字进行声明，声明的格式为<code>const identifier [type] = value</code>其中type可以省略。与变量声明一样，可以批量声明多个常量，这比较适合声明一组相关的常量:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">e</span> <span class="p">=</span> <span class="mf">2.71828182845904523536028747135266249775724709369995957496696763</span>
+    <span class="nx">pi</span> <span class="p">=</span> <span class="mf">3.14159265358979323846264338327950288419716939937510582097494459</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>所有常量的运算都可以在编译期完成，这样可以减少运行时的工作，也方便其他编译优化。当操作数是常量时，一些运行时的错误也可以在编译时被发现，例如整数除零、字符串索引越界、任何导致无效浮点数的操作等。</p>
+<p>常量间的所有算术运算、逻辑运算和比较运算的结果也是常量，对常量的类型转换操作或以下函数调用都是返回常量结果：<code>len</code>、<code>cap</code>、<code>real</code>、<code>imag</code>、<code>complex</code>和<code>unsafe.Sizeof</code>。</p>
+<p>一个常量的声明也可以包含一个类型和一个值，但是如果没有显式指明类型，那么将从右边的表达式推断类型。</p>
+<p>如果是批量声明的常量，除了第一个外其它的常量右边的初始化表达式都可以省略，如果省略初始化表达式则表示使用前面常量的初始化表达式写法，对应的常量类型也一样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">a</span> <span class="p">=</span> <span class="mi">1</span>
+    <span class="nx">b</span>
+    <span class="nx">c</span> <span class="p">=</span> <span class="mi">2</span>
+    <span class="nx">d</span>
+<span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span> <span class="c1">// &#34;1 1 2 2&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>它可以带来其它的特性，那就是iota常量生成器语法</p>
+<h5 id="iota-常量生成器the-constant-generator-iota">iota 常量生成器(The Constant Generator iota)</h5>
+<p>常量声明可以使用iota常量生成器初始化，它用于生成一组以相似规则初始化的常量，但是不用每行都写一遍初始化表达式。在一个const声明语句中，在第一个声明的常量所在的行，iota将会被置为0，然后在每一个有常量声明的行加一:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Weekday</span> <span class="kt">int</span>
+<span class="kd">const</span> <span class="p">(</span>
+	<span class="nx">Sunday</span> <span class="nx">Weekday</span> <span class="p">=</span> <span class="kc">iota</span>
+	<span class="nx">Monday</span>
+	<span class="nx">Tuesday</span>
+	<span class="nx">Wednesday</span>
+	<span class="nx">Thursday</span>
+	<span class="nx">Friday</span>
+	<span class="nx">Saturday</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的Sunday为0，monday为1，以此类推，对计量单位的赋值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">_</span> <span class="p">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="kc">iota</span><span class="p">)</span>
+    <span class="nx">KiB</span> <span class="c1">// 1024
+</span><span class="c1"></span>    <span class="nx">MiB</span> <span class="c1">// 1048576
+</span><span class="c1"></span>    <span class="nx">GiB</span> <span class="c1">// 1073741824
+</span><span class="c1"></span>    <span class="nx">TiB</span> <span class="c1">// 1099511627776 (exceeds 1 &lt;&lt; 32)
+</span><span class="c1"></span>    <span class="nx">PiB</span> <span class="c1">// 1125899906842624
+</span><span class="c1"></span>    <span class="nx">EiB</span> <span class="c1">// 1152921504606846976
+</span><span class="c1"></span>    <span class="nx">ZiB</span> <span class="c1">// 1180591620717411303424 (exceeds 1 &lt;&lt; 64)
+</span><span class="c1"></span>    <span class="nx">YiB</span> <span class="c1">// 1208925819614629174706176
+</span><span class="c1"></span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="无类型常量untyped-constants">无类型常量(Untyped Constants)</h5>
+<p>go语言的许多常量并没有一个明确的基础类型。</p>
+<p>有六种未明确类型的常量类型，分别是<strong>无类型的布尔型</strong>、<strong>无类型的整数</strong>、<strong>无类型的字符</strong>、<strong>无类型的浮点数</strong>、<strong>无类型的复数</strong>、<strong>无类型的字符串</strong>。</p>
+<p><strong>无类型的常量不仅可以提供更高的运算精度，而且可以直接用于更多的表达式而不需要显式的类型转换</strong>。<strong>只有常量</strong>可以是无类型的，当一个无类型的常量被赋值给一个变量的时候，无类型的常量将会被隐式转换为对应的类型。</p>
+<p>对于精度，编译器为这些没有明确的基础类型的数字常量提供比基础类型更高精度的算术运算，可以认为至少有256bit的运算精度。例如，上述的ZiB和YiB的值已经超出任何Go语言中整数类型能表达的范围，但是它们依然是合法的常量，而且可以像下面常量表达式依然有效（YiB/ZiB是在编译期计算出来的，并且结果常量1024，是Go语言int变量能有效表示的）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">YiB</span><span class="o">/</span><span class="nx">ZiB</span><span class="p">)</span> <span class="c1">// &#34;1024&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>不需要显式的类型转换，math.Pi无类型的浮点数常量，可以直接用于任意需要浮点数或复数的地方：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">x</span> <span class="kt">float32</span> <span class="p">=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pi</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="kt">float64</span> <span class="p">=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pi</span>
+<span class="kd">var</span> <span class="nx">z</span> <span class="kt">complex128</span> <span class="p">=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pi</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于一个没有显式类型的变量声明语法（包括短变量声明语法），无类型的常量会被隐式转为默认的变量类型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span> <span class="c1">// untyped integer; implicit int(0)
+</span><span class="c1"></span><span class="nx">r</span> <span class="o">:=</span> <span class="sc">&#39;\000&#39;</span> <span class="c1">// untyped rune; implicit rune(&#39;\000&#39;)
+</span><span class="c1"></span><span class="nx">f</span> <span class="o">:=</span> <span class="mf">0.0</span> <span class="c1">// untyped floating-point; implicit float64(0.0)
+</span><span class="c1"></span><span class="nx">c</span> <span class="o">:=</span> <span class="m">0i</span> <span class="c1">// untyped complex; implicit complex128(0i)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>默认类型是规则的：无类型的整数常量默认转换为int，对应不确定的内存大小，浮点数和复数常量则默认转换为float64和complex128(<em>Go语言本身并没有不确定内存大小的浮点数和复数类型，而且如果不知道浮点数类型的话将很难写出正确的数值算法</em>),如果不想使用默认的规则就需要指明类型。</p>
+<h3 id="复合数据类型composite-types">复合数据类型(Composite Types)</h3>
+<p>以不同的方式组合基本类型可以构造出来的复合数据类型，包括<strong>数组</strong>、<strong>slice</strong>(切片)、<strong>map</strong>和<strong>结构体</strong>。</p>
+<h4 id="数组arrays">数组(Arrays)</h4>
+<p>数组是一个由固定长度的特定类型元素组成的序列，一个数组可以由零个或多个元素组成。</p>
+<p>数组的长度是数组类型的一个组成部分，因此补充长度的元素同类的数组是两种不同的数组类型。数组的长度必须是常量表达式，因为数组的长度需要在编译阶段确定。</p>
+<p>数组的每个元素可以通过索引下标来访问，索引下标的范围是从0开始到数组长度减1的位置。内置的len函数将返回数组中元素的个数。</p>
+<p><strong>数组的声明与初始化</strong></p>
+<p>数组的一般声明形式如下：</p>
+<p><code>var identifier [num]type = [num]type{value_0,value_1,value_2,...value_num}</code></p>
+<p>其中num表示数组的长度，type为数组元素的基本类型。</p>
+<p>可以省略等式右边，此时，数组的每个元素都被初始化为元素类型对应的零值，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">a</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span> <span class="c1">//a数组的各个元素都是int类型的零值，即0
+</span></code></pre></td></tr></table>
+</div>
+</div><p>也可以省略数组的长度，使用<code>...</code>来替代长度，则表示数组的长度是根据初始化值的个数来计算:</p>
+<p><code>identifier := [...]type{value_0,value_1,value_2,...value_num}</code></p>
+<p>如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">q</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">q</span><span class="p">)</span> <span class="c1">// &#34;[3]int&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>也可以指定一个索引和对应值列表的方式初始化:</p>
+<p><code>identifier := [...]type{index_0:value_0,index_1:value_1,...index_n:value_n}</code></p>
+<p>如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Currency</span> <span class="kt">int</span>
+<span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">USD</span> <span class="nx">Currency</span> <span class="p">=</span> <span class="kc">iota</span> <span class="c1">// 美元
+</span><span class="c1"></span>    <span class="nx">EUR</span> <span class="c1">// 欧元
+</span><span class="c1"></span>    <span class="nx">GBP</span> <span class="c1">// 英镑
+</span><span class="c1"></span>    <span class="nx">RMB</span> <span class="c1">// 人民币
+</span><span class="c1"></span><span class="p">)</span>
+<span class="nx">symbol</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="nx">USD</span><span class="p">:</span> <span class="s">&#34;$&#34;</span><span class="p">,</span> <span class="nx">EUR</span><span class="p">:</span> <span class="s">&#34;€&#34;</span><span class="p">,</span> <span class="nx">GBP</span><span class="p">:</span> <span class="s">&#34;￡&#34;</span><span class="p">,</span> <span class="nx">RMB</span><span class="p">:</span> <span class="s">&#34;￥&#34;</span><span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">RMB</span><span class="p">,</span> <span class="nx">symbol</span><span class="p">[</span><span class="nx">RMB</span><span class="p">])</span> <span class="c1">// &#34;3 ￥&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>在这种形式的数组字面值形式中，初始化索引的顺序是无关紧要的，而且没用到的索引可以省略，省略的是零值。</p>
+<p><strong>数组的比较</strong></p>
+<p>只有当两个数组的所有元素都是相等的时候数组才是相等的</p>
+<p><strong>其他注意：</strong></p>
+<p><strong>与大多数语言不同，如果Go中的数组作为函数的参数，那么实际传递的参数是一份数组的拷贝，而不是数组的指针</strong></p>
+<ul>
+<li>
+<blockquote>
+<p>函数参数传递的机制导致传递大的数组类型将是低效的,且数组的作用结果不是直接在原数组上</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="结构体structs">结构体(Structs)</h4>
+<p>Go 语言中没有类的概念，因此在 Go 中结构体有着更为重要的地位。最常用的方法是使用关键字 type 和 struct 来定义一个结构体:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">identifier</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">attribute1</span> <span class="nx">type1</span>
+    <span class="nx">attribute2</span> <span class="nx">type2</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>遇到结构简单的结构体的也可以进行一些简化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">identifier</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span> <span class="nx">type1</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>结构体字面量</strong>：</p>
+<p>结构体值也可以用结构体面值表示。</p>
+<p>第一种方法，结构体面值可以指定每个成员的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Point</span> <span class="kd">struct</span><span class="p">{</span> <span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span> <span class="kt">int</span> <span class="p">}</span>
+<span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上述的方法要求以结构体成员定义的顺序为每个结构体成员指定一个面值，一般只在定义结构体的包内部使用，或者是在较小的结构体中使用</p>
+<p>第二种写法，以成员名字和相应的值来初始化，可以包含部分或全部的成员：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">anim</span> <span class="o">:=</span> <span class="nx">gif</span><span class="p">.</span><span class="nx">GIF</span><span class="p">{</span><span class="nx">LoopCount</span><span class="p">:</span> <span class="nx">nframes</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在这种形式的结构体面值写法中，如果成员被忽略的话将默认用零值，顺序不做要求</p>
+<p><strong>结构体的比较：</strong></p>
+<p>如果结构体的全部成员都是可以比较的，那么结构体也是可以比较的</p>
+<blockquote>
+<p>可比较的结构体类型和其他可比较的类型一样，可以用于map的key类型</p>
+</blockquote>
+<p><strong>结构体嵌入和匿名结构体(Struct Embedding and Anonymous Fields):</strong></p>
+<p>结构体嵌入机制让一个命名的结构体包含另一个结构体类型的匿名成员，这样就可以通过简单的点运算符<code>x.f</code>来访问匿名成员链中嵌套的<code>x.d.e.f</code>成员。</p>
+<p>Go语言有一个特性让我们只声明一个成员对应的数据类型而不指名成员的名字，这类成员就叫匿名结构体（或叫匿名成员）。匿名结构体的数据类型必须是命名的类型或指向一个命名的类型的指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Circle</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Point</span>
+    <span class="nx">Radius</span> <span class="kt">int</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">Wheel</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Circle</span>	<span class="c1">//匿名成员
+</span><span class="c1"></span>    <span class="nx">Spokes</span> <span class="kt">int</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于匿名成员，可以由于嵌入的特性直接访问嵌入的结构体的成员：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">w</span> <span class="nx">Wheel</span>
+<span class="nx">w</span><span class="p">.</span><span class="nx">X</span> <span class="p">=</span> <span class="mi">8</span> <span class="c1">// 等价于w.Circle.Point.X = 8
+</span><span class="c1"></span><span class="nx">w</span><span class="p">.</span><span class="nx">Y</span> <span class="p">=</span> <span class="mi">8</span> <span class="c1">// 等价于w.Circle.Point.Y = 8
+</span><span class="c1"></span><span class="nx">w</span><span class="p">.</span><span class="nx">Radius</span> <span class="p">=</span> <span class="mi">5</span> <span class="c1">// 等价于w.Circle.Radius = 5
+</span><span class="c1"></span><span class="nx">w</span><span class="p">.</span><span class="nx">Spokes</span> <span class="p">=</span> <span class="mi">20</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>匿名结构体的缺点是无法通过简短的方式对结构体赋值:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">w</span> <span class="p">=</span> <span class="nx">Wheel</span><span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">}</span> <span class="c1">// compile error: unknown fields
+</span><span class="c1"></span><span class="nx">w</span> <span class="p">=</span> <span class="nx">Wheel</span><span class="p">{</span><span class="nx">X</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">Y</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">Radius</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nx">Spokes</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span> <span class="c1">// compile error: unknown fields
+</span></code></pre></td></tr></table>
+</div>
+</div><p>只能老老实实地赋值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">w</span> <span class="p">=</span> <span class="nx">Wheel</span><span class="p">{</span><span class="nx">Circle</span><span class="p">{</span><span class="nx">Point</span><span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">},</span> <span class="mi">5</span><span class="p">},</span> <span class="mi">20</span><span class="p">}</span>
+<span class="nx">w</span> <span class="p">=</span> <span class="nx">Wheel</span><span class="p">{</span>
+    <span class="nx">Circle</span><span class="p">:</span> <span class="nx">Circle</span><span class="p">{</span>
+        <span class="nx">Point</span><span class="p">:</span> <span class="nx">Point</span><span class="p">{</span><span class="nx">X</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">Y</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+        <span class="nx">Radius</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nx">Spokes</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="c1">// NOTE: trailing comma necessary here (and at Radius)
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">w</span><span class="p">)</span>
+<span class="c1">// Output:
+</span><span class="c1">// Wheel{Circle:Circle{Point:Point{X:8, Y:8}, Radius:5}, Spokes:20}
+</span><span class="c1"></span><span class="nx">w</span><span class="p">.</span><span class="nx">X</span> <span class="p">=</span> <span class="mi">42</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">w</span><span class="p">)</span>
+<span class="c1">// Output:
+</span><span class="c1">// Wheel{Circle:Circle{Point:Point{X:42, Y:8}, Radius:5}, Spokes:20}
+</span></code></pre></td></tr></table>
+</div>
+</div><p>因为匿名成员也有一个隐式的名字，因此<strong>不能同时包含两个类型相同的匿名成员</strong>。同时，因为成员的名字是由其类型隐式地决定的，所有匿名成员也有可见性的规则约束。在上面的例子中，Point和Circle匿名成员都是导出的。</p>
+<p>即使它们不导出（比如改成小写字母开头的point和circle），我们依然可以在包内用简短形式访问匿名成员嵌套的成员：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">w</span><span class="p">.</span><span class="nx">X</span> <span class="p">=</span> <span class="mi">8</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>但是在包外部，因为circle和point没有导出不能访问它们的成员，因此简短的匿名成员访问语法也是禁止的,下面的代买可以在包内运行成功，但是在包外的时候，这代码将会报如下的错误：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//包外使用如下语句
+</span><span class="c1"></span><span class="nx">a</span> <span class="o">:=</span> <span class="nx">test</span><span class="p">.</span><span class="nx">Wheel</span><span class="p">{}</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">circle</span><span class="p">.</span><span class="nx">point</span><span class="p">.</span><span class="nx">X</span> <span class="p">=</span> <span class="mi">8</span>
+<span class="c1">//报错：a.circle undefined (cannot refer to unexported field or method circle)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>匿名成员并不要求是结构体类型，其实任何命令的类型都可以作为结构体的匿名成员，这样做的意义是：是匿名类型的方法集，简短的点运算符语法可以用于选择匿名成员嵌套的成员，也可以用于访问它们的方法。</p>
+<p>外层的结构体不仅仅是获得了匿名成员类型的所有成员，而且也获得了该类型导出的全部的方法。这个机制可以用于将一个有简单行为的对象组合成有复杂行为的对象。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>结构体成员的输入顺序也有重要的意义，顺序不一样的结构体不是同一个结构体。</li>
+<li>如果结构体成员名字是以大写字母开头的，那么该成员就是导出的，由go语言导出规则决定的。一个结构体可能同时包含导出和未导出的成员。</li>
+<li>一个命名为S的结构体类型将不能再包含S类型的成员：因为一个聚合的值不能包含它自身。但是S类型的结构体可以包含*S指针类型的成员，这可以让我们创建递归的数据结构，比如链表和树结构等。</li>
+<li>结构体变量的成员可以通过点操作符访问：<code>identifier.attribute1</code>,并且可以直接对其赋值，取地址，然后通过指针访问。结构体本身也可以被取址。</li>
+<li>结构体类型的零值是每个成员都对是零值。通常会将零值作为最合理的默认值。</li>
+<li>如果结构体没有任何成员的话就是空结构体，写作<code>struct{}</code>。它的大小为0，也不包含任何信息。有些Go语言程序员用map带模拟set数据结构时，用它来代替map中布尔类型的value，只是强调key的重要性，但是因为节约的空间有限，语法比较复杂，通常避免这样的用法。</li>
+<li>如果考虑效率的话，较大的结构体通常会用指针的方式传入和返回。</li>
+</ul>
+<h3 id="引用类型">引用类型</h3>
+<h4 id="切片slice">切片(slice)</h4>
+<p>Slice（切片）代表变长的序列，序列中每个元素都有相同的类型。类似于Python的list，一个slice类型一般写作<code>[]T</code>，其中T代表slice中元素的类型，slice的语法和数组很像，只是没有固定长度而已。</p>
+<p>一个slice是一个轻量级的数据结构，提供了访问数组子序列（或者全部）元素的功能(slice的底层确实引用一个数组对象)。一个slice由三个部分构成：<strong>指针、长度和容量</strong>：</p>
+<ul>
+<li><strong>指针</strong>指向第一个slice元素对应的底层数组元素的地址(slice的第一个元素并不一定就是数组的第一个元素)。</li>
+<li><strong>长度</strong>对应slice中元素的数目。内置的len函数返回slice的长度。</li>
+<li><strong>容量</strong>是从slice的开始位置到底层数据的结尾位置。长度不能超过容量。内置的cap函数返回slice的容量。</li>
+</ul>
+<p>切片的定义与初始化：<code>var identifier []type</code></p>
+<ul>
+<li><code>var s []int</code>初始化为长度为0的空切片,默认为<code>nil</code></li>
+<li><code>s :=[] int {1,2,3}</code>直接初始化</li>
+<li><code>s := arr[startIndex:endIndex]</code>数组arr的引用</li>
+</ul>
+<p>slice的切片操作s[i:j]，其中0 ≤ i≤ j≤ cap(s)，用于创建一个新的slice，引用s的从第i个元素开始到第j-1个元素的子序列。新的slice将只有j-i个元素。类似大多数支持切片的语言，如果i位置的索引被省略的话将使用0代替，如果j位置的索引被省略的话将使用len(s)代替。</p>
+<p>slice和数组的字面值语法很类似，不过不需要定义长度，或使用内置的make函数来创建切片:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kd">type</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">type</span><span class="p">,</span> <span class="nx">len</span><span class="p">)</span>	<span class="c1">//或者s := make([]type, len)
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>make([]T, length, capacity)</code>此处的length是切片的初始长度，capacity指的是切片的容量，切片长度不能超过该长度（容量部分可以省略，在这种情况下，容量将等于长度）</p>
+<p>多个slice之间可以共享底层的数据，并且引用的数组部分区间可能重叠：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">months</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s">&#34;January&#34;</span><span class="p">,</span> <span class="cm">/* ... */</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span> <span class="s">&#34;December&#34;</span><span class="p">}</span> <span class="c1">//定义months数组
+</span><span class="c1"></span><span class="nx">Q2</span> <span class="o">:=</span> <span class="nx">months</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>	<span class="c1">//由数组生成切片
+</span><span class="c1"></span><span class="nx">summer</span> <span class="o">:=</span> <span class="nx">months</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span><span class="c1">//由数组生成切片
+</span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201208213559543.png"
+        data-srcset="/images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201208213559543.png, /images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201208213559543.png 1.5x, /images/post/go/2.go%e8%af%ad%e8%a8%80%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/image-20201208213559543.png 2x"
+        data-sizes="auto"
+        alt="/images/post/go/2.go语言基础语法/image-20201208213559543.png"
+        title="image-20201208213559543" /></p>
+<p>如果切片操作超出cap(s)的上限将导致一个panic异常，但是超出len(s)则是意味着扩展了slice，因为新slice的长度会变大：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">summer</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span> <span class="c1">// panic: out of range
+</span><span class="c1"></span><span class="nx">endlessSummer</span> <span class="o">:=</span> <span class="nx">summer</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="c1">// extend a slice (within capacity)
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">endlessSummer</span><span class="p">)</span> <span class="c1">// &#34;[June July August September October]&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>append函数</strong></p>
+<p>一般的格式为<code>append(slice,element1,element2,element3...)</code>,设置可以增加slice，<code>append(slice,slice1,slice2,slice3...)</code></p>
+<p>返回增加元素后的slice，所以一般的用法是<code>slice =append(slice,element) </code></p>
+<p>底层原理：每次调用append函数，必须先检测slice底层数组是否有足够的容量来保存新添加的元素。</p>
+<ul>
+<li>如果有足够空间的话，直接扩展slice（依然在原有的底层数组之上），将新添加的y元素复制到新扩展的空间，并返回slice</li>
+<li>如果没有足够的增长空间的话，append函数则会先分配一个足够大的slice用于保存新的结果，先将输入的x复制到新的空间，然后添加y元素</li>
+</ul>
+<p>根据底层原理，append函数返回的slice是可能与原来的slice不共用底层的数组， 会改变长度甚至容量与指针。</p>
+<p><strong>切片的比较</strong></p>
+<p>slice之间不能比较，因此我们不能使用<code>==</code>操作符来判断两个slice是否含有全部相等元素。(<em>标准库提供了高度优化的bytes.Equal函数来判断两个字节型slice是否相等（[]byte），但是对于其他类型slice，我们必须自己展开每个元素进行比较</em>)</p>
+<p>可以自己写函数进行切片的相等的判断：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">equal</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">x</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">y</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">{</span>
+        	<span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>slice不直接支持比较运算符的原因：</p>
+<ul>
+<li>一个slice的元素是间接引用的，一个slice甚至可以包含自身。</li>
+<li>一个固定值的slice在不同的时间可能包含不同的元素，因为底层数组的元素可能会被修改。</li>
+</ul>
+<p>slice唯一合法的比较操作是和nil比较：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">summer</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>一个零值的slice等于<code>nil</code>。<strong>一个<code>nil</code>值的slice并没有底层数组</strong>。一个<code>nil</code>值的slice的长度和容量都是0(slice的nil值类似于NULL，是没有底层的内存空间的)。与任意类型的<code>nil</code>值一样，我们可以用 []int(<code>nil</code>)类型转换表达式来生成一个对应类型slice的<code>nil</code>值</p>
+<blockquote>
+<p>但是也有非<code>nil</code>值的slice的长度和容量也是0的，例如[]int{}或make([]int, 3)[3:]。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kt">int</span> <span class="c1">// len(s) == 0, s == nil
+</span><span class="c1"></span><span class="nx">s</span> <span class="p">=</span> <span class="kc">nil</span> <span class="c1">// len(s) == 0, s == nil
+</span><span class="c1"></span><span class="nx">s</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">int</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span> <span class="c1">// len(s) == 0, s == nil
+</span><span class="c1"></span><span class="nx">s</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span> <span class="c1">// len(s) == 0, s != nil
+</span></code></pre></td></tr></table>
+</div>
+</div><p>因此，如果需要测试一个slice是否是空的，使用<code>len(s) == 0</code>来判断，而不应该用<code>s == nil</code>来判断，除此之外，一个nil值的slice的行为和其它任意0产长度的slice一样。</p>
+<h4 id="字典map">字典(map)</h4>
+<p>map类型可以写为<code>map[K]V</code>，其中K和V分别对应key和value。</p>
+<p>map中所有的key都有相同的类型，所有的value也有着相同的类型。 其中K对应的key必须是支持==比较运算符的数据类型，所以map可以通过测试key是否相等来判断是否已经存在。对于V对应的value数据类型则没有任何的限制。</p>
+<blockquote>
+<p>虽然浮点数类型也是支持相等运算符比较的，但是将浮点数用做key类型则是一个坏的想法，最坏的情况是可能出现的NaN和任何浮点数都不相等</p>
+</blockquote>
+<p>Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。 map存储了键/值（key/value）的集合，对集合元素，提供常数时间的存、取或测试操作。键可以是任意类型，只要其值能用<code>==</code>运算符比较（最常见的例子是字符串），值则可以是任意类型。</p>
+<p><strong>map的定义</strong>：</p>
+<ul>
+<li>
+<p><code>var map_identifier map[key_type]value_type</code></p>
+<p>不初始化的 map 是 <code>nil</code>，如果不初始化map，那么就会创建一个nil map。nil map不能用来存放键值对。<strong>因此，map上的大部分操作，包括查找、删除、len和range循环都可以安全工作在nil值map上，它们的行为和一个空的map类似。但是向一个nil值的map存入元素将导致一个panic异常</strong></p>
+</li>
+<li>
+<p>创建map并初始化：<code>var map_indentifier := map[key_type]value_type{}</code></p>
+<p>经过初始化后的此map不等于nil</p>
+</li>
+<li>
+<p><code>map_identifier := make(map[key_type]value_type)</code></p>
+</li>
+<li>
+<p>也可以通过字面量进行初始化</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">ages</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span>
+    <span class="s">&#34;alice&#34;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>
+    <span class="s">&#34;charlie&#34;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这相当于：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">ages</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
+<span class="nx">ages</span><span class="p">[</span><span class="s">&#34;alice&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">31</span>
+<span class="nx">ages</span><span class="p">[</span><span class="s">&#34;charlie&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="mi">34</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p><strong>map的读取</strong>：</p>
+<p>map的读取可以通过键来读取：<code>map_indentifier[key_name]</code>,map中不含某个键时，首次读到时，值将被计算为其类型的零值。</p>
+<p>但是有的时候为了区分这个值是真正的零值还是因为不存在而返回的零值（比如<code>map[string]int</code>代表名字与成绩对应的map，不能确定是否是因为没有这个人导致成绩为0还是本身得0分），可以使用如下的方法进行判断该键的值是否存在：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">ages</span><span class="p">[</span><span class="s">&#34;bob&#34;</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>map的下标语法将产生两个值，第二个是一个布尔值，用于报告元素是否真的存在</p>
+<p><strong>map的遍历</strong>：</p>
+<p>要想遍历map中全部的键值对的话，可以使用range风格的for循环实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ages</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s\t%d\n&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Map的迭代顺序是不确定的</p>
+<p><strong>map的删除</strong>：</p>
+<p>删除可以使用map的delete函数：<code>delete(map_indentifier,key_name)</code></p>
+<p><strong>map的比较</strong>：</p>
+<p>和slice一样，map之间也不能进行相等比较，唯一的例外是和<code>nil</code>进行比较</p>
+<p><strong>注意与技巧</strong>：</p>
+<ul>
+<li>
+<p>map中的元素并不是一个变量，因此我们不能对map的元素进行取址操作</p>
+<p>禁止对map元素取址的原因是map可能随着元素数量的增长而重新分配更大的内存空间，从而可能导致之前的地址无效</p>
+</li>
+<li>
+<p>go没有集合这个数据结构，有时候可以忽略value，将map当做集合（set）使用：<code>map[key_type]bool</code>,即将值设置为布尔值</p>
+</li>
+</ul>
+<h4 id="函数functions">函数(functions)</h4>
+<p>与很多编程语言的函数一样，实参是按值传递的，函数接收到的是每个实参的副本。修改函数的形参不会影响到调用者的实参，但是如果提供的实参包含引用类型如指针，slice，map，函数或者通道，则会间接地修改实参变量。</p>
+<p><strong>go函数特别之处在于，go函数也属于一种变量，拥有类型，也存在空值（但是除了与空值比较，函数之间不能比较）</strong>,其为什么是引用变量的原因见后面的匿名函数小节。</p>
+<p>函数的类型称为<em>函数签名（signature）</em>，当两个函数拥有相同的形参列表和返回列表时，认为这两个函数的类型或签名是相同的。形参和返回值的名字不会影响到函数类型，采用简写也不会影响到函数的类型。</p>
+<h5 id="函数的声明">函数的声明</h5>
+<p>函数声明包括：<strong>函数名</strong>、<strong>形参列表</strong>、<strong>返回值列表</strong>（可省略）以及<strong>函数体</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">name</span><span class="p">(</span><span class="nx">parameter</span><span class="o">-</span><span class="nx">list</span><span class="p">)</span> <span class="p">(</span><span class="nx">result</span><span class="o">-</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">body</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果一组形参或返回值有相同的类型，我们不必为每个形参都写出参数类型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">hypot</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果函数返回一个<strong>无名变量</strong>或者<strong>没有返回值</strong>，返回值列表的括号是可以省略的,但是只要有返回值，就必须写返回类型，否则报错:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">funcs</span><span class="p">(</span><span class="nx">x</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span><span class="cm">/*...*/</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Go语言没有默认参数值，也没有任何方法可以通过参数名指定形参，因此形参和返回值的变量名不会对调用方产生影响。</p>
+<p>返回值也可以像形式参数一样被命名。在这种情况下，每个返回值被声明成一个局部变量，并根据该返回值的类型，将其初始化为0，如果一个函数将所有的返回值都显示的变量名，那么该函数的return语句可以省略操作数。这称之为bare return:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">sub</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">z</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span> <span class="nx">z</span> <span class="p">=</span> <span class="nx">x</span> <span class="o">-</span> <span class="nx">y</span><span class="p">;</span> <span class="k">return</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果一个函数在声明时，包含返回值列表，该函数必须以 return语句结尾，除非函数明显无法运行到结尾处。例如函数在结尾时调用了panic异常或函数中存在无限循环。如果一个函数声明不包括返回值列表，那么函数体执行完毕后，不会返回任何值。</p>
+<p>空白h标识符<code>_</code>表示这个形参在函数中未使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">first</span><span class="p">(</span><span class="nx">x</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">_</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>偶尔遇到没有函数体的函数声明，这表示该函数不是以Go实现的。这样的声明定义了函数标识符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">math</span>
+<span class="c1">//使用汇编语言实现
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">Sin</span><span class="p">(</span><span class="nx">x</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">float</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="多返回值">多返回值</h5>
+<p>在Go中，一个函数可以返回多个值（许多标准库中的函数返回2个值，一个是期望得到的返回值，另一个是函数出错时的错误信息）。</p>
+<h5 id="错误">错误</h5>
+<p>go与大多数语言不一样，go使用普通的值而非*异常(exception)*来报告错误，虽然Go有异常机制但这些机制仅被使用在处理未预料的程序bug，而不是那些已经预料到的写在程序中的错误处理部分处理的错误。</p>
+<p><strong>错误处理策略</strong>：</p>
+<p>当一次函数调用返回错误时，调用者有应该选择何时的方式处理错误。根据情况的不同，有很多处理方式：</p>
+<ol>
+<li>
+<p>最常用的方式是传播错误是着函数中某个子例程的错误（如c++,python,java的异常处理），会变成主调用例程的错误。</p>
+<p>如果是这种情况，那么当错误最终被某一个错误处理的程序段处理时，需要一个清晰的因果链，如：</p>
+<p><code>genesis: crashed: no parachute: G-switch failed: bad relay orientation</code></p>
+<p>由于错误信息经常是以链式组合在一起的，所以错误信息中应避免大写和换行符。最终的错误信息可能很长。</p>
+</li>
+<li>
+<p>对于不固定或者不可预测的错误，在短暂间隔后对操作进行重试，超过了重试次数再报错退出。</p>
+</li>
+<li>
+<p>如果错误发生后，程序无法继续运行，可以采用第三种策略：输出错误信息并结束程序（比如使用<code>os.Exit(1)</code>结束程序）。需要注意的是，这种策略只应在main中执行。</p>
+<p>通常库函数应该讲错误传递给调用者，除非这个错误表示一个内部一致性的错误，这代表库内部存在bug。</p>
+</li>
+<li>
+<p>在一些错误下，只记录错误信息然后程序继续运行。</p>
+</li>
+<li>
+<p>在一些特殊情况下可以直接安全忽略掉整个日志</p>
+<p>这个情况像是我们忘记处理错误一样，要习惯考了每个函数出错的情况，当有意忽略错误的时候，需要清除解释原因。</p>
+</li>
+</ol>
+<p><strong>文件结束标识EOF</strong>：</p>
+<p><code>io</code>包保证任何由文件结束引起的读取失败都返回同一个错误——<code>io.EOF</code>，EOF的定义为：</p>
+<p>EOF is the error returned by Read when no more input is available.</p>
+<h5 id="函数变量">函数变量</h5>
+<p>函数在go语言中是头等重要的值：就如其他值，函数变量也有类型，而且可以赋给变量或者传递或者从其他函数中返回。</p>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">square</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">n</span> <span class="p">}</span>
+<span class="kd">func</span> <span class="nf">negative</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span> <span class="k">return</span> <span class="o">-</span><span class="nx">n</span> <span class="p">}</span>
+<span class="kd">func</span> <span class="nf">product</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">m</span> <span class="o">*</span> <span class="nx">n</span> <span class="p">}</span>
+
+<span class="nx">f</span> <span class="o">:=</span> <span class="nx">square</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">// &#34;9&#34;
+</span><span class="c1"></span><span class="nx">f</span> <span class="p">=</span> <span class="nx">negative</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">// &#34;-3&#34;
+</span><span class="c1"></span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span> <span class="c1">// &#34;func(int) int&#34;
+</span><span class="c1"></span><span class="nx">f</span> <span class="p">=</span> <span class="nx">product</span> <span class="c1">// compile error: can&#39;t assign func(int, int) int to func(int) int
+</span></code></pre></td></tr></table>
+</div>
+</div><p>函数类型的零值为<code>nil</code>,代用空的函数将导致宕机(panic)。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">f</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span>
+<span class="nf">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">// panic: call of nil function
+</span></code></pre></td></tr></table>
+</div>
+</div><p>但是函数值之间是不可比较的，所以也不能用函数值作为map的key。</p>
+<p>函数值使得我们不仅仅可以通过数据来参数化函数，还可以将函数的行为当做参数进行传递,l例如遍历一个网页的所有节点：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// forEachNode针对每个结点x,都会调用pre(x)和post(x)。
+</span><span class="c1">// pre和post都是可选的。
+</span><span class="c1">// 遍历孩子结点之前,pre被调用
+</span><span class="c1">// 遍历孩子结点之后，post被调用
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">forEachNode</span><span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">html</span><span class="p">.</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">pre</span><span class="p">,</span> <span class="nx">post</span> <span class="kd">func</span><span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">html</span><span class="p">.</span><span class="nx">Node</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">pre</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">pre</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">FirstChild</span><span class="p">;</span> <span class="nx">c</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">;</span> <span class="nx">c</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">NextSibling</span> <span class="p">{</span>
+        <span class="nf">forEachNode</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">pre</span><span class="p">,</span> <span class="nx">post</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">post</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">post</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该函数接收2个函数作为参数，分别在结点的孩子被访问前和访问后调用。这样的设计给调用者更大的灵活性。</p>
+<h5 id="匿名函数anonymous-functions">匿名函数（Anonymous Functions）</h5>
+<p>命名函数（拥有函数名的函数）智能在包级别作用域进行声明，通过<em>函数字面量（function literal）<em>在任何表达式中指定一个函数，函数的字面量就像函数声明，但是在<code>func</code>关键字后面没有函数的名称，它是一个表达式，值称为</em>匿名函数</em>。</p>
+<p>函数字面量运行我们需要的时候才定义，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">strings</span><span class="p">.</span><span class="nf">Map</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">r</span> <span class="kt">rune</span><span class="p">)</span> <span class="kt">rune</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">},</span> <span class="s">&#34;HAL-9000&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过这种方式定义的函数可以获得的词法环境（lexical environment），这意味着里层的函数可以使用外层函数的变量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// squares返回一个匿名函数。
+</span><span class="c1">// 该匿名函数每次被调用时都会返回下一个数的平方。
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">squares</span><span class="p">()</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="kt">int</span>
+    <span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+        <span class="nx">x</span><span class="o">++</span>
+        <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">f</span> <span class="o">:=</span> <span class="nf">squares</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span> <span class="c1">// &#34;1&#34;
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span> <span class="c1">// &#34;4&#34;
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span> <span class="c1">// &#34;9&#34;
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span> <span class="c1">// &#34;16&#34;
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>函数squares返回另一个类型为 <code>func() int </code>的函数。对squares的一次调用会生成一个局部变量x并返回一个匿名函数。每次调用时匿名函数时，该函数都会先使x的值加1，再返回x的平方。第二次调用squares时，会生成第二个x变量，并返回一个新的匿名函数。新匿名函数操作的是第二个x变量。</p>
+<p>上述代码说明，<strong>函数值不仅仅是一串代码，还拥有状态</strong>。在squares中定义的匿名内部函数可以获取和更新squares函数中的局部变量，这意味着匿名函数和squares中，存在变量引用，<strong>这就是函数被归类为引用类型和函数变量不可比较的原因</strong>。Go使用*闭包（closures）*技术实现函数值，Go程序员也把函数变量叫做闭包。</p>
+<p>通过这个例子，我们看到<strong>变量的生命周期不由它的作用域决定</strong>：squares返回后，变量x仍然隐式的存在于f中。</p>
+<p>当一个匿名函数需要递归，我们必须首先声明一个变量（在下面的例子中，我们首先声明了<code>visitAll</code>），再将匿名函数赋值给这个变量，如果不分成两步，函数字面量无法与<code>visitAll</code>绑定，我们也无法递归调用该匿名函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">course</span> <span class="o">:=</span> <span class="k">range</span> <span class="nf">topoSort</span><span class="p">(</span><span class="nx">prereqs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d:\t%s\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">course</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//深度优先算法
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">topoSort</span><span class="p">(</span><span class="nx">m</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">order</span> <span class="p">[]</span><span class="kt">string</span>
+    <span class="nx">seen</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">bool</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nx">visitAll</span> <span class="kd">func</span><span class="p">(</span><span class="nx">items</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span>
+    <span class="nx">visitAll</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">items</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">item</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">items</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">!</span><span class="nx">seen</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="p">{</span>
+                <span class="nx">seen</span><span class="p">[</span><span class="nx">item</span><span class="p">]</span> <span class="p">=</span> <span class="kc">true</span>
+                <span class="nf">visitAll</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="nx">item</span><span class="p">])</span>
+                <span class="nx">order</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">order</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">keys</span> <span class="p">[]</span><span class="kt">string</span>
+    <span class="k">for</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">m</span> <span class="p">{</span>
+        <span class="nx">keys</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">keys</span><span class="p">)</span>
+    <span class="nf">visitAll</span><span class="p">(</span><span class="nx">keys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">order</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>下面就不能递归：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">visitAll</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">items</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...
+</span><span class="c1"></span>    <span class="nf">visitAll</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="nx">item</span><span class="p">])</span> <span class="c1">// compile error: undefined: visitAll
+</span><span class="c1"></span>    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>警告：迭代变量的值的获取问题</strong></p>
+<p>下面介绍Go词法作用域的一个容易错的陷阱：</p>
+<p>当没有函数的情况下，下面的语句是对的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">a</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+	<span class="nx">x</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span>
+		<span class="nx">x</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="c1">//[1 2 3]
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>但是当存在函数的时候：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">a</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+	<span class="nx">x</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">func</span><span class="p">()</span><span class="kt">int</span><span class="p">{}</span>
+	<span class="kd">var</span> <span class="nx">p</span> <span class="o">*</span><span class="kt">int</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">i</span><span class="p">)</span><span class="c1">//每次循环i的地址没有变化过
+</span><span class="c1"></span>		<span class="nx">p</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">i</span>
+		<span class="nx">x</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="kd">func</span><span class="p">()</span><span class="kt">int</span><span class="p">{</span>
+			<span class="k">return</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span>
+		<span class="p">})</span><span class="c1">//每次x增加的函数地址也没有变化
+</span><span class="c1"></span>	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span><span class="c1">//每次都是4
+</span><span class="c1"></span>	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">f</span><span class="p">)</span><span class="c1">//每次地址都相同
+</span><span class="c1"></span>	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="o">*</span><span class="nx">p</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="cm">/*output：
+</span><span class="cm">0xc0000140a0
+</span><span class="cm">0xc0000140a0
+</span><span class="cm">0xc0000140a0
+</span><span class="cm">4
+</span><span class="cm">4
+</span><span class="cm">4
+</span><span class="cm">0xc000006038
+</span><span class="cm">0xc000006038
+</span><span class="cm">0xc000006038
+</span><span class="cm">[0xec55e0 0xec55e0 0xec55e0]
+</span><span class="cm">3
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>问题的原因在于循环变量的作用域。在上面的程序中，for循环语句引入了新的词法块，循环变量i在这个词法块中被声明。在该循环中生成的所有函数值都共享相同的变量（一个可访问的存储位置而非固定的值，所以上述的函数slice中每个函数的地址都是相同的）。需要注意，<strong>函数值中记录的是循环变量的内存地址</strong>，而不是循环变量某一时刻的值。for循环完成后，i的地址中存储的值为最后一次迭代的值，都是一样的。</p>
+<p>为了解决这个问题，我们会引入一个与循环变量同名的局部变量，作为循环变量的副本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">//...
+</span><span class="c1"></span>		<span class="nx">p</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">i</span>
+		<span class="nx">i</span> <span class="o">:=</span><span class="nx">i</span>			<span class="c1">//局部变量加在这里
+</span><span class="c1"></span>        <span class="c1">//...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上述看着加的有点古怪，具体见 [go语言结构](1. go语言结构.md) 中的 [作用域](1. go语言结构.md##作用域)</p>
+<h5 id="变长函数variadic-functions">变长函数(Variadic Functions)</h5>
+<p>参数数量可变的函数称为<strong>变长函数</strong>(例如：<code>fmt.Printf</code>)。在参数列表最后的类型名称之前使用<code>...</code>表明一个变长函数调用这个函数可以传递该类型的任意数目的参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">vals</span> <span class="o">...</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">total</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">vals</span> <span class="p">{</span>
+        <span class="nx">total</span> <span class="o">+=</span> <span class="nx">val</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">total</span>
+<span class="p">}</span>
+
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">sum</span><span class="p">())</span>           <span class="c1">// &#34;0&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>          <span class="c1">// &#34;3&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="c1">// &#34;10&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>在函数体中，<code>vals</code>被看作是类型为<code>[] int</code>的切片。在上面的代码中，调用者隐式的创建一个数组，并将原始参数复制到数组中，再把数组的一个切片作为参数传给被调用函数。</p>
+<p>如果原始参数已经是切片类型，只需在最后一个参数后加上省略符,就可以把数组中的元素传入函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">values</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="nx">values</span><span class="o">...</span><span class="p">))</span> <span class="c1">// &#34;10&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>虽然在可变参数函数内部，<code>...int</code> 型参数的行为看起来很像切片类型，但实际上，可变参数函数和以切片作为参数的函数是不同的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">f</span><span class="p">(</span><span class="o">...</span><span class="kt">int</span><span class="p">)</span> <span class="p">{}</span>
+<span class="kd">func</span> <span class="nf">g</span><span class="p">([]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span> <span class="c1">// &#34;func(...int)&#34;
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">g</span><span class="p">)</span> <span class="c1">// &#34;func([]int)&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><h5 id="延迟调用函数deferred-function-calls">延迟调用函数（Deferred Function Calls）</h5>
+<p>defer语句的目的是在函数退出的前一刻执行对应的对应的函数（defer后面必须是函数调用语句，不能是其他语句，否则编译器会报错），只需要在调用普通函数或方法前加上关键字defer，就完成了defer所需要的语法。</p>
+<p>当执行到该条语句时，函数和参数表达式得到计算求值，不论包含defer语句的函数是正常return结束，还是由于panic（宕机）导致的异常结束，该defer语句的函数执行完毕后，才会进行上述return或者异常处理。defer语句没有数量限制，它们的执行顺序<strong>与声明顺序相反</strong>。</p>
+<p>defer语句经常被用于成对的操作，如打开与关闭、连接与断开连接、加锁与释放锁。通过defer机制，不论函数逻辑多复杂，都能保证在任何执行路径下，资源被释放。释放资源的defer应该直接跟在<strong>成功</strong>请求资源的语句后。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//gopl.io/ch5/title2
+</span><span class="c1"></span><span class="cm">/*如果没有defer，则在每个return前都要加一个Body.close函数*/</span>
+<span class="kd">func</span> <span class="nf">title</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span><span class="c1">//成功请求到资源
+</span><span class="c1"></span>	<span class="k">defer</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span><span class="c1">//defer释放资源语句
+</span><span class="c1"></span>	<span class="nx">ct</span> <span class="o">:=</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">Header</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;Content-Type&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">ct</span> <span class="o">!=</span> <span class="s">&#34;text/html&#34;</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">ct</span><span class="p">,</span><span class="s">&#34;text/html;&#34;</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;%s has type %s, not text/html&#34;</span><span class="p">,</span><span class="nx">url</span><span class="p">,</span> <span class="nx">ct</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">doc</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">html</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;parsing %s as HTML: %v&#34;</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">// ...print doc&#39;s title element…
+</span><span class="c1"></span>	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+<span class="cm">/*output:
+</span><span class="cm">$ go build gopl.io/ch5/title1 
+</span><span class="cm">$ ./title1 http://gopl.io 
+</span><span class="cm">The Go Programming Language 
+</span><span class="cm">$ ./title1 https://golang.org/doc/effective_go.html
+</span><span class="cm">Effective Go - The Go Programming Language 
+</span><span class="cm">$ ./title1 https://golang.org/doc/gopher/frontpage.png 
+</span><span class="cm">title: https://golang.org/doc/gopher/frontpage.png has type image/png, not text/html
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在文件操作，互斥锁操作等地方也可以使用defer操作，调试复杂程序时也可以用于记录何时进入和退出函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//gopl.io/ch5/trace
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">bigSlowOperation</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">defer</span> <span class="nf">trace</span><span class="p">(</span><span class="s">&#34;bigSlowOperation&#34;</span><span class="p">)()</span> <span class="c1">// don&#39;t forget the extra parentheses
+</span><span class="c1"></span>	<span class="c1">// ...lots of work...
+</span><span class="c1"></span>	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span> <span class="c1">// simulate slow operation by sleeping
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">trace</span><span class="p">(</span><span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">start</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">()</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;enter %s&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span>
+	<span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;exit %s (%s)&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Since</span><span class="p">(</span><span class="nx">start</span><span class="p">))</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nf">bigSlowOperation</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="cm">/*
+</span><span class="cm">!+output
+</span><span class="cm">$ go build gopl.io/ch5/trace
+</span><span class="cm">$ ./trace
+</span><span class="cm">2021/08/06 17:41:45 enter bigSlowOperation
+</span><span class="cm">2021/08/06 17:41:55 exit bigSlowOperation (10.0220884s)
+</span><span class="cm">!-output
+</span><span class="cm">*/</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>注：此处一定要加括号</p>
+</blockquote>
+<p><strong>注意：</strong></p>
+<ol>
+<li>被延迟执行的匿名函数甚至可以修改函数返回给调用者的返回值</li>
+<li>在循环中如果defer用于释放资源，需要十分小心，因为全部是在函数结束时才会调用，太多资源不释放可能会导致程序崩溃</li>
+</ol>
+<h5 id="panic内置函数又名宕机">Panic内置函数（又名宕机）</h5>
+<p>有些错误只能在运行时进行检查，如数组访问越界，空指针等，这些错误在运行时会引起panic。</p>
+<p>当panic发生时，程序会中断运行，并立即执行在该goroutine(暂且理解为线程)中的defer定义的延迟函数。随后程序崩溃并输出日志信息。日志信息包括<em>panic值</em>（<em>panic value</em>）和函数调用的堆栈跟踪信息。panic值通常是某种错误信息。对于每个goroutine，日志信息中都会有与之相对的发生panic时的函数调用<em>栈跟踪</em>（<em>stack trace</em>）信息。由于足够详细，在填写问题报告时一般会将panic异常和日志信息一并记录。</p>
+<p>不是所有的panic异常都来自运行时（runtime），直接调用内置的panic函数也会引发panic异常；panic函数接受任何值作为参数，当某些不应该发生的场景发生时，最好调用panic，比如触发到不可执行的地方：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">switch</span> <span class="nx">s</span> <span class="o">:=</span> <span class="nf">suit</span><span class="p">(</span><span class="nf">drawCard</span><span class="p">());</span> <span class="nx">s</span> <span class="p">{</span> 
+    <span class="k">case</span> <span class="s">&#34;Spades&#34;</span><span class="p">:</span> <span class="c1">// ... 
+</span><span class="c1"></span>	<span class="k">case</span> <span class="s">&#34;Hearts&#34;</span><span class="p">:</span> <span class="c1">// ... 
+</span><span class="c1"></span><span class="k">case</span> <span class="s">&#34;Diamonds&#34;</span><span class="p">:</span> <span class="c1">// ... 
+</span><span class="c1"></span><span class="k">case</span> <span class="s">&#34;Clubs&#34;</span><span class="p">:</span> <span class="c1">// ... 
+</span><span class="c1"></span><span class="k">default</span><span class="p">:</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;invalid suit %q&#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">))</span> <span class="c1">// Joker? 
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意：</strong></p>
+<p>panic类似其他语言的异常，与其他语言的异常不同，panic会引起程序的崩溃，但是好的程序尽量避免程序崩溃，因此panic一般用于严重的错误，对于任何可预期的漏洞，一般使用错误机制，而不是panic，只有当调用者输入了不应该出现的输入时，才应该触发panic，对于此类判断接收到不合法就panic的函数一般以Must开头命名，如<code>MustCompile</code>。</p>
+<h5 id="recover内置函数恢复">Recover内置函数（恢复）</h5>
+<p>通常来说，不应该对panic做出任何处理，但是有时可以从异常中恢复，至少在崩溃前做出一些操作。如果在defer中调用内置函数recover，并且该defer语句所在的函数发生了panic异常，recover能使程序从panic中恢复并返回panic值，导致panic异常的函数不会继续运行，但是能正常返回。在未发生panic时调用recover则会返回nil。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>recover只有在defer调用的函数中有效</li>
+<li>因为有些错误没有处理，不能不加区分恢复所有panic异常</li>
+<li>不应该试图去恢复其他包引起的panic异常，公有的API应该将函数的运行失败作为error返回，而并不是panic，安全的做法是有选择性的recover。即只恢复应该被恢复的panic异常，为了标识某个panic是否应该被恢复，我们可以将panic value设置成特殊类型（自定义类型）</li>
+</ul>
+<h4 id="指针pointer">指针(pointer)</h4>
+<p>指针的值是变量的地址，不是所有的值都有地址，但是变量都有，使用指针可以在无需知道变量名字的情况下间接读取或者更新变量的值。指针的类型为<code>*</code>+数据类型，如<code>var p *int =&amp;x</code>，其中x为整型。任何类型的指针的零值都是<code>nil</code>，如果p！=nil测试为真，则p是指向某个有效变量。指针是可比较的，两个指针当且仅当指向同一个变量或者两者都是<code>nil</code>才会相等。</p>
+<h5 id="与c语言的不同点">与c语言的不同点</h5>
+<p>go语言也有指针，大体上的用法与C差不多，但是由于运算符的优先级，会出现以下的不同点：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span> <span class="kt">int</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">p</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">a</span><span class="o">-</span> 
+	<span class="o">*</span><span class="nx">p</span><span class="o">++</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>输出的结果为2,而C语言中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">p</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的a的值却是1，因为C语言的运算符优先级为<code>++</code>&gt;<code>*</code>,而go语言是相反的，而且go语言为了安全防止歧义，仅允许数字可以使用<code>++</code>，而不允许其他类型自加</p>
+<h2 id="go语句">go语句</h2>
+<h3 id="类型声明语句">类型声明语句</h3>
+<p>与C语言中<code>typedef</code>关键字功能类似，go中有<code>type</code>关键字进行创建新的类型名字，使其和现有的类型具有相同的底层结构，新命名的类型提供了一个方法，用来分隔不同概念的类型，这样即使它们底层类型相同页式不兼容的</p>
+<p>一般用法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">new_type_name</span> <span class="nx">type_name</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>类型声明语句一般出现在包一级，如果首字母大写，则在外部包也可以使用。</p>
+<h3 id="赋值语句">赋值语句</h3>
+<h4 id="一般赋值语句">一般赋值语句</h4>
+<p>最简单的复制语句：<code>identifier=value</code></p>
+<h4 id="加减乘除二元运算符赋值语句">加减乘除二元运算符赋值语句</h4>
+<p>二元赋值运算符有：<code>+=</code>,<code>-=</code>,<code>*=</code>,<code>/=</code>,可以省去对符号的重复计算</p>
+<h4 id="自增与自减">自增与自减</h4>
+<p>值得注意的是，与C/C++不同，自增<code>++</code>与自减<code>--</code>都是语句而非表达式，所以go不能出现<code>x=i++</code>这样的语句，同时，<code>++</code>只是右运算符，不能出现在变量的左侧。</p>
+<h4 id="元组赋值">元组赋值</h4>
+<p>元组赋值允许同时更新多个变量的值，赋值前会将赋值语句右边所有表达式先进行求值 ，然后统一更新左边对应变量的的值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">=</span><span class="nx">y</span><span class="p">,</span><span class="nx">x</span>
+<span class="nx">i</span><span class="p">,</span><span class="nx">j</span><span class="p">,</span><span class="nx">k</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+<span class="nx">f</span><span class="p">,</span><span class="nx">err</span><span class="p">=</span><span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">&#34;foo.txt&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="隐式赋值">隐式赋值</h4>
+<p>很多赋值都是隐式的，比如函数调用的给形参赋值，return语句隐式将值赋给结果变量，复合类型的字面量表达式赋值等。不管是显式还是隐式，只要变量与值的是有可赋值性的即可。</p>
+<h3 id="比较语句">比较语句</h3>
+<p>比较运算符与大部分主流编程语言相似：<code>&gt;,&gt;=,==,&lt;=,&lt;</code>,得到的结果为<code>true</code>或<code>false</code>,只有数据类型一样的两个变量才能得到这些内置运算符的支持，如果两个值的类型不同则不能直接进行比较。</p>
+<h4 id="range">range</h4>
+<p>range 关键字用于 for 循环中迭代数组(array)、切片(slice)、通道(channel)或集合(map)的元素。在数组和切片中它返回元素的索引和索引对应的值，在集合中返回 key-value 对。</p>
+<h3 id="循环语句">循环语句</h3>
+<p>go语言的循环语句只有for循环一种，但是有多个变种，方便不同情况下使用：</p>
+<ol>
+<li>
+<p>最一般情况：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">initialization</span><span class="p">;</span> <span class="nx">condition</span><span class="p">;</span> <span class="nx">post</span> <span class="p">{</span>
+	<span class="c1">// zero or more statements
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>`</p>
+<p>for循环三个部分不需括号包围。大括号强制要求，左大括号必须和post语句在同一行。</p>
+<ul>
+<li>
+<p>initialization</p>
+<p>initialization语句是可选的，在循环开始前执行。initalization如果存在，必须是一条简单语句，即，短变量声明、自增语句、赋值语句或函数调用。</p>
+</li>
+<li>
+<p>condition</p>
+<p>condition是一个布尔表达式，其值在每次循环迭代开始时计算。如果为true则执行循环体语句</p>
+</li>
+<li>
+<p>post</p>
+<p>post语句在循环体执行结束后执行，之后再次对condition求值。condition值为false时，循环结束。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>类“while”语句
+for循环的这三个部分每个都可以省略，如果省略initialization和post，分号也可以省略：</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// a traditional &#34;while&#34; loop
+</span><span class="c1"></span><span class="k">for</span> <span class="nx">condition</span> <span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>死循环
+如果连condition也省略了，像下面这样</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// a traditional infinite loop
+</span><span class="c1"></span><span class="k">for</span> <span class="p">{</span>
+ 	<span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这就变成一个无限循环，尽管如此，还可以用其他方式终止循环，如一条break或return语句。</p>
+<ol start="4">
+<li>range与for结合
+for循环的另一种形式，在某种数据类型的区间（range）上遍历，如字符串或切片：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">index</span><span class="p">,</span><span class="nx">i</span><span class="o">:=</span><span class="k">range</span> <span class="nx">slide</span><span class="p">{</span>
+	<span class="c1">//...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>每次循环迭代，range产生一对值：<strong>索引</strong>以及在该索引处的<strong>元素值</strong>。</p>
+<blockquote>
+<p>有时候不需要索引，但range的语法要求，要处理元素，必须处理索引。一种思路是把索引赋值给一个临时变量（如temp）然后忽略它的值，但Go语言不允许使用无用的局部变量（local variables），因为这会导致编译错误。</p>
+<p>Go语言中这种情况的解决方法是用空标识符，即<code>_</code>（也就是下划线）。空标识符可用于在任何语法需要变量名但程序逻辑不需要的时候（如：在循环里）丢弃不需要的循环索引，并保留元素值。</p>
+</blockquote>
+<h3 id="条件判断语句">条件判断语句</h3>
+<p>if语句条件两边也不加括号，但是主体部分需要加。if语句的else部分是可选的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">布尔表达式</span> <span class="p">{</span>
+	<span class="cm">/* 在布尔表达式为 true 时执行 */</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="p">{</span>
+	<span class="cm">/* 在布尔表达式为 false 时执行 */</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-01-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" data-title="2.go语言基础语法"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" data-title="2.go语言基础语法"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" class="prev" rel="prev" title="3.go语言的面向对象编程"><i class="fas fa-angle-left fa-fw"></i>3.go语言的面向对象编程</a>
+            <a href="/1.go%E8%AF%AD%E8%A8%80%E7%BB%93%E6%9E%84/" class="next" rel="next" title="1.go语言结构">1.go语言结构<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
