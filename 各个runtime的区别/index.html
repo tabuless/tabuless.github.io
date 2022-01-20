@@ -453,10 +453,10 @@ make: *** <span class="o">[</span>container-build<span class="o">]</span> Error 
 <img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="0201115122303271_15104.png"
-        data-srcset="0201115122303271_15104.png, 0201115122303271_15104.png 1.5x, 0201115122303271_15104.png 2x"
+        data-src="20201115122303271_15104.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115122303271_15104.png, 20201115122303271_15104.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115122303271_15104.png 2x"
         data-sizes="auto"
-        alt="0201115122303271_15104.png"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115122303271_15104.png"
         title="gvisor结构" />
 gVisor 对系统调用的劫持方法，目前提供了两种劫持模式：KVM 模式，与 ptrace 模式。ptrace 模式的性能不及 KVM 模式。因为应用的每个 SYSCALL 都需要通过 ptrace 访问 Sentry。<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>
 gVisor 兼容 OCI，因此它的 rootfs 的文件来源就来自容器 OCI 镜像各层聚合以后的 rootfs。为了减少 Guest App 直接对 Host 系统调用的依赖，Sentry 使用了 9pfs。应用程序通过 9p 协议与 Runsc 进程通信（内部运行着 Gofer Server 的功能），通过 Runsc 间接地来对 Host 的 rootfs 进行操作。<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>

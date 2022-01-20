@@ -176,7 +176,7 @@ make: *** [container-build] Error 2
 # gVisor
 
 gVisor作为主机上的一个进程运行，这个进程提供被沙盒隔离的应用和主机之间的接口，gVisor的思想是保证提供进程模型的情况下尽可能的通过多层防护减小系统应用的攻击，Sentry 是 gVisor 的核心组件，它就像一个简单的操作系统内核，提供了系统调用，进程管理，内存管理等功能。Sentry实现了Linux系统的大多数调用， 以及很多重要的内核函数如信号传递，内存管理，网络堆栈，线程模型等。
-![gvisor结构](0201115122303271_15104.png)
+![gvisor结构](20201115122303271_15104.png)
  gVisor 对系统调用的劫持方法，目前提供了两种劫持模式：KVM 模式，与 ptrace 模式。ptrace 模式的性能不及 KVM 模式。因为应用的每个 SYSCALL 都需要通过 ptrace 访问 Sentry。[^4]
  gVisor 兼容 OCI，因此它的 rootfs 的文件来源就来自容器 OCI 镜像各层聚合以后的 rootfs。为了减少 Guest App 直接对 Host 系统调用的依赖，Sentry 使用了 9pfs。应用程序通过 9p 协议与 Runsc 进程通信（内部运行着 Gofer Server 的功能），通过 Runsc 间接地来对 Host 的 rootfs 进行操作。[^4]
 ![详细架构](20201115160733312_26893.png)
