@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>3.go语言的面向对象编程 - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="3.go语言的面向对象编程" />
+<meta property="og:description" content="方法(methods) 一个面向对象的程序会用方法来表达其属性和对应的操作，这样使用这个对象的用户就不需要直接操作对象，而是借助方法来做这些事" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-19T17:18:31+08:00" />
+<meta property="article:modified_time" content="2022-01-19T17:18:31+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="3.go语言的面向对象编程"/>
+<meta name="twitter:description" content="方法(methods) 一个面向对象的程序会用方法来表达其属性和对应的操作，这样使用这个对象的用户就不需要直接操作对象，而是借助方法来做这些事"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" /><link rel="prev" href="https://tabuless.github.io/a.%E5%B8%B8%E7%94%A8%E7%9A%84go%E6%A0%87%E5%87%86%E5%BA%93/" /><link rel="next" href="https://tabuless.github.io/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "3.go语言的面向对象编程",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "go, gopl","wordcount":  4956 ,
+        "url": "https:\/\/tabuless.github.io\/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B\/","datePublished": "2022-01-19T17:18:31+08:00","dateModified": "2022-01-19T17:18:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">3.go语言的面向对象编程</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go/"><i class="far fa-folder fa-fw"></i>go</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4956 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;<span id="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" class="leancloud_visitors" data-flag-title="3.go语言的面向对象编程">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#方法的声明">方法的声明</a></li>
+    <li><a href="#指针作为参数的方法">指针作为参数的方法</a></li>
+    <li><a href="#nil也是一个合法的receiver值">nil也是一个合法的receiver值</a></li>
+    <li><a href="#通过嵌入结构体来扩展类型">通过嵌入结构体来扩展类型</a></li>
+    <li><a href="#方法值和表达式method-value-and-expression">方法值和表达式（method value and expression）</a></li>
+    <li><a href="#封装encapsulation">封装（encapsulation）</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#接口即约定">接口即约定</a></li>
+    <li><a href="#接口的定义">接口的定义</a></li>
+    <li><a href="#接口的实现">接口的实现</a></li>
+    <li><a href="#接口值">接口值</a>
+      <ul>
+        <li><a href="#接口的零值">接口的零值</a></li>
+        <li><a href="#接口的使用">接口的使用</a></li>
+        <li><a href="#接口的可比较性">接口的可比较性</a></li>
+      </ul>
+    </li>
+    <li><a href="#类型断言">类型断言</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="方法methods">方法(methods)</h1>
+<p>一个面向对象的程序会用方法来表达其属性和对应的操作，这样使用这个对象的用户就不需要直接操作对象，而是借助方法来做这些事情。</p>
+<h2 id="方法的声明">方法的声明</h2>
+<p>在函数声明时，在其名字之前放上一个变量，即是一个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">identifier</span> <span class="nx">Type</span><span class="p">)</span> <span class="nf">name</span><span class="p">(</span><span class="nx">parameter</span><span class="o">-</span><span class="nx">list</span><span class="p">)</span> <span class="p">(</span><span class="nx">result</span><span class="o">-</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">body</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中<code>identifier</code>称为方法的<em>接收器</em>（<em>receiver</em>），Go并不会像其它语言那样用this或者self作为接收器，接收器名字可以自定义，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Point</span> <span class="kd">struct</span><span class="p">{</span> <span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span> <span class="kt">float64</span> <span class="p">}</span>
+
+<span class="kd">type</span> <span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Point</span><span class="p">)</span> <span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span> <span class="nx">Point</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span> 
+	<span class="k">return</span> <span class="nx">math</span><span class="p">.</span><span class="nf">Hypot</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">X</span><span class="o">-</span><span class="nx">p</span><span class="p">.</span><span class="nx">X</span><span class="p">,</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Y</span><span class="o">-</span><span class="nx">p</span><span class="p">.</span><span class="nx">Y</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="nx">q</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span> 
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>p.Distance</code>表达式称为<em>选择器</em>（<em>selector</em>，又称选择子），因为会给p合适的名为Distance的方法执行（因为Distance方法可能不止一个）,选择器也可以用来选择结构类型中的某些字段值，如<code>p.X</code>。方法与字段在同一个命名空间，因此如果声明一个X方法是非法的。</p>
+<p>go语言运行给任何类型定义方法，包括Go自带的各种类型，指针与接口除外。</p>
+<h2 id="指针作为参数的方法">指针作为参数的方法</h2>
+<p>有时为了避免实参拷贝为形参，就需要用到指针而不是对象来声明方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Point</span><span class="p">)</span> <span class="nf">ScaleBy</span><span class="p">(</span><span class="nx">factor</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">{</span> 
+	<span class="nx">p</span><span class="p">.</span><span class="nx">X</span> <span class="o">*=</span> <span class="nx">factor</span> 
+    <span class="nx">p</span><span class="p">.</span><span class="nx">Y</span> <span class="o">*=</span> <span class="nx">factor</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这个方法的名字是<code>(*Point).ScaleBy</code>，其中括号是必须的，没有括号的这个表达式可能被理解为<code>*(Point.ScaleBy)</code>。只有类型（如<code>Point</code>）与指向它的指针类型（如<code>*Point</code>）是唯一可以出现在receiver声明处的类型。在声明方法的时候，如果一个类型本身是指针的话，不允许其出现在receiver中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">P</span> <span class="o">*</span><span class="kt">int</span> 
+<span class="kd">func</span> <span class="p">(</span><span class="nx">P</span><span class="p">)</span> <span class="nf">f</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span> <span class="c1">// compile error: invalid receiver type
+</span></code></pre></td></tr></table>
+</div>
+</div><p>想要调用指针类型方法，只需要提供一个该类型的指针即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> 
+<span class="nx">pptr</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">p</span> 
+<span class="nx">pptr</span><span class="p">.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// &#34;{2, 4}&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>上述的操作可以更简单的表达，如果对上述的<code>p</code>直接执行<code>p.ScaleBy(2)</code>，编译器会隐式帮程序员用<code>&amp;p</code>调用<code>ScaleBy</code>方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> 
+<span class="nx">p</span><span class="p">.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// &#34;{2, 4}&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这种简单的方法只适用于变量，包括struct里面的成员变量（如<code>p.X</code>）以及数组或切片里面的元素（如某数组第一个元素<code>perim[0]</code>）,但是不能适用于取不了地址的receiver来调用指针方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// compile error: can&#39;t take address of Point literal
+</span></code></pre></td></tr></table>
+</div>
+</div><p>但如果<code>*Point</code>类型的receiver来调用<code>Point</code>类型的方法是合法的，因为可以通过地址找到这个变量，只需加载receiver的指针指向的值即可，同理于上面<code>p</code>可以隐式插入<code>&amp;</code>符号取址，此时编译器也会对指针隐式插入<code>*</code>操作符进行取值，因此下面两个语句是等效的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">pptr</span><span class="p">.</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">)</span> 
+<span class="p">(</span><span class="o">*</span><span class="nx">pptr</span><span class="p">).</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上述的过程进行总结如下：</p>
+<ul>
+<li>不管你的method的receiver是指针类型还是非指针类型，都是可以通过对应的指针/非指针类型进行调用的，编译器会帮你隐式做类型转换（只要可以取址或者可以取值）。</li>
+<li>在声明一个method的receiver该是指针还是非指针类型时，你需要考虑两方面的内部：
+<ul>
+<li>第一方面：这个对象本身是不是特别大，如果声明为非指针变量时，调用会产生一次拷贝</li>
+<li>第二方面：是如果你用指针类型作为receiver，那么你一定要注意，这种指针类型指向的始终是一块内存地址，就算你对其进行了拷贝</li>
+</ul>
+</li>
+</ul>
+<h2 id="nil也是一个合法的receiver值">nil也是一个合法的receiver值</h2>
+<p>就像一些函数允许nil值的变量作为参数，方法也可以用nil指针作为receiver，尤其当nil对于对象来说说合法的零值时，如map或slice。但是不能直接使用<code>nil.method()</code>调用方法，因为nil字面量编译器无法判断其类型。</p>
+<h2 id="通过嵌入结构体来扩展类型">通过嵌入结构体来扩展类型</h2>
+<p>如果有结构体<code>ColorPoint</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ColoredPoint</span> <span class="kd">struct</span> <span class="p">{</span> 
+	<span class="nx">Point</span> 
+	<span class="nx">color</span><span class="p">.</span><span class="nx">RGBA</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该结构体嵌入了<code>Point</code>结构体，因此也“继承”了<code>Point</code>的方法，但是该方法的参数并不会自动变成<code>ColorPoint</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">p</span> <span class="p">=</span> <span class="nx">ColoredPoint</span><span class="p">{</span><span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="nx">red</span><span class="p">}</span>
+<span class="kd">var</span> <span class="nx">q</span> <span class="p">=</span> <span class="nx">ColoredPoint</span><span class="p">{</span><span class="nx">Point</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="nx">blue</span><span class="p">}</span>
+<span class="nx">p</span><span class="p">.</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">)</span> <span class="c1">// compile error: cannot use q (ColoredPoint) as Point
+</span><span class="c1"></span><span class="nx">p</span><span class="p">.</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Point</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>除非在<code>ColorPoint</code>内再写一遍<code>Distance</code>方法（如果此时仍然将方法命名为<code>Distance</code>则会发生对<code>Point.Distance</code>方法的覆盖）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">ColoredPoint</span><span class="p">)</span> <span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span> <span class="nx">ColoredPoint</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span> 
+	<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Distance</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Point</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>嵌入结构体的方法查找顺序为：</p>
+<ul>
+<li>首先查找这个类型的方法</li>
+<li>接着是内嵌的结构体对应的方法</li>
+<li>如果内嵌结构体还有内嵌的结构，则递归查找下去</li>
+</ul>
+<p>上述顺序找到就停止下一步的查找。</p>
+<h2 id="方法值和表达式method-value-and-expression">方法值和表达式（method value and expression）</h2>
+<p><strong>方法值：</strong></p>
+<p>格式：<code>identifier.method</code></p>
+<p>对于常用的<code>p.Distance()</code>方式，其实可以分成两步：首先独立得到selector：<code>distanceFromP := p.Distance</code>，selector会返回一个<em>方法值</em>（<em>method value</em>）：一个将方法（<code>Point.Distance</code>）绑定到特定selector得到的函数。</p>
+<blockquote>
+<p>所以方法值本质上是一个函数</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> 
+<span class="nx">q</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+<span class="nx">distanceFromP</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Distance</span> 		<span class="c1">// method value
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">distanceFromP</span><span class="p">(</span><span class="nx">q</span><span class="p">))</span>   	<span class="c1">// &#34;5&#34;
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">origin</span> <span class="nx">Point</span>        	<span class="c1">// {0, 0} 
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">distanceFromP</span><span class="p">(</span><span class="nx">origin</span><span class="p">))</span> 	<span class="c1">// &#34;2.23606797749979&#34;, sqrt(5)
+</span><span class="c1"></span>
+<span class="nx">scaleP</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">ScaleBy</span> <span class="c1">// method value 
+</span><span class="c1"></span><span class="nf">scaleP</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>			<span class="c1">// p becomes (2, 4)
+</span><span class="c1"></span><span class="nf">scaleP</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 			<span class="c1">// then (6, 12)
+</span><span class="c1"></span><span class="nf">scaleP</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>			<span class="c1">// then (60, 120)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果包内的API调用一个函数值（如<code>distanceFromP</code>,<code>scaleP</code>），且希望这个函数变量主要用于调用一个特定的receiver（如<code>p</code>，<code>q</code>），方法值非常有效。</p>
+<p><strong>方法表达式：</strong></p>
+<p>格式：<code>Type.method</code></p>
+<p>与方法变量相关的还有<em>方法表达式</em>（<em>method expression</em>），调用一个方法时，与调用函数相比，需要提供selector，并根据对应的语法（如<code>p.Distance</code>）进行调用。对于类型<code>T</code>，方法表达式有<code>T.f</code>和<code>(*T).f</code>两种，这两种表达式得到的类型均为函数，这个函数将第一个参数作为receiver，余下的参数即对应方法的参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">p</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> 
+<span class="nx">q</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+<span class="nx">distance</span> <span class="o">:=</span> <span class="nx">Point</span><span class="p">.</span><span class="nx">Distance</span> 		<span class="c1">// method expression 
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">distance</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">q</span><span class="p">))</span> 	<span class="c1">// &#34;5&#34; 
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">distance</span><span class="p">)</span> 	<span class="c1">// &#34;func(Point, Point) float64&#34;
+</span><span class="c1"></span>
+<span class="nx">scale</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">Point</span><span class="p">).</span><span class="nx">ScaleBy</span> 
+<span class="nf">scale</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> 
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>					<span class="c1">// &#34;{2 4}&#34; 
+</span><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T\n&#34;</span><span class="p">,</span> <span class="nx">scale</span><span class="p">)</span> 	<span class="c1">// &#34;func(*Point, float64)&#34;
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要在多个方法中经常使用某个特定类型<code>T</code>的某个特定的方法<code>f</code>，就可以将这个类型的方法单独用一个变量来表示（<code>e:=T.f</code>），这个变量就可以用方法表达式来得到，而所有的方法都属于同一种类型<code>T</code>，因此这个变量可以在不同情况更换不同的方法表达式得到的函数（从<code>e=T.f</code>到<code>e=T.g</code>）:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Point</span> <span class="kd">struct</span><span class="p">{</span> 
+	<span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span> <span class="kt">float64</span> 
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Point</span><span class="p">)</span> <span class="nf">Add</span><span class="p">(</span><span class="nx">q</span> <span class="nx">Point</span><span class="p">)</span> <span class="nx">Point</span> <span class="p">{</span> 
+    <span class="k">return</span> <span class="nx">Point</span><span class="p">{</span><span class="nx">p</span><span class="p">.</span><span class="nx">X</span> <span class="o">+</span> <span class="nx">q</span><span class="p">.</span><span class="nx">X</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Y</span> <span class="o">+</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Y</span><span class="p">}</span> 
+<span class="p">}</span> 
+<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Point</span><span class="p">)</span> <span class="nf">Sub</span><span class="p">(</span><span class="nx">q</span> <span class="nx">Point</span><span class="p">)</span> <span class="nx">Point</span> <span class="p">{</span> 
+    <span class="k">return</span> <span class="nx">Point</span><span class="p">{</span><span class="nx">p</span><span class="p">.</span><span class="nx">X</span> <span class="o">-</span> <span class="nx">q</span><span class="p">.</span><span class="nx">X</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Y</span> <span class="o">-</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Y</span><span class="p">}</span> 
+<span class="p">}</span> 
+<span class="kd">type</span> <span class="nx">Path</span> <span class="p">[]</span><span class="nx">Point</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">path</span> <span class="nx">Path</span><span class="p">)</span> <span class="nf">TranslateBy</span><span class="p">(</span><span class="nx">offset</span> <span class="nx">Point</span><span class="p">,</span> <span class="nx">add</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="kd">var</span> <span class="nx">op</span> <span class="kd">func</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">q</span> <span class="nx">Point</span><span class="p">)</span> <span class="nx">Point</span> 
+    <span class="k">if</span> <span class="nx">add</span> <span class="p">{</span> 
+        <span class="nx">op</span> <span class="p">=</span> <span class="nx">Point</span><span class="p">.</span><span class="nx">Add</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span> 
+        <span class="nx">op</span> <span class="p">=</span> <span class="nx">Point</span><span class="p">.</span><span class="nx">Sub</span>
+	<span class="p">}</span> 
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">path</span> <span class="p">{</span> <span class="c1">// Call either path[i].Add(offset) or path[i].Sub(offset). 
+</span><span class="c1"></span>        <span class="nx">path</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nf">op</span><span class="p">(</span><span class="nx">path</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">offset</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="封装encapsulation">封装（encapsulation）</h2>
+<p>一个对象的变量或者方法如果对调用方是不可见的话，一般就被定义为“封装”。对于不可见性，go语言只有一个方式：大写首字母的标识符会从定义它们的包中被导出，小写字母的则不会，所以如果要封装一个对象，必须将其定义为一个struct：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">IntSet</span> <span class="kd">struct</span> <span class="p">{</span> 
+    <span class="nx">words</span> <span class="p">[]</span><span class="kt">uint64</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种基于名字的手段使得在go语言中的封装单位是包，而不是其他语言的类型，所以go语言的一个struct类型字段对同一个包的所有代码都可见。</p>
+<p>封装提供了三方面的有点：</p>
+<ul>
+<li>调用方不能直接修改对象的变量值，只需要关注少量语句与变量</li>
+<li>隐藏实现细节</li>
+<li>最重要地，阻止外部包调用方对对象内部的值进行肆意修改，只允许按照一定的规则修改内容（比如setter，getter等）</li>
+</ul>
+<p>go不禁止直接导出字段，但是一旦进行了导出，就无法在不改变API兼容性的情况下撤销导出（所以最初的设计需要额外小心）。</p>
+<h1 id="接口interface">接口（interface）</h1>
+<p>接口类型是对其他类型行为的抽象和概括。go语言接口类型的独特之处在与它是满足隐式实现的，即我们没有必要对于给定的具体类型定义所有满足的接口类型，拥有一些必需的方法就够了。很多Go程序中都尽可能多的去使用标准库中的接口。</p>
+<h2 id="接口即约定">接口即约定</h2>
+<p>接口类型是一种抽象的类型，不会暴露他所代表的对象内部值的结构和这个对象支持的基础操作的集合，它们只会展示出它们自己的方法，所以，使用者使用接口对象时，接口类型封装和隐藏具体类型和它的值，即使该类型有其他的方法，接口类型也只能暴露接口定义的方法而不能使用其他方法。</p>
+<h2 id="接口的定义">接口的定义</h2>
+<p>接口定义的格式为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">T</span> <span class="kd">interface</span><span class="p">{</span>
+    <span class="nf">Func</span><span class="p">(</span><span class="nx">indentifier_list</span><span class="p">)(</span><span class="nx">return_value_list</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>接口也可以通过现有接口的组合进行定义,这种方法称为接口的嵌套：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Reader</span> <span class="kd">interface</span> <span class="p">{</span> 
+    <span class="nf">Read</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">Writer</span> <span class="kd">interface</span> <span class="p">{</span> 
+    <span class="nf">Write</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">ReadWriter</span> <span class="kd">interface</span> <span class="p">{</span> 
+    <span class="nx">Reader</span> 
+    <span class="nx">Writer</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然也可以直接写在在内部：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">type ReadWriter interface { 
+    Read(p []byte) (n int, err error) 
+    Write(p []byte) (n int, err error)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>或者混搭：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ReadWriter</span> <span class="kd">interface</span> <span class="p">{</span> 
+    <span class="nf">Read</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> 
+    <span class="nx">Writer</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上述的顺序也对接口的定义没有影响。</p>
+<h2 id="接口的实现">接口的实现</h2>
+<p>一个类型如果拥有一个接口需要的所有方法，那么这个类型就实现了这个接口。接口指定的规则非常简单：表达一个类型属于某个接口只要这个类型实现这个接口。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 对于空接口，什么方法都不需要实现
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">any</span> <span class="kd">interface</span><span class="p">{}</span> 
+<span class="nx">any</span> <span class="p">=</span> <span class="kc">true</span> 
+<span class="nx">any</span> <span class="p">=</span> <span class="mf">12.34</span> 
+<span class="nx">any</span> <span class="p">=</span> <span class="s">&#34;hello&#34;</span> 
+<span class="nx">any</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="s">&#34;one&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> 
+<span class="nx">any</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>非空的接口类型通常由一个指针类型来实现的，特别是当接口类型一个或多个方法暗示会修改receiver的情况（如<code>Write</code>函数）。</p>
+<p>注意：</p>
+<ul>
+<li>虽然对于指针方法，编译器会隐式转换<code>(*Type).method</code>与<code>Type.method</code>，但是这两个方法是不一样的，所以实现某个接口的时候这两个方法会被当做两个不同方法</li>
+</ul>
+<h2 id="接口值">接口值</h2>
+<p>概念上讲，接口之由两个部分组成：一个具体类型和该类型的一个值，二者称为接口的<em>动态类型</em>（<em>dynamic type</em>）与<em>动态值</em>（<em>dynamic value</em>）。提供每个类型信息的值被称为类型描述符（type descriptor），比如类型的名称和方法。 在一个接口值中，类型部分代表与之相关类型的类型描述符。</p>
+<h3 id="接口的零值">接口的零值</h3>
+<p>一个接口的零值为<code>nil</code>，此时动态类型与动态值均为<code>nil</code>：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="image-20210819165306132.png"
+        data-srcset="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819165306132.png, image-20210819165306132.png 1.5x, /3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819165306132.png 2x"
+        data-sizes="auto"
+        alt="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819165306132.png"
+        title="接口的零值" /></p>
+<p>比如对于接口w，只要执行<code>w=nil</code>，即可使w设置为零值。</p>
+<p>值得注意的是，一个不包含任何值的nil接口值和一个刚好包含nil指针的接口值是不同的，所以，动态类型不为空，而动态值为空的时候，接口也不为空：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="image-20210819173619805.png"
+        data-srcset="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819173619805.png, image-20210819173619805.png 1.5x, /3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819173619805.png 2x"
+        data-sizes="auto"
+        alt="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/image-20210819173619805.png"
+        title="一个包含空指针的非空接口" /></p>
+<p>此时如果对上面的w进行写操作会导致panic，因为该指针为空，无法写入内容。</p>
+<h3 id="接口的使用">接口的使用</h3>
+<p>随着接口变量的赋值与操作，接口的动态类型与动态值可能会变化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">w</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span>			<span class="c1">//接口类型：io.Writer 动态类型：nil 动态值：nil
+</span><span class="c1"></span><span class="nx">w</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span>			<span class="c1">//接口类型：io.Writer 动态类型：*os.File 动态值：os.Stdout
+</span><span class="c1">//上句等价于：w = io.Writer(os.Stdout)
+</span><span class="c1"></span><span class="nx">w</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span> 	<span class="c1">//接口类型：io.Writer 动态类型：*bytes.Buffer 动态值：bytes.Buffer指针值，此时buffer里为空
+</span><span class="c1"></span><span class="nx">w</span> <span class="p">=</span> <span class="kc">nil</span>					<span class="c1">//接口类型：nil 动态类型：nil 动态值：nil
+</span></code></pre></td></tr></table>
+</div>
+</div><p>一个接口值可以持有任意大的动态值。从概念上讲，不论接口值多大，动态值总是可以容下它。</p>
+<h3 id="接口的可比较性">接口的可比较性</h3>
+<p>接口类型与众不同，接口有时候是可比较的，有时是不可比较的。如果该动态类型是不可比较的，那么就会出现panic，当接口类型可比较，接口值可以使用<code>==</code>和<code>!=</code>来进行比较,两个接口值相等仅当它们都是<code>nil</code>值或者它们的动态类型与动态值相等。</p>
+<h2 id="类型断言">类型断言</h2>
+<p><em>类型断言</em>（<em>Type Assertions</em>）用来从它的操作数中把具体类型的值提取出来，类型断言会检查作为操作数的动态类型是否满足指定的断言类型。类型断言作用于接口值，格式为：<code>x.(T)</code>，其中<code>x</code>是一个接口类型的变量，<code>T</code>是一个类型。</p>
+<p>如果<code>T</code>是一个具体的类型，则会判断<code>x</code>的动态类型是否为<code>T</code>类型，如果是则类型断言的结果就是<code>x</code>的动态值，否则会panic：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">w</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span> 
+<span class="nx">w</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span> 
+<span class="nx">f</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">File</span><span class="p">)</span><span class="c1">// success: f == os.Stdout 
+</span><span class="c1"></span><span class="nx">c</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="o">*</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span> <span class="c1">// panic: interface holds *os.File, not *bytes.Buffer
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果<code>T</code>是接口类型， 则会断言检查<code>x</code>的动态类型是否满足T接口，如果满足，动态值并不会提取出来，而是返回与动态类型与动态值相等的该类型接口的接口值，如果该动态类型不满足接口所需的方法，则会panic：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">w</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span>
+<span class="nx">w</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span>
+<span class="nx">f</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="p">)</span><span class="c1">//f的接口类型变为了io.ReadWriter,f的动态类型为*os.File
+</span><span class="c1"></span><span class="nx">f</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;asd&#34;</span><span class="p">))</span><span class="c1">//此时输出“asd”
+</span><span class="c1"></span>
+<span class="nx">w</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">ByteCounter</span><span class="p">)</span> 
+<span class="nx">rw</span> <span class="p">=</span> <span class="nx">w</span><span class="p">.(</span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="p">)</span> <span class="c1">// panic: *ByteCounter has no Read method
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如果断言操作的对象是一个<code>nil</code>接口值，那么不论被断言的类型是什么这个类型断言都会失败。一般的操作是将接口转化为要求更严格的接口，很少要从一个接口类型向一个要求更宽松的类型做类型断言（即更少的方法，且方法集合是子集），因为除了操作<code>nil</code>之外，其他情况与赋值一致。</p>
+<p>如果类型断言出现在一个有两个返回值的赋值操作中，则第二个参数表示成功与否的布尔值，这个操作不会在失败的时候发生panic：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">w</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span> 
+<span class="nx">f</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">File</span><span class="p">)</span><span class="c1">// success: ok, f == os.Stdout 
+</span><span class="c1"></span><span class="nx">b</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="o">*</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span> <span class="c1">// failure: !ok, b == nil
+</span></code></pre></td></tr></table>
+</div>
+</div><p>当类型断言操针对象是一个变量的时候，可以将该变量覆盖使用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.(</span><span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">File</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span> 
+    <span class="c1">// ...use w...
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-01-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" data-title="3.go语言的面向对象编程" data-hashtags="go,gopl"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" data-hashtag="go"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/3.go%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" data-title="3.go语言的面向对象编程"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/go/">go</a>,&nbsp;<a href="/tags/gopl/">gopl</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/a.%E5%B8%B8%E7%94%A8%E7%9A%84go%E6%A0%87%E5%87%86%E5%BA%93/" class="prev" rel="prev" title="a.常用的go标准库"><i class="fas fa-angle-left fa-fw"></i>a.常用的go标准库</a>
+            <a href="/2.go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="next" rel="next" title="2.go语言基础语法">2.go语言基础语法<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

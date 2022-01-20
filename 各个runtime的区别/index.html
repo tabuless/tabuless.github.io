@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>各个runtime的区别 - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="各个runtime的区别" />
+<meta property="og:description" content="kata_container架构 kata基于英特尔虚拟化技术（VT），想要解决容器内的安全问题。 使用Intel VT，能够将容器作为轻量级虚拟" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-20T15:59:56+08:00" />
+<meta property="article:modified_time" content="2022-01-20T15:59:56+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="各个runtime的区别"/>
+<meta name="twitter:description" content="kata_container架构 kata基于英特尔虚拟化技术（VT），想要解决容器内的安全问题。 使用Intel VT，能够将容器作为轻量级虚拟"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" /><link rel="prev" href="https://tabuless.github.io/1.go%E8%AF%AD%E8%A8%80%E7%BB%93%E6%9E%84/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "各个runtime的区别",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "容器, docker","wordcount":  4414 ,
+        "url": "https:\/\/tabuless.github.io\/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB\/","datePublished": "2022-01-20T15:59:56+08:00","dateModified": "2022-01-20T15:59:56+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">各个runtime的区别</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/"><i class="far fa-folder fa-fw"></i>虚拟化</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-20">2022-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4414 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" class="leancloud_visitors" data-flag-title="各个runtime的区别">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kata_container的安装">kata_container的安装</a>
+      <ul>
+        <li><a href="#遇到的问题">遇到的问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#内核的区别">内核的区别</a></li>
+    <li><a href="#sysfs与procfs">sysfs与procfs</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#firecracker安装">firecracker安装</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#unikernels">unikernels</a></li>
+    <li><a href="#nabla">nabla</a>
+      <ul>
+        <li><a href="#nabla的架构">nabla的架构</a></li>
+        <li><a href="#nabla安装">nabla安装</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#sysfs">sysfs</a></li>
+    <li><a href="#procfs">procfs</a></li>
+    <li><a href="#procfs和sysfs的区别">procfs和sysfs的区别</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kata_container架构">kata_container架构</h1>
+<p>kata基于英特尔虚拟化技术（VT），想要解决容器内的安全问题。 使用Intel VT，能够将容器作为轻量级虚拟机启动，从而提供了与流行的容器环境（如Kubernetes 和Docker ）交互的runtime替代工具。</p>
+<p>对于每个kata容器，都会运行在一个VM上，单独享有内核与namespace。所以系统调用是与主机隔离的。sysfs与procfs也是隔离的<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<ul>
+<li><strong>Runtime</strong>     组件Runtime 是Kata Containers 运行时， 负责处 理OCI runtime 的所有命令并启动kata-shim 实例。它 大量利用virtcontainers 软件包，该软件包提供了一套通 用，与运行时规范无关，硬件虚拟化的容器库，负责创建 在Linux 主机上运行的硬件虚拟化Linux 容器。该运行时 与OCI 兼容，CRI-O 以及Containerd 兼容，从而使其可 以分别与Docker 和Kubernetes 无缝地工作。安装kata runtime 时可在路径/usr/share/defaults/kata-containers/ configuration.toml 配置文件中定义hypervisor 路径、 guest kernel 以及mini-OS 映像。</li>
+<li><strong>Agent</strong>    Agent 是运行在微虚机中的一个运行时代理组件，负 责虚机内的容器及容器内部进程的生命周期管理，替运行 在宿主机上的runtime 实际管理运行在虚机上的容器环境。
+Agent 的最小执行单元是sandbox，一个sandbox 对应一 系列的命名空间（NS，UTS，IPC，PID）。Kata 容器支 持一个虚机内运行多个容器，由agent 管理一个虚机内的 多个容器及内部进程。Agent 重用了许多runC 代码，利 用libcontainer 管理容器生命周期，并通过gRPC 协议实 现与其他Kata 组件的通信。</li>
+<li><strong>Proxy</strong>    组件Proxy 负责Kata 容器代理服务， 代理agent 与shim、runtime 之间的通信，负责路由shim 到对应的 agent。默认由virtio-serial 技术实现通信，kernel 版本 v4.8 以上支持vsock 技术，virtio-serial 技术需要proxy 以多路分流的方式对多个容器进程通信，而利用 Vsock 技术通信时则不需要多路分流。</li>
+<li><strong>Shim</strong>    组件shim 在主机环境中运行，替实际运行在 虚机里的容器处理std I / O 及信号。shim 可以将 上层Containerd-shim 发来的数据流（如stdin）经 由proxy 转交给agent 执行，也可以将agent 经由 proxy 发过来的数据流（stdout/stderr）及信号传给 上层Containerd-shim。它主要负责在虚机外部监 控以及终止容器。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201109105707828_6620.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201109105707828_6620.png, 20201109105707828_6620.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201109105707828_6620.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201109105707828_6620.png"
+        title="kata和kubernetes结合" />
+kata在主机上有kata runtime对新的容器进行启动与配置，对于每个在kata VM里面的容器，在主机上有一个对应的kata shim，shim接收客户端API的请求（如docker和kubectl）并通过vsock将请求传递到kata VM里的agent。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201110112323205_20972.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201110112323205_20972.png, 20201110112323205_20972.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201110112323205_20972.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201110112323205_20972.png"
+        title="docker与kata&#43;docker的对比" /></p>
+<p>Kata Containers使用QEMU NVDIMM功能提供内存映射的虚拟设备，可用于将虚拟机的根文件系统DAX映射到guest内存地址空间<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201118005150384_23390.jpg"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201118005150384_23390.jpg, 20201118005150384_23390.jpg 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201118005150384_23390.jpg 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201118005150384_23390.jpg"
+        title="DAX" /></p>
+<h2 id="kata_container的安装">kata_container的安装</h2>
+<ol>
+<li><a href="https://github.com/kata-containers/documentation/blob/master/install/ubuntu-installation-guide.md" target="_blank" rel="noopener noreffer">kata安装</a></li>
+<li><a href="https://github.com/kata-containers/documentation/blob/master/install/docker/ubuntu-docker-install.md" target="_blank" rel="noopener noreffer">docker配置</a></li>
+</ol>
+<h3 id="遇到的问题">遇到的问题</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cwy@cwy:~$ sudo docker run busybox uname -a
+docker: Error response from daemon: OCI runtime create failed: failed to launch qemu: <span class="nb">exit</span> status 1, error messages from qemu log: Could not access KVM kernel module: No such file or directory
+qemu-vanilla-system-x86_64: failed to initialize kvm: No such file or directory: unknown.
+ERRO<span class="o">[</span>0001<span class="o">]</span> error waiting <span class="k">for</span> container: context canceled 
+</code></pre></td></tr></table>
+</div>
+</div><p>原因是我把它安装在虚拟机上了，需要安装在物理机上才能真正的运行：
+<a href="https://oracle-base.com/articles/linux/docker-kata-containers-ol7" target="_blank" rel="noopener noreffer">原因</a>    <a href="https://ubuntu.com/kubernetes/docs/kata" target="_blank" rel="noopener noreffer">原因</a></p>
+<p>此时对于我的vmware虚拟机，我可以将其设置中的：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201104204059961_11767.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201104204059961_11767.png, 20201104204059961_11767.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201104204059961_11767.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201104204059961_11767.png"
+        title="vmware虚拟化设置" />
+然后就可以运行了</p>
+<h2 id="内核的区别">内核的区别</h2>
+<p>对于一般的docker容器，其对应的内核信息如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cwy@cwy:~$ sudo docker run -it ubuntu /bin/bash
+root@e583629a8af1:/# uname -a
+Linux e583629a8af1 5.4.0-52-generic <span class="c1">#57~18.04.1-Ubuntu SMP Thu Oct 15 14:04:49 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>而主机的内核：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cwy@cwy:~$ uname -a
+Linux cwy 5.4.0-52-generic <span class="c1">#57~18.04.1-Ubuntu SMP Thu Oct 15 14:04:49 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可见docker的主机内核与主机的内核是一样的。</p>
+<p>而安装了kata的容器的内核与主机是不一样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cwy@cwy:~$ sudo vim /etc/docker/daemon.json
+cwy@cwy:~$ sudo vim /etc/docker/daemon.json
+cwy@cwy:~$ sudo systemctl daemon-reload
+cwy@cwy:~$ sudo systemctl restart docker
+cwy@cwy:~$ sudo docker run -it ubuntu /bin/bash
+root@a356febe014d:/# uname -a
+Linux a356febe014d 5.4.60-51.container <span class="c1">#1 SMP Thu Oct 22 16:13:49 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
+root@a356febe014d:/# 
+</code></pre></td></tr></table>
+</div>
+</div><p>Docker使用主机操作系统内核,容器内没有自定义或者使用额外的内核。机器上运行的所有容器都共享此“主机”内核</p>
+<h2 id="sysfs与procfs">sysfs与procfs</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">root@9f15bc1ad622:/# cat /proc/mounts<span class="p">|</span>grep sysfs
+sysfs /sys sysfs ro,nosuid,nodev,noexec,relatime <span class="m">0</span> <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">root@9f15bc1ad622:/# cat /proc/mounts<span class="p">|</span>grep proc  
+proc /proc proc rw,nosuid,nodev,noexec,relatime <span class="m">0</span> <span class="m">0</span>
+proc /proc/bus proc ro,relatime <span class="m">0</span> <span class="m">0</span>
+proc /proc/fs proc ro,relatime <span class="m">0</span> <span class="m">0</span>
+proc /proc/irq proc ro,relatime <span class="m">0</span> <span class="m">0</span>
+proc /proc/sys proc ro,relatime <span class="m">0</span> <span class="m">0</span>
+tmpfs /proc/acpi tmpfs ro,relatime <span class="m">0</span> <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="firecracker">firecracker</h1>
+<blockquote>
+<p>Firecracker is an open source virtualization technology that is purpose-built for creating and managing secure, multi-tenant container and function-based services that provide serverless operational models.</p>
+</blockquote>
+<p>架构如下：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201107103709337_18716.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107103709337_18716.png, 20201107103709337_18716.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107103709337_18716.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107103709337_18716.png"
+        title="firecracker架构" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201107105227807_3766.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107105227807_3766.png, 20201107105227807_3766.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107105227807_3766.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201107105227807_3766.png"
+        title="firecracker在系统中的位置" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201108225058454_24690.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108225058454_24690.png, 20201108225058454_24690.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108225058454_24690.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108225058454_24690.png"
+        title="firecracker架构" /><br>
+从上图可知firecracker使用的是自己的内核，rootfs与sysfs也需要自己进行创建，所以rootfs不是使用主机的<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></p>
+<p>在docker里面sysfs，rootfs都使用的是主机的</p>
+<h2 id="firecracker安装">firecracker安装</h2>
+<p><a href="https://github.com/firecracker-microvm/firecracker/blob/master/docs/getting-started.md" target="_blank" rel="noopener noreffer">安装教程</a>
+<a href="https://ieevee.com/tech/2018/11/28/firecracker.html" target="_blank" rel="noopener noreffer">安装教程</a></p>
+<h1 id="nabla-container">nabla container</h1>
+<h2 id="unikernels">unikernels</h2>
+<p>unikernels是单地址空间的可以直接在hypervisor上跑的镜像，它将应用和其需要的内核函数打包进了一个镜像：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201111164427788_29256.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111164427788_29256.png, 20201111164427788_29256.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111164427788_29256.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111164427788_29256.png"
+        title="unikernel和多功能内核的对比" />
+unikernel将内核分开为多个库只把有关的应用需要的库放在单个镜像中，跟VM一样，unikernel也在VMM上运行，由于体量小，unikernel能快速启动和扩展。</p>
+<h2 id="nabla">nabla</h2>
+<h3 id="nabla的架构">nabla的架构</h3>
+<p>nabla的架构如下：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201114112050592_16592.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114112050592_16592.png, 20201114112050592_16592.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114112050592_16592.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114112050592_16592.png"
+        title="nabla架构" /></p>
+<p>IBM的nabla的基本思想是将“把unikernel当成进程跑”，即把unikernel程序在一个特别的VMM上当做进程运行，nabla containers认为在unikernel和一般的VMM之间的超级调用（hypercall）仍然有较大的攻击可能性，所以用一个有unikernel特性的只允许更少系统调用的监视器能显著提升安全性。nabla tender拦截unikernel发送给VMM的超级调用并翻译为系统调用，linux seccomp（secure computing mode）屏蔽所有Tender不需要的调用：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201114111949944_22996.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114111949944_22996.png, 20201114111949944_22996.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114111949944_22996.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201114111949944_22996.png"
+        title="和普通的容器比nabla的安全性提高的原因" />
+一个unikernel与nabla结合可以被当做一个主机上的用户空间的进程：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201111215038725_29316.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111215038725_29316.png, 20201111215038725_29316.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111215038725_29316.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201111215038725_29316.png"
+        title="nabla在unikernel应用于主机之间创建一个轻量的接口" /></p>
+<h3 id="nabla安装">nabla安装</h3>
+<p>安装的主要方法见<a href="https://nabla-containers.github.io/2018/06/28/nabla-setup/" target="_blank" rel="noopener noreffer">nabla安装1</a> 或者<a href="https://abdennoor.medium.com/successfully-running-containers-with-nabla-runtime-on-ubuntu-machines-2ec06e62861e" target="_blank" rel="noopener noreffer">nabla安装2</a>
+执行过程中遇到了报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cwy@cwy:~/go/src/github.com/nabla-containers/runnc$ make container-build
+sudo docker build . -f Dockerfile.build -t runnc-build
+Sending build context to Docker daemon  7.624MB
+Step 1/7 : FROM golang:1.11
+ ---&gt; 43a154fee764
+Step 2/7 : RUN go get -u github.com/golang/dep/cmd/dep
+ ---&gt; Using cache
+ ---&gt; c96b623cd623
+Step 3/7 : RUN apt update
+ ---&gt; Using cache
+ ---&gt; 0b52b5e2cc0e
+Step 4/7 : RUN apt install -y genisoimage
+ ---&gt; Using cache
+ ---&gt; 0d216af11007
+Step 5/7 : RUN apt install -y libseccomp-dev
+ ---&gt; Using cache
+ ---&gt; ac6b324b417f
+Step 6/7 : RUN apt install -y sudo
+ ---&gt; Using cache
+ ---&gt; c2cd0875f4e8
+Step 7/7 : RUN apt install -y jq
+ ---&gt; Using cache
+ ---&gt; dd819ac61acc
+Successfully built dd819ac61acc
+Successfully tagged runnc-build:latest
+sudo docker run --rm -v /home/cwy/go/src/github.com/nabla-containers/runnc:/go/src/github.com/nabla-containers/runnc -w /go/src/github.com/nabla-containers/runnc runnc-build make
+dep ensure
+The following issues were found in Gopkg.toml:
+
+  ✗ unable to deduce repository and <span class="nb">source</span> <span class="nb">type</span> <span class="k">for</span> <span class="s2">&#34;golang.org/x/sys&#34;</span>: unable to <span class="nb">read</span> metadata: unable to fetch raw metadata: failed HTTP request to URL <span class="s2">&#34;http://golang.org/x/sys?go-get=1&#34;</span>: Get http://golang.org/x/sys?go-get<span class="o">=</span>1: dial tcp 216.239.37.1:80: connect: connection refused
+
+ProjectRoot name validation failed
+make: *** <span class="o">[</span>Makefile:70: godep<span class="o">]</span> Error <span class="m">1</span>
+Makefile:52: recipe <span class="k">for</span> target <span class="s1">&#39;container-build&#39;</span> failed
+make: *** <span class="o">[</span>container-build<span class="o">]</span> Error <span class="m">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.cnblogs.com/sage-blog/p/10640947.html" target="_blank" rel="noopener noreffer">网上博客</a>说是墙的原因导致的，但是不管我试哪种方法（包括换代理，科学上网，修改hosts）我都是会报这个错，由于不是很清楚该怎么解决，接下来的安装无法继续，但根据原理与架构我可以知道nabla是mount主机的sysfs和procfs<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<h1 id="gvisor">gVisor</h1>
+<p>gVisor作为主机上的一个进程运行，这个进程提供被沙盒隔离的应用和主机之间的接口，gVisor的思想是保证提供进程模型的情况下尽可能的通过多层防护减小系统应用的攻击，Sentry 是 gVisor 的核心组件，它就像一个简单的操作系统内核，提供了系统调用，进程管理，内存管理等功能。Sentry实现了Linux系统的大多数调用， 以及很多重要的内核函数如信号传递，内存管理，网络堆栈，线程模型等。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="0201115122303271_15104.png"
+        data-srcset="0201115122303271_15104.png, 0201115122303271_15104.png 1.5x, 0201115122303271_15104.png 2x"
+        data-sizes="auto"
+        alt="0201115122303271_15104.png"
+        title="gvisor结构" />
+gVisor 对系统调用的劫持方法，目前提供了两种劫持模式：KVM 模式，与 ptrace 模式。ptrace 模式的性能不及 KVM 模式。因为应用的每个 SYSCALL 都需要通过 ptrace 访问 Sentry。<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>
+gVisor 兼容 OCI，因此它的 rootfs 的文件来源就来自容器 OCI 镜像各层聚合以后的 rootfs。为了减少 Guest App 直接对 Host 系统调用的依赖，Sentry 使用了 9pfs。应用程序通过 9p 协议与 Runsc 进程通信（内部运行着 Gofer Server 的功能），通过 Runsc 间接地来对 Host 的 rootfs 进行操作。<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201115160733312_26893.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115160733312_26893.png, 20201115160733312_26893.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115160733312_26893.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201115160733312_26893.png"
+        title="详细架构" />
+当应用调用了那些未被实现的系统调用时，Sentry 会直接报错返回。由于系统调用尚未完备，导致部分软件还不能无缝地运行在 gVisor 中。而且 gVisor 已支持的系统调用中，有若干还必须依赖 Host 内核。当处理这些系统调用时，Sentry 会陷回 Host 模式。<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
+<p>安装见 <a href="https://gvisor.dev/docs/user_guide/install/" target="_blank" rel="noopener noreffer">安装教程</a></p>
+<h1 id="sysfs和procfs是什么">sysfs和procfs是什么</h1>
+<h2 id="sysfs">sysfs</h2>
+<p>sysfs是一个基于内存的文件系统，它的作用是将内核信息以文件的方式提供给用户程序使用。sysfs可以看成与proc,devfs和devpty同类别的文件系统，该文件系统是虚拟的文件系统，可以更方便对系统设备进行管理。它可以产生一个包含所有系统硬件层次视图，与提供进程和状态信息的proc文件系统十分类似。<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup><sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="20201108170728075_24939.png"
+        data-srcset="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108170728075_24939.png, 20201108170728075_24939.png 1.5x, /%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108170728075_24939.png 2x"
+        data-sizes="auto"
+        alt="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/20201108170728075_24939.png"
+        title="sysfs的层次结构" /></p>
+<h2 id="procfs">procfs</h2>
+<h2 id="procfs和sysfs的区别">procfs和sysfs的区别</h2>
+<blockquote>
+<p>What is the difference between procfs and sysfs?</p>
+</blockquote>
+<p>proc is the old one, it is more or less without rules and structure. And at some point it was decided that proc was a little too chaotic and a new way was needed.</p>
+<p>Then sysfs was created, and the new stuff that was added was put into sysfs like device information.</p>
+<p>So in some sense they do the same, but sysfs is a little bit more structured.</p>
+<blockquote>
+<p>Why are they made as file systems?</p>
+</blockquote>
+<p>UNIX philosophy tells us that everything is a &ldquo;file&rdquo;, therefore it was created so it behaves as files.</p>
+<p>As I understand it, proc is just something to store the immediate info regarding the processes running in the system.</p>
+<p>Those parts has always been there and they will probably never move into sysfs.</p>
+<p>But there is more old stuff that you can find in proc, that has not been moved.<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></p>
+<h1 id="总结">总结</h1>
+<p>gVisor和Nabla是沙盒化的runtime，它们可以将主机与容器化过程进一步隔离。 容器化过程不是共享主机内核，而是在Unikernel或内核代理层上运行，然后，该层将代表容器与主机内核进行交互。 由于增加了隔离度，因此这些runtime的受攻击面有所减少，并且使容器进程不太可能对主机产生不安全的影响。</p>
+<p>Kata是虚拟化的runtime。 它们是OCI Runtime规范的实现，由虚拟机接口而不是主机内核支持。 他们使用标准Linux内核映像启动轻量级虚拟机，并在该虚拟机中运行“容器化”的过程。</p>
+<p>与本机runtime相反，沙盒化和虚拟化runtime在整个容器化过程的整个生命周期中都会对性能产生影响。 在沙盒容器中，有一个额外的抽象层：进程在沙盒unikernel / proxy上运行，它将指令中继到主机内核。 在虚拟化容器中，存在一层虚拟化：该过程完全在虚拟机中运行，这本质上比本地运行慢。 将VM技术（如注重性能的AWS Firecracker）用作VM容器的支持虚拟机类型可以帮助最大程度地减少这种影响。</p>
+<table>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>系统调用是否借用host系统调用</th>
+<th>procfs、sysfs是否mount自主机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>kata containers</td>
+<td>否（来自客户OS内核）</td>
+<td>否（来自虚拟机）</td>
+</tr>
+<tr>
+<td>firecracker</td>
+<td>否（来自自带内核）</td>
+<td>否（来自自带的文件系统）</td>
+</tr>
+<tr>
+<td>nabla container</td>
+<td>否（来自unikernel，如果没有再用host）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>gvisor</td>
+<td>否（go语言实现的内核的系统调用）</td>
+<td>否（来自自带的文件系统）</td>
+</tr>
+</tbody>
+</table>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://katacontainers.io/learn/" target="_blank" rel="noopener noreffer">kata与一般容器的区别</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://unit42.paloaltonetworks.com/making-containers-more-isolated-an-overview-of-sandboxed-container-technologies/" target="_blank" rel="noopener noreffer">几个容器工具的介绍</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://sealyun.com/post/kubernetes-vm/" target="_blank" rel="noopener noreffer">强隔离容器那些事</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://github.com/firecracker-microvm/firecracker/blob/master/docs/design.md" target="_blank" rel="noopener noreffer">Firecracker microVMs</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p><a href="https://nabla-containers.github.io/2018/11/28/fs/" target="_blank" rel="noopener noreffer">nabla的文件系统</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p><a href="https://blog.csdn.net/omnispace/article/details/80597676" target="_blank" rel="noopener noreffer">谷歌新作gVisor：VM容器融合技术已经到来</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p><a href="https://www.jianshu.com/p/98606bee1dad" target="_blank" rel="noopener noreffer">sysfs的结构</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-sysfs/" target="_blank" rel="noopener noreffer">使用 /sys 文件系统访问 Linux 内核</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p><a href="https://unix.stackexchange.com/questions/4884/what-is-the-difference-between-procfs-and-sysfs" target="_blank" rel="noopener noreffer">procfs与sysfs的区别</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-01-20</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" data-title="各个runtime的区别" data-hashtags="容器,docker"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" data-hashtag="容器"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/%E5%90%84%E4%B8%AAruntime%E7%9A%84%E5%8C%BA%E5%88%AB/" data-title="各个runtime的区别"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%AE%B9%E5%99%A8/">容器</a>,&nbsp;<a href="/tags/docker/">docker</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/1.go%E8%AF%AD%E8%A8%80%E7%BB%93%E6%9E%84/" class="prev" rel="prev" title="1.go语言结构"><i class="fas fa-angle-left fa-fw"></i>1.go语言结构</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
