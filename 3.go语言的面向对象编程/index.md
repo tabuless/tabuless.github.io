@@ -15,7 +15,7 @@ func (identifier Type) name(parameter-list) (result-list) {
 }
 ```
 
-其中`identifier`称为方法的*接收器*（*receiver*），Go并不会像其它语言那样用this或者self作为接收器，接收器名字可以自定义，例如：
+其中`identifier`称为方法的*接收器*（*receiver*），Go并不会像其它语言那样用this或者self作为接收器，接收器名字可以自定义，例如： 
 
 ```go
 type Point struct{ X, Y float64 }
