@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title> - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="" />
+<meta property="og:description" content="基础模型 混淆矩阵： TP：真阳性，TN：真阴性，FP：伪阳性，FN：伪阴性 召回率/查全率 sensitivity, recall, hit rate, or true positive rate (TPR) $$ recall =\frac{TP}{P}= \frac{TP}{TP&#43;FN} $$ 精度 precision or positive predictive value (PPV) $$ precision=\frac{TP}{TP&#43;FP} $$ 精度" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="基础模型 混淆矩阵： TP：真阳性，TN：真阴性，FP：伪阳性，FN：伪阴性 召回率/查全率 sensitivity, recall, hit rate, or true positive rate (TPR) $$ recall =\frac{TP}{P}= \frac{TP}{TP&#43;FN} $$ 精度 precision or positive predictive value (PPV) $$ precision=\frac{TP}{TP&#43;FP} $$ 精度"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" /><link rel="next" href="https://tabuless.github.io/tgat/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  2972 ,
+        "url": "https:\/\/tabuless.github.io\/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2972 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基础模型">基础模型</a>
+      <ul>
+        <li><a href="#召回率查全率">召回率/查全率</a></li>
+        <li><a href="#精度">精度</a></li>
+        <li><a href="#精度与召回率结合">精度与召回率结合</a>
+          <ul>
+            <li><a href="#f1-score">F1-score</a></li>
+            <li><a href="#roc受试者特征曲线receiver-operating-characteristic-curve1">ROC（受试者特征曲线,Receiver Operating Characteristic curve）</a></li>
+          </ul>
+        </li>
+        <li><a href="#翻译领域">翻译领域</a>
+          <ul>
+            <li><a href="#bleu">BLEU</a></li>
+            <li><a href="#pplperplexity">PPL（Perplexity）</a></li>
+            <li><a href="#知识图谱领域">知识图谱领域</a></li>
+            <li><a href="#hitxx与mrmean-rank">hit@XX与MR（mean rank）</a></li>
+            <li><a href="#filtered-hitxx与filtered-mr">filtered hit@XX与filtered MR</a></li>
+            <li><a href="#mrr">MRR</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="基础模型">基础模型</h2>
+<p>混淆矩阵：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="fund_word.png"
+        data-srcset="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/fund_word.png, fund_word.png 1.5x, /%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/fund_word.png 2x"
+        data-sizes="auto"
+        alt="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/fund_word.png"
+        title="混淆矩阵" /></p>
+<p>TP：真阳性，TN：真阴性，FP：伪阳性，FN：伪阴性</p>
+<h3 id="召回率查全率">召回率/查全率</h3>
+<p>sensitivity, recall, hit rate, or true positive rate (TPR)
+$$
+recall =\frac{TP}{P}= \frac{TP}{TP+FN}
+$$</p>
+<h3 id="精度">精度</h3>
+<p>precision or positive predictive value (PPV)
+$$
+precision=\frac{TP}{TP+FP}
+$$</p>
+<h3 id="精度与召回率结合">精度与召回率结合</h3>
+<h4 id="f1-score">F1-score</h4>
+<p>精度和召回率的调和平均数：
+$$
+F_1 = 2\times \frac{precision\times recall}{precision+recall}=\frac { 2 T P } { 2 T P + F P + F N }
+$$</p>
+<h4 id="roc受试者特征曲线receiver-operating-characteristic-curve1">ROC（受试者特征曲线,Receiver Operating Characteristic curve）<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h4>
+<p>X轴为伪阳性率（<strong>false positive rate</strong>，错误命中率，假警报率 (false alarm rate)）:$FPR=\frac{FP}{N}=\frac{FP}{FP+TN}$，Y轴为真阳性率（<strong>true positive rate</strong>，又称命中率 (hit rate)、敏感度(sensitivity)）：$TPR=\frac{TP}{P}=\frac{TP}{TP+FN}$。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="ROC.png"
+        data-srcset="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/ROC.png, ROC.png 1.5x, /%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/ROC.png 2x"
+        data-sizes="auto"
+        alt="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/ROC.png"
+        title="ROC" /></p>
+<p><strong>完美的预测</strong>是一个在左上角的点，在ROC空间座标 (0,1)点，X=0 代表着没有伪阳性，Y=1 代表著没有伪阴性（所有的阳性都是真阳性）</p>
+<ul>
+<li>点与随机猜测线的距离，是预测力的指标：<strong>离左上角越近的点预测（诊断）准确率越高</strong>。离右下角越近的点，预测越不准。</li>
+<li>在<strong>A</strong>、<strong>B</strong>、<strong>C</strong>三者当中，最好的结果是<strong>A</strong>方法。</li>
+<li><strong>B</strong>方法的结果位于随机猜测线（对角线）上，在例子中我们可以看到<strong>B</strong>的准确度（ACC，定义见前面表格）是50%。</li>
+<li><strong>C</strong>虽然预测准确度最差，甚至劣于随机分类，也就是低于0.5（低于对角线）。然而，当将<strong>C</strong>以 (0.5, 0.5) 为中点作一个镜像后，<strong>C'<strong>的结果甚至要比</strong>A</strong>还要好。这个作镜像的方法，简单说，不管<strong>C</strong>（或任何ROC点低于对角线的情况）预测了什么，就做相反的结论。</li>
+</ul>
+<p><strong>AUC</strong>：ROC曲线下方的面积（英语：Area under the Curve of ROC (AUC ROC)），**AUC值越大的分类器，正确率越高。**从AUC判断分类器（预测模型）优劣的标准：</p>
+<ul>
+<li>AUC = 1，是完美分类器，采用这个预测模型时，存在至少一个阈值能得出完美预测。绝大多数预测的场合，不存在完美分类器。</li>
+<li>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</li>
+<li>AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</li>
+<li>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</li>
+</ul>
+<h3 id="翻译领域">翻译领域</h3>
+<h4 id="bleu">BLEU</h4>
+<p>bilingual evaluation understudy是IBM在2002提出的<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，用于翻译任务的评价。BLEU算法的思想就是机器翻译的译文越接近人工翻译的结果，它的翻译质量就越高。</p>
+<p>首先根据n-gram划分一个短语包含单词的数量，如1-gram（unigram）就是将语料划分成1个单词的短语。然后统计这些短语出现在参考译文中的个数，最后除以划分总数，得到BLEU-1分数。Unigram的准确率可以用于衡量单词翻译的准确性，更高阶的n-gram 的准确率可以用来衡量句子的流畅性。</p>
+<p>计算方式如下<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>：
+$$
+bleu_n= \frac{\sum_{c\in candidates}\sum_{n_gram\in c}Count_{clip}(n_gram)} {\sum_{ c^\prime \in candidates} \sum_{n_gram^\prime\in c^\prime}Count(n_gram^\prime)}
+$$
+candidate：神经网络生成的句子</p>
+<p>reference：给定的标准译文</p>
+<p>$Count_{clip}(n_gram)$：某一个n−gram在reference中的个数</p>
+<p>$Count(n_gram')$：n−gram′在candidate中的个数</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>易于计算且快速</li>
+<li>使用普遍</li>
+</ul>
+<p><strong>缺点<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>：</strong></p>
+<ul>
+<li>它不考虑意义:有些同义词没有考虑替代</li>
+<li>它不直接考虑句子结构：很多语法结构的错误被忽略</li>
+<li>它不能很好地处理形态丰富的语言：</li>
+<li>它与人类的判断并不相符</li>
+</ul>
+<h4 id="pplperplexity">PPL（Perplexity）</h4>
+<p>$$
+P P ( S ) = P ( w _ { 1 } w _ { 2 } \cdots w_N ) ^ { - \frac { 1 } { N } } = \sqrt [ N ] { \frac { 1 } { P ( w _ { 1 } w _ { 2 } \cdots w _ { N }) } }\
+= \sqrt [ N ] { \prod _ { i = 1 } ^ { N } \frac { 1 } { p ( w _ { i } | w _ { 1 } w _ { 2 } \cdot w _ { i -1} ) } }
+$$</p>
+<p>S代表sentence，N是句子长度，p($w_i$)是第i个词的概率。</p>
+<p>特点<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>：</p>
+<ul>
+<li>训练数据集越大，PPL会下降得更低，1billion dataset和10万dataset训练效果是很不一样的；</li>
+<li>数据中的标点会对模型的PPL产生很大影响，一个句号能让PPL波动几十，标点的预测总是不稳定；</li>
+<li>预测语句中的“的，了”等词也对PPL有很大影响，可能“我借你的书”比“我借你书”的指标值小几十，但从语义上分析有没有这些停用词并不能完全代表句子生成的好坏。</li>
+</ul>
+<h4 id="知识图谱领域">知识图谱领域</h4>
+<h4 id="hitxx与mrmean-rank">hit@XX与MR（mean rank）</h4>
+<p>常见于transE等trans系列用于知识图谱推理预测的论文中。</p>
+<p>假设整个知识库中一共有n个实体，那么评价过程如下<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>：</p>
+<ul>
+<li>将一个正确的三元组a中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组。</li>
+<li>分别对上述n个三元组计算其能量值，在transE中，就是计算h+r-t的值。这样可以得到n个能量值，分别对应上述n个三元组。</li>
+<li>对上述n个能量值进行升序排序。</li>
+<li>记录三元组a的能量值排序后的序号。</li>
+<li>对所有的正确的三元组重复上述过程。</li>
+<li>每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Mean Rank。</li>
+<li>计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Hits@10。</li>
+</ul>
+<p>上述就是评价的过程，共有两个指标：Mean Rank和Hits@10。其中Mean Rank越小越好，Hits@10越大越好。</p>
+<h4 id="filtered-hitxx与filtered-mr">filtered hit@XX与filtered MR</h4>
+<p>但是上述过程存在一个不合理的地方：在将一个正确的三元组a的头或者尾实体替换成其它实体之后得到的这个三元组也有可能是正确的，在计算每个三元组的能量并排序之后，这类正确的三元组的能量有可能排在三元组a的前面。但是上面所说的基本评价过程并没有考虑这点。因此我们把上述基本评价过程得到的结果称为Raw Mean Rank和Raw Hits@10，把改进方法得到的结果称为Filtered Mean Rank和Filtered Hits@10。</p>
+<p>为了更好的评价embedding的质量，我们对上述方法进行改进。</p>
+<ul>
+<li>将一个正确的三元组a中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组。</li>
+<li>分别对上述n个三元组计算其能量值，在transE中，就是计算h+r-t的值。这样可以得到n个能量值，分别对应上述n个三元组。</li>
+<li>对上述n个能量值进行升序排序。</li>
+<li>记录三元组a的能量值排序后的序号k。</li>
+<li>如果前k-1个能量对应的三元组中有m个三元组也是正确的，那么三元组a的序号改为k-m。</li>
+<li>对所有的正确的三元组重复上述过程。</li>
+</ul>
+<p>每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Filtered Mean Rank。</p>
+<p>计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Filtered Hits@10。</p>
+<h4 id="mrr">MRR</h4>
+<p>MRR（平均倒数排序，Mean reciprocal rank<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>）是一个国际上通用的对搜索算法进行评价的机制，即第一个结果匹配，分数为1，第二个匹配分数为0.5，第n个匹配分数为1/n，如果没有匹配的句子分数为0。最终的分数为所有得分之和。
+$$
+{\text{MRR}}={\frac  {1}{|Q|}}\sum <em>{{i=1}}^{{|Q|}}{\frac  {1}{{\text{rank}}</em>{i}}}.!
+$$
+wiki上一个MRR的例子：</p>
+<p>假设我们有以下三个示例查询，用于尝试将英语单词翻译成复数形式的系统。在每种情况下，系统都会做出三个猜测，第一个是它认为最有可能正确的猜测：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="MRR_example.png"
+        data-srcset="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/MRR_example.png, MRR_example.png 1.5x, /%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/MRR_example.png 2x"
+        data-sizes="auto"
+        alt="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/MRR_example.png"
+        title="MRR的一个例子" /></p>
+<p>给定这三个样本，我们可以将平均倒数排名计算为 (1/3 + 1/2 + 1)/3 = 11/18。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://zh.wikipedia.org/zh-hans/ROC%e6%9b%b2%e7%ba%bf?oldformat=true" target="_blank" rel="noopener noreffer">ROC曲线 - 维基百科，自由的百科全书 (wikipedia.org)</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Papineni K, Roukos S, Ward T, et al. Bleu: a method for automatic evaluation of machine translation[C]//Proceedings of the 40th annual meeting of the Association for Computational Linguistics. 2002: 311-318.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://zhuanlan.zhihu.com/p/223048748" target="_blank" rel="noopener noreffer">BLEU详解 - 知乎 (zhihu.com)</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://towardsdatascience.com/evaluating-text-output-in-nlp-bleu-at-your-own-risk-e8609665a213" target="_blank" rel="noopener noreffer">Evaluating Text Output in NLP: BLEU at your own risk | by Rachael Tatman | Towards Data Science</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p><a href="https://blog.csdn.net/index20001/article/details/78884646" target="_blank" rel="noopener noreffer">语言模型评价指标Perplexity_不眠旅行-CSDN博客_语言模型ppl</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p>[transE评价方法 - Sunder (xiangrongzeng.github.io)](<a href="https://xiangrongzeng.github.io/knowledge" target="_blank" rel="noopener noreffer">https://xiangrongzeng.github.io/knowledge</a> graph/transE-evaluation.html)&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p><a href="https://www.wikiwand.com/en/Mean_reciprocal_rank" target="_blank" rel="noopener noreffer">Mean reciprocal rank - Wikiwand</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 0001-01-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" data-title=""><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" data-title=""><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/tgat/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["tabuless"],"clientID":"b7d8ed424e09262a8719","clientSecret":"5624a7e968dac00542e9b709139cf8ab77fa4602","id":"0001-01-01T00:00:00Z","owner":"tabuless","repo":"github_blog_gitalk_repo","title":""}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"$$","right":"$$"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
