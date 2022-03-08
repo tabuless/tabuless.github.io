@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>CyGNet - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="CyGNet" />
+<meta property="og:description" content="CyGNet：从历史数据中进行预测 Zhu等人提出了CyGNet（时序复制生成网络，Temporal Copy-Generation Network），作者认为许多事实常常会" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-08T09:58:13+08:00" />
+<meta property="article:modified_time" content="2022-03-08T10:59:19+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="CyGNet"/>
+<meta name="twitter:description" content="CyGNet：从历史数据中进行预测 Zhu等人提出了CyGNet（时序复制生成网络，Temporal Copy-Generation Network），作者认为许多事实常常会"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" /><link rel="prev" href="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CyGNet",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "时序图谱, 论文阅读","wordcount":  3261 ,
+        "url": "https:\/\/tabuless.github.io\/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks\/","datePublished": "2022-03-08T09:58:13+08:00","dateModified": "2022-03-08T10:59:19+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">CyGNet</h1><h2 class="single-subtitle">Learning from History Modeling Temporal Knowledge Graphs with Sequential Copy-Generation Networks</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a>&nbsp;<a href="/categories/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>时序图谱</a>&nbsp;<a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw"></i>论文阅读</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3261 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#复制模式">复制模式</a></li>
+    <li><a href="#生成模式">生成模式</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="cygnet从历史数据中进行预测">CyGNet：从历史数据中进行预测</h1>
+<p>Zhu等人提出了CyGNet（时序复制生成网络，Temporal <strong>C</strong>op<strong>y</strong>-<strong>G</strong>eneration <strong>Net</strong>work），作者认为许多事实常常会随着时间展现出重复，例如金融危机或外交活动等。这样的观察发现暗示我们模型有潜力去学习更多的在历史中出现的已知知识。为了这个目的，作者提出了一个新的时序提出了新的时序知识图谱的表征学习模型CyGNet。该模型基于一个新颖的时间感知副本生成机制，它不仅可以根据全部的实体词库预测事件，还能够识别重复的事实并且相应地预测与过去已知事件相关的未来事实。作者在5个基准数据集上对提出的模型进行了评估，实验证明了CyGNet的有效性。</p>
+<p>CyGNet由两种推断模式组成，即<strong>复制模式</strong>和<strong>生成模式</strong>。图中用2018年NBA冠军的示例预测说明了CyGNet的两种推断模式。因此，2018年之前的所有18名NBA冠军团队都被收集为历史实体词汇，个实体组共包含有30个NBA球队。为了完成查询（NBA，冠军，？，2018），CyGNet利用复制模式来预测来自已知实体词汇表的实体概率，并采用生成模式来推断来自整个实体词汇表的实体概率。然后，将两个概率分布组合为最终预测。一个CyGNet的示例流程如图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="flow.png"
+        data-srcset="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/flow.png, flow.png 1.5x, /learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/flow.png 2x"
+        data-sizes="auto"
+        alt="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/flow.png"
+        title="流程图" /></p>
+<p>时序知识图谱在传统的知识图谱中包含时间信息。在时序知识图谱中，每个事实在时间$t \in T$确定了对于主实体$s\in E$和客实体$o \in E$之间的关系$p \in R$，其中$E,R$表示相应的实体和关系的词典中，$T$表示时间戳的集合。$s,p,o,t$表示主实体，谓词p，客实体o，以及时间t是一个时序事实。$G_t$是时序知识图谱在t时刻的快照，$g=(s,p,o,t)$表示一个$G_t$的四元组（事实）。一个时序知识图谱TKG建立在一组事实四元组之上，这些四元组根据它们的时间戳按顺序递增排列。即：$G={G_1,G_2,&hellip;,G_T}$,其中相同的冗余四元组被删除。对每个主语实体-谓语对在时间$t_k$（即$(s,p,t_k)$），定义一个分隔的子集$E$（被称为$(s,p,t_k)$的历史词汇），记作$H_{t_k}^{(s,p)}$，其中包含在$t_k$前的已知的沿着一系列快照$G_{(t_1,t_{k-1})}={G_1,G_2,&hellip;G_{k-1}}$中的主实体$s$，谓词$p$，被当做事实中的客实体。历史词汇$H_{t_k}^{(s,p)}$是一个N维的多热向量指标，N是E的基，在历史词汇中的实体被记为1其余的记为0。对一个缺失的时刻时间目标是:给定$(s,p,?,t)$推测出缺失的客实体，或者$(?,p,o,t)$推测出主体，或者给定的主实体和客实体的$(s,?,o,t)$推测出谓词。在不丧失一般性的情况下，<strong>我们将我们的模型描述为预测时间事实中缺失的客实体，尽管该模型可以很容易地扩展到预测其他元素，包括主实体和谓词。</strong></p>
+<p>模型结合了两种推断模式，即复制模式和生成模式，其中前者寻求从一个特定历史词汇中选择实体，在后面预测整个实体词汇表中的实体，在历史中形成重复的事实。当预测一个四元组$(s_1,p_3,?,T+1)$如图所示，复制模式应推断在主实体为$s_1$，谓词为$p_3$，沿着事实构成的快照序列$G_{(t_1,t_T)}$中，被作为客实体的历史词汇表的${s_3,s_4,s_5,&hellip;s_m}$中实体的概率。另一方面，生成模式估计整个实体词汇表中每个实体的概率以应答查询。然后，CyGNet将复制模式和生成模式的概率预测结合起来，输出最终预测，其整体结构如图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="structure.png"
+        data-srcset="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/structure.png, structure.png 1.5x, /learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/structure.png 2x"
+        data-sizes="auto"
+        alt="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/structure.png"
+        title="结构" /></p>
+<p>该研究首先处理训练集，以获得训练快照中每个时刻t上每个主语实体和谓词组合$(s,p,t)$的历史词汇，在每个快照上按顺序训练模型，类似于递归的思想，通过增量维护所有以前快照的历史词汇表来训练。当在验证集和测试集中评估CyGNet的表现时，将使用整个训练集中的最大历史词汇表，上述训练过程如图所示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="train.png"
+        data-srcset="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/train.png, train.png 1.5x, /learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/train.png 2x"
+        data-sizes="auto"
+        alt="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/train.png"
+        title="训练" /></p>
+<h2 id="复制模式">复制模式</h2>
+<p>复制模式旨在识别重复发生的事实，并通过复制历史上已知的事实来预测未来的事实。<strong>如果查询$(s,p,?,t_k)$有历史词汇表$\textbf{H}_{t_k}^{(s,p)}$，CyGNet将增加在历史词汇表中选择的对象实体的估计概率</strong>。具体地说，复制模式首先使用MLP生成索引向量$v_q$：</p>
+<div>
+$$
+        t_k=t_{k-1}+t_u\\
+    v_q=tanh(\textbf{W}_c[s,p,t_k]+b_c)
+$$
+</div>
+<p>其中$\textbf{W}_c\in\mathbb{R}^{3d\times N}$，$b_c\in\mathbb{R}^N$，是可训练的参数。$t_u$是一个时间单元，$t_1=t_u$。查询向量$v_q$是一个N维的向量，N是整个实体词汇表$E$的基的基数。</p>
+<p>为了最大限度地降低某些实体在历史上未形成s和p已知事实的可能性（即那些对复制模式<em>不感兴趣</em>的实体），首先对${\textbf{H}}_{t_k}^{(s,p)}$进行修改：$\dot{\textbf{H}}_{t_k}^{(s,p)}$改变了$\textbf{H}_{t_k}^{(s,p)}$中不感兴趣的实体的索引为一个小的负数。因此，通过增加$v_q$，修改后的$\dot{\textbf{H}}_{t_k}^{(s,p)}$，CyGNet能通过减少不感兴趣的实体的概率限定候选的空间，然后通过一个softmax函数估计历史词汇表中客实体的概率：</p>
+<div>
+$$
+   c_q=v_q+\dot{\textbf{H}}_{t_k}^{(s,p)}\\
+    \textbf{p}(c)=softmax(\textbf{c}_q)
+$$
+</div>
+<p>其中，$c_q$是N维索引向量，使得与$c_q$中不感兴趣的实体对应的值接近0。$\textbf{p}(c)$是一个向量，其大小等于整个实体词汇表的大小，表示历史词汇表上的预测概率。最后，$\textbf{p}(c)$的最大维度表示要从历史词汇表中复制的对象实体。复制模式的优点是，它能够从比整个实体词汇表更为分隔的候选空间中学习预测。然而，事实也可能在即将发布的快照中新出现。因此，需要一种生成模式来预测这些事实。</p>
+<h2 id="生成模式">生成模式</h2>
+<p>给定相同的上述查询$(s,p,?,t_k)$，生成模式负责通过从整个实体词汇表$E$中选择对象实体来预测事实。生成模式所做的预测是将预测的事实视为一个全新的事实，而不参考历史。与复制模式类似，生成模式还生成索引向量$g_q$，其大小等于候选空间$E$的大小，并且使用softmax函数进行归一化以进行预测：</p>
+<div>$$
+\textbf{g}_q=\textbf{W}_g[\textbf{s,p,t}_k]+b_g\\
+        \textbf{p}(g)=softmax(\textbf{g}_q)
+$$</div>
+其中$\textbf{W}_g\in\mathbb{R}^{3d\times N}$，$b_g\in\mathbb{R}^N$，是可训练的参数。与复制模式中的$ \textbf{p}(c) $类似，$ \textbf{p}(g) $表示整个实体词汇表上的预测概率。$\textbf{p}(g)$中的最大值表示通过生成模式在整个实体词汇表中预测的客实体。生成模式与复制模式互补，具有从头开始（即无历史事实）事实预测的能力。
+<p><strong>训练：</strong></p>
+<p>在给定查询$(s,p,?,t_k)$时预测（客）实体可以被视为多级分类任务，其中每个类对应于一个对象实体。学习目标是在训练期间存在的时序知识图谱快照的所有事实中最小化以下的交叉熵损$L$：</p>
+<div>$$
+L=-\sum_{t\in T}\sum_{i\in E}\sum_{k=1}^Ko_{it}ln\textbf{p}(y_{ik}|s,p,t)
+$$</div>
+$o_{it}$是快照$G_t$中的第i个基本事实的客实体，$\textbf{p}(y_{ik}|s,p,t)$是快照$G_t$中的第i个基本事实的第k个客实体为$o_i$的概率。
+<p><strong>推理：</strong></p>
+<p>在不丧失一般性的情况下，我们将推理过程描述为预测时间事实中缺失的对象，尽管这个过程可以很容易地扩展到预测主实体和关系。为了对查询$(s,p,?,t_k)$进行预测，复制和生成模式都会在其候选空间内给出概率最高的预测对象实体，其中复制模式可以从比整个实体词汇表小得多的候选空间进行预测。为了确保$E$中所有实体的概率总和等于1，引入系数$\alpha$以调整复制模式和生成模式之间的权重。CyGNet通过将复制模式和生成模式给出的每个实体的概率相加，将复制模式和生成模式的概率预测结合起来。最终预测$o_t$将是接收到最高组合概率的实体，定义如下：</p>
+<div>$$
+p(o|s,p,t)=\alpha*\textbf{p}(c)+(1-\alpha)*p(g),\\
+o_t=argmax_{o\in E}\textbf{p}(o|s,p,t)
+$$</div>
+$\alpha \in [0,1]$，$\textbf{p}(o|s,p,t)$为整个实体词汇量向量，其中包含了所有实体出现的概率。
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-03-08&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/ed5e3d68ae8aaee612ac055997bd6a09f3c23de4" target="_blank" title="commit by tabuless(2564801119@qq.com) ed5e3d68ae8aaee612ac055997bd6a09f3c23de4: CyGNet">
+                                    <i class="fas fa-hashtag fa-fw"></i>ed5e3d6</a></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" data-title="CyGNet" data-hashtags="时序图谱,论文阅读"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" data-hashtag="时序图谱"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" data-title="CyGNet"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/">时序图谱</a>,&nbsp;<a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" class="prev" rel="prev" title="知识图谱常用评价指标"><i class="fas fa-angle-left fa-fw"></i>知识图谱常用评价指标</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["tabuless"],"clientID":"b7d8ed424e09262a8719","clientSecret":"5624a7e968dac00542e9b709139cf8ab77fa4602","id":"2022-03-08T09:58:13+08:00","owner":"tabuless","repo":"github_blog_gitalk_repo","title":"CyGNet"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"$$","right":"$$"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

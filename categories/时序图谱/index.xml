@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>时序图谱 - 分类 - Tabuless</title>
+        <link>https://tabuless.github.io/categories/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/</link>
+        <description>时序图谱 - 分类 - Tabuless</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 08 Mar 2022 09:58:13 &#43;0800</lastBuildDate><atom:link href="https://tabuless.github.io/categories/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/" rel="self" type="application/rss+xml" /><item>
+    <title>CyGNet</title>
+    <link>https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/</link>
+    <pubDate>Tue, 08 Mar 2022 09:58:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/</guid>
+    <description><![CDATA[CyGNet：从历史数据中进行预测 Zhu等人提出了CyGNet（时序复制生成网络，Temporal Copy-Generation Network），作者认为许多事实常常会]]></description>
+</item></channel>
+</rss>
