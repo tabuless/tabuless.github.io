@@ -23,10 +23,10 @@ attention机制的优点：
 GAT每层成为graph attention layer：
 
 单层输入、输出为节点的特征（feature）：
-$$
+&lt;div&gt;$$
 输入：\mathbf{h} = \{ \overrightarrow{h_1}, \overrightarrow{h_2}, \dots, \overrightarrow{h_N} \}, \overrightarrow{h_i} \in \mathbb{R}^F\\
 输出：\mathbf{h&#39;} = \{ \overrightarrow{h&#39;_1}, \overrightarrow{h&#39;_2}, \dots, \overrightarrow{h&#39;_N} \},\overrightarrow{h&#39;_i} \in \mathbb{R}^{F&#39;}
-$$
+$$&lt;/div&gt;
 
 | *F/F&#39;* | *每个节点的输入/输出特征* |
 | ------ | ------------------------- |
@@ -36,9 +36,9 @@ $$
 #### attention的计算
 
 首先计算attention系数：
-$$
+&lt;div&gt;$$
 e_{ij} = a(\mathbf{W} \overrightarrow{h_i}, \mathbf{W} \overrightarrow{h_j})，j\in \mathcal{N}_i
-$$
+$$&lt;/div&gt;
 
 | 符号            | 含义                                                         |
 | --------------- | ------------------------------------------------------------ |
@@ -49,34 +49,34 @@ $$
 &gt; $\mathcal{N}_i$是attention引入图的一个核心概念，因为不相邻的节点没有直接联系
 
 论文中论文中使用$\overrightarrow{a}\in \mathbb{R}^{2F&#39;}$，并且应用`LeakyReLU`：
-$$
+&lt;div&gt;$$
 e_{ij} = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W} \overrightarrow{h_i}|| \mathbf{W} \overrightarrow{h_j} \Big] \Big)
-$$
+$$&lt;/div&gt;
 其中`||`是concat操作。
 
 为了让attention 系数在不同节点之间有可比较性，进行一次softmax：
-$$
+&lt;div&gt;$$
 \alpha_{ij} = \text{softmax}_j(e_{ij}) = \frac{\exp(e_{ij})}{\sum_{j \in \mathcal{N}_i} \exp(e_{ij})}
-$$
+$$&lt;/div&gt;
 上述的$\alpha_{ij}$指的就是节点i与节点j之间的attention。
 
 #### 加入激活函数
 
 对于多头的注意力机制，假如有$K$个头，则第$k$头的输出$\overrightarrow{h&#39;^k_i}$为：
-$$
+&lt;div&gt;$$
 \overrightarrow{h&#39;^k_i} =\sigma \Big (\sum_{j \in \mathcal{N}_i} \alpha^k_{ij} \mathbf{W}^k \overrightarrow{h_j} \Big )
-$$
+$$&lt;/div&gt;
 最后通过一个concat操作得到最终的多头attention的单层输出：
-$$
+&lt;div&gt;$$
 \overrightarrow{h&#39;_i} = \Bigg\Vert_{k=1}^{K} \overrightarrow{h&#39;^k_i}
-$$
+$$&lt;/div&gt;
 
 ### GAT最后一层
 
 如果在最后一层的话multi-head的concat操作不再敏感，一般不会concat，而是对每个head取平均，把非线性层（softmax或者sigmoid）放在最后进行操作：
-$$
+&lt;div&gt;$$
 \overrightarrow{h_i&#39;} =\sigma \Big (\frac{1}{K}\sum_{k=1}^{K}\sum_{j \in \mathcal{N}_i} \alpha^k_{ij} \mathbf{W}^k \overrightarrow{h_j} \Big )
-$$
+$$&lt;/div&gt;
 
 ### GAT和GCN的比较
 
@@ -104,20 +104,23 @@ GAT中，对于任意的节点（query），attention函数是关于邻接节点
 **动态注意力的定义**：已知一个key的集合$\mathbb{K}=\{k_1,k_2,...,k_n\}\subset \mathbb{R}^d$与query集合$\mathbb{Q}=\{q_1,q_2,...,q_m\}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对任何的映射$\varphi : [ m ] \rightarrow [ n ]$存在$f\in\mathcal{F}$使得对任何的query $i\in [m]$与key $j_{\neq \varphi(i)}\in [n]$有$f ( q_ { i } , k _{\varphi (i)} ) \geq f ( q_ { i } , k _ { j } )$，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的**动态注意力的函数族**。
 
 GAT是静态注意力的证明比较简单，大致思路是将计算$e_{ij}$的$\overrightarrow{a}$进行分块：$\overrightarrow{a}=[a_1||a_2]$，则有：
-$$
+&lt;div&gt;$$
 e_{ij} = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W} \overrightarrow{h_i}|| \mathbf{W} \overrightarrow{h_j} \Big] \Big)\\
 =\text{LeakyReLU} \Big( [a_1||a_2]^\top \Big[\mathbf{W} \overrightarrow{h_i}|| \mathbf{W} \overrightarrow{h_j} \Big] \Big)\\
 =\text{LeakyReLU} \Big( [a_1^\top \mathbf{W} h_i&#43; a_2^\top \mathbf{W} h_j \Big)
-$$
+$$&lt;/div&gt;
 证明得到的结论是：$s_j=a_2^\top \mathbf{W} h_j$对于任何的query节点（$h_i$）来说，最大值都是不变的，$s_i=a_1^\top \mathbf{W} h_i$这一项仅仅表征了图像的陡峭程度（如图figure 1a）。
 
 #### GATv2的动态注意力
 
 GAT之所以会是静态的原因在于$W和a$是连乘的，会坍缩为一个先行层，进行如下的改进：
 
-| GAT   | $e(h_i,h_j) = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W} \overrightarrow{h_i}||\mathbf{W} \overrightarrow{h_j} \Big] \Big)$ |
+| 模型   | 公式 |
 | ----- | ------------------------------------------------------------ |
-| GATv2 | $e(h_i,h_j) = \overrightarrow{\mathbf{a}}^\top\text{LeakyReLU} \Big(\mathbf{W}\Big[ \overrightarrow{h_i}||\overrightarrow{h_j} \Big] \Big)$ |
+| GAT   | $e(h_i,h_j) = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W} \overrightarrow{h_i}\|\|\mathbf{W} \overrightarrow{h_j} \Big] \Big)$ |
+| GATv2 | $e(h_i,h_j) = \overrightarrow{\mathbf{a}}^\top\text{LeakyReLU} \Big(\mathbf{W}\Big[ \overrightarrow{h_i}\|\|\overrightarrow{h_j} \Big] \Big)$ |
+
+
 
 #### 如何选择GAT与GATv2
 
