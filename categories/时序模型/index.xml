@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>时序模型 - 分类 - Tabuless</title>
+        <link>https://tabuless.github.io/categories/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B/</link>
+        <description>时序模型 - 分类 - Tabuless</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 08 Mar 2022 09:17:30 &#43;0800</lastBuildDate><atom:link href="https://tabuless.github.io/categories/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>TGAT</title>
+    <link>https://tabuless.github.io/tgat/</link>
+    <pubDate>Tue, 08 Mar 2022 09:17:30 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://tabuless.github.io/tgat/</guid>
+    <description><![CDATA[时序图的挑战： 节点嵌入不应该只投影拓扑结构和节点的特点，而应该考虑连续的时间函数。 图结构随着时间演变，给邻域的汇聚带来限制 节点特征和拓扑结构]]></description>
+</item></channel>
+</rss>

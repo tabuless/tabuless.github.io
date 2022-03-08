@@ -28,10 +28,11 @@ GAT每层成为graph attention layer：
 输出：\mathbf{h&#39;} = \{ \overrightarrow{h&#39;_1}, \overrightarrow{h&#39;_2}, \dots, \overrightarrow{h&#39;_N} \},\overrightarrow{h&#39;_i} \in \mathbb{R}^{F&#39;}
 $$&lt;/div&gt;
 
-| *F/F&#39;* | *每个节点的输入/输出特征* |
+| 符号 | 含义 |
 | ------ | ------------------------- |
-| *h/h&#39;* | *输入/输出节点的特征集合* |
-| *N*    | *节点个数*                |
+| F/F&#39; | 每个节点的输入/输出特征 |
+| h/h&#39; | 输入/输出节点的特征集合 |
+| N    | 节点个数                |
 
 #### attention的计算
 
