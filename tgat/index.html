@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tabuless.github.io/tgat/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-08T09:17:30+08:00" />
-<meta property="article:modified_time" content="2022-03-08T10:59:19+08:00" />
+<meta property="article:modified_time" content="2022-03-10T09:37:54+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/tabuless.github.io\/tgat\/"
-        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "图神经网络","wordcount":  2694 ,
-        "url": "https:\/\/tabuless.github.io\/tgat\/","datePublished": "2022-03-08T09:17:30+08:00","dateModified": "2022-03-08T10:59:19+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "图神经网络","wordcount":  2708 ,
+        "url": "https:\/\/tabuless.github.io\/tgat\/","datePublished": "2022-03-08T09:17:30+08:00","dateModified": "2022-03-10T09:37:54+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">TGAT</h1><h2 class="single-subtitle">temporal graph attention network</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a>&nbsp;<a href="/categories/%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B/"><i class="far fa-folder fa-fw"></i>基本模型</a>&nbsp;<a href="/categories/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B/"><i class="far fa-folder fa-fw"></i>时序模型</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2694 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2708 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -140,7 +140,7 @@
 <div>$$
 \mathcal{K} ( t_{ 1 } , t_ { 2 } ) = \mathbb{E} _{ w } [ \cos ( w ( t _ { 1 } - t _ { 2 } ) ) ] = \mathbb{E}_ { w } [ \cos ( w t _ { 1 } ) \cos ( w t _ { 2 } ) + \sin ( w t _ { 1 } )\sin ( w t _ { 2 } )]
 $$</div>
-<p>其中$\mathbb{E}<em>w(\cdot)=\int</em> { \mathbb{R} }\cdot \ p ( w ) dw$，$p(\omega)$为概率测度，进而根据蒙特卡洛方法得到近似：</p>
+<p>其中$\mathbb{E}_w(\cdot)=\int_{ \mathbb{R} }\cdot \ p ( w ) dw$，$p(\omega)$为概率测度，进而根据蒙特卡洛方法得到近似：</p>
 <div>$$
 \mathcal{K} ( t _{ 1 } , t_ { 2 } ) \approx \frac { 1 } { d } \sum _{ i = 1 } ^ { d } \big [\cos ( w _ { i } t _ { 1 } ) \cos ( w _ { i } t _ { 2 } ) + \sin ( w _ { i } t _ { 1 } ) \sin ( w _ { i } t _ { 2 } )\big ]
 $$</div>
@@ -187,7 +187,7 @@ $$</div>
 q ( t ) = [ Z ( t ) ] _{ 0 } W_ { Q } , K ( t ) = [ Z ( t ) ] _{ 1 : N } W_ { K } , V ( t ) = [ Z ( t ) ] _{ 1 : N }W_V
 $$</div>
 其中$W_ { Q } , W _{ K } , W_ { V } \in \mathbb{R} ^ { ( d + d _{ T } ) \times d_ { h } }$。
-<p>根据注意力机制，attention值为$\alpha <em>i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) =\operatorname { exp } ( q ^ { T } K</em> { i } ) / ( \sum <em>{ q } \operatorname {exp} ( q ^ { T } K</em> { q } ) )$，表示了节点$v_0$的邻接节点$v_i$的attention，则每个节点$v_i\in \mathcal{N}(v_0;t)$的隐藏表示为$\alpha _i V_i$即印象层的表示为：</p>
+<p>根据注意力机制，attention值为$\alpha_i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) =\operatorname { exp } ( q ^ { T } K_{ i } ) / ( \sum_{ q } \operatorname {exp} ( q ^ { T } K_{ q } ) )$，表示了节点$v_0$的邻接节点$v_i$的attention，则每个节点$v_i\in \mathcal{N}(v_0;t)$的隐藏表示为$\alpha _i V_i$即印象层的表示为：</p>
 <div>$$
 h(t) = \alpha_i V_i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) V_i=\operatorname {attn} ( q ( t ) , K ( t ) , V ( t ) )\in \mathbb{R}^{d_n}
 $$</div>
@@ -243,8 +243,8 @@ $$</div>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-08&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/ed5e3d68ae8aaee612ac055997bd6a09f3c23de4" target="_blank" title="commit by tabuless(2564801119@qq.com) ed5e3d68ae8aaee612ac055997bd6a09f3c23de4: CyGNet">
-                                    <i class="fas fa-hashtag fa-fw"></i>ed5e3d6</a></span>
+                <span>更新于 2022-03-10&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/dbac3f0e5be77669bbfeb989f81fce0bf5b3b3ab" target="_blank" title="commit by tabuless(2564801119@qq.com) dbac3f0e5be77669bbfeb989f81fce0bf5b3b3ab: 修改TGAT">
+                                    <i class="fas fa-hashtag fa-fw"></i>dbac3f0</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>

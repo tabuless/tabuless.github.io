@@ -24,7 +24,7 @@
 \mathcal{K} ( t_{ 1 } , t_ { 2 } ) = \mathbb{E} _{ w } [ \cos ( w ( t _ { 1 } - t _ { 2 } ) ) ] = \mathbb{E}_ { w } [ \cos ( w t _ { 1 } ) \cos ( w t _ { 2 } ) &#43; \sin ( w t _ { 1 } )\sin ( w t _ { 2 } )]
 $$&lt;/div&gt;
 
-其中$\mathbb{E}_w(\cdot)=\int_ { \mathbb{R} }\cdot \ p ( w ) dw$，$p(\omega)$为概率测度，进而根据蒙特卡洛方法得到近似：
+其中$\mathbb{E}\_w(\cdot)=\int_{ \mathbb{R} }\cdot \ p ( w ) dw$，$p(\omega)$为概率测度，进而根据蒙特卡洛方法得到近似：
 &lt;div&gt;$$
 \mathcal{K} ( t _{ 1 } , t_ { 2 } ) \approx \frac { 1 } { d } \sum _{ i = 1 } ^ { d } \big [\cos ( w _ { i } t _ { 1 } ) \cos ( w _ { i } t _ { 2 } ) &#43; \sin ( w _ { i } t _ { 1 } ) \sin ( w _ { i } t _ { 2 } )\big ]
 $$&lt;/div&gt;
@@ -62,7 +62,7 @@ q ( t ) = [ Z ( t ) ] _{ 0 } W_ { Q } , K ( t ) = [ Z ( t ) ] _{ 1 : N } W_ { K 
 $$&lt;/div&gt;
 其中$W_ { Q } , W _{ K } , W_ { V } \in \mathbb{R} ^ { ( d &#43; d _{ T } ) \times d_ { h } }$。
 
-根据注意力机制，attention值为$\alpha _i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) =\operatorname { exp } ( q ^ { T } K_ { i } ) / ( \sum _{ q } \operatorname {exp} ( q ^ { T } K_ { q } ) )$，表示了节点$v_0$的邻接节点$v_i$的attention，则每个节点$v_i\in \mathcal{N}(v_0;t)$的隐藏表示为$\alpha _i V_i$即印象层的表示为：
+根据注意力机制，attention值为$\alpha_i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) =\operatorname { exp } ( q ^ { T } K_{ i } ) / ( \sum_{ q } \operatorname {exp} ( q ^ { T } K\_{ q } ) )$，表示了节点$v_0$的邻接节点$v_i$的attention，则每个节点$v_i\in \mathcal{N}(v_0;t)$的隐藏表示为$\alpha _i V_i$即印象层的表示为：
 &lt;div&gt;$$
 h(t) = \alpha_i V_i=\operatorname {softmax}( \frac { Q K ^ { T } } { \sqrt { d } } ) V_i=\operatorname {attn} ( q ( t ) , K ( t ) , V ( t ) )\in \mathbb{R}^{d_n}
 $$&lt;/div&gt;
