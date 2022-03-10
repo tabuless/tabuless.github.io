@@ -100,9 +100,9 @@ GAT中，对于任意的节点（query），attention函数是关于邻接节点
 
 ![GATv2-static attention](GATv2.png)
 
-**静态注意力的定义**：已知一个key的集合$\mathbb{K}=\{k_1,k_2,...,k_n\}\subset \mathbb{R}^d$与query集合$\mathbb{Q}=\{q_1,q_2,...,q_m\}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对于$\forall f\in\mathcal{F}$，存在一个“最高分数”的key $j_f\in [n]$，使得对每个query $i\in [m]$与key $j\in [n]$有：$f ( q _{ i } , k_ { j_f } ) \geq f ( q _{ i } , k_ { j } )$恒成立，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的**静态注意力的函数族**。
+**静态注意力的定义**：已知一个key的集合$\mathbb{K}=\{k_1,k_2,...,k_n\}\subset \mathbb{R}^d$与query集合$\mathbb{Q}=\{q_1,q_2,...,q_m\}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对于$\forall f\in\mathcal{F}$，存在一个“最高分数”的key $j_f\in [n]$，使得对每个query $i\in [m]$与key $j\in [n]$有：$f ( q_{ i } , k_{ j_f } ) \geq f ( q_{ i } , k_{ j } )$恒成立，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的**静态注意力的函数族**。
 
-**动态注意力的定义**：已知一个key的集合$\mathbb{K}=\{k_1,k_2,...,k_n\}\subset \mathbb{R}^d$与query集合$\mathbb{Q}=\{q_1,q_2,...,q_m\}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对任何的映射$\varphi : [ m ] \rightarrow [ n ]$存在$f\in\mathcal{F}$使得对任何的query $i\in [m]$与key $j_{\neq \varphi(i)}\in [n]$有$f ( q_ { i } , k _{\varphi (i)} ) \geq f ( q_ { i } , k _ { j } )$，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的**动态注意力的函数族**。
+**动态注意力的定义**：已知一个key的集合$\mathbb{K}=\{k_1,k_2,...,k_n\}\subset \mathbb{R}^d$与query集合$\mathbb{Q}=\{q_1,q_2,...,q_m\}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对任何的映射$\varphi : [ m ] \rightarrow [ n ]$存在$f\in\mathcal{F}$使得对任何的query $i\in [m]$与key $j_{\neq \varphi(i)}\in [n]$有$f ( q_{ i } , k_{\varphi (i)} ) \geq f ( q_{ i } , k_{ j } )$，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的**动态注意力的函数族**。
 
 GAT是静态注意力的证明比较简单，大致思路是将计算$e_{ij}$的$\overrightarrow{a}$进行分块：$\overrightarrow{a}=[a_1||a_2]$，则有：
 &lt;div&gt;$$
@@ -114,7 +114,7 @@ $$&lt;/div&gt;
 
 #### GATv2的动态注意力
 
-GAT之所以会是静态的原因在于$W和a$是连乘的，会坍缩为一个先行层，进行如下的改进：
+GAT之所以会是静态的原因在于$W和a$是连乘的，会坍缩为一个线性层，进行如下的改进：
 
 | 模型   | 公式 |
 | ----- | ------------------------------------------------------------ |

@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tabuless.github.io/gat_gatv2/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-07T22:45:00+08:00" />
-<meta property="article:modified_time" content="2022-03-10T09:37:54+08:00" />
+<meta property="article:modified_time" content="2022-03-10T15:41:32+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/tabuless.github.io\/gat_gatv2\/"
-        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "图神经网络","wordcount":  2721 ,
-        "url": "https:\/\/tabuless.github.io\/gat_gatv2\/","datePublished": "2022-03-07T22:45:00+08:00","dateModified": "2022-03-10T09:37:54+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "图神经网络","wordcount":  2712 ,
+        "url": "https:\/\/tabuless.github.io\/gat_gatv2\/","datePublished": "2022-03-07T22:45:00+08:00","dateModified": "2022-03-10T15:41:32+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -106,7 +106,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">GAT&amp;GATv2</h1><h2 class="single-subtitle">graph attention newtwork</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a>&nbsp;<a href="/categories/%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B/"><i class="far fa-folder fa-fw"></i>基本模型</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2721 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2712 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -263,8 +263,8 @@ $$</div>
         data-sizes="auto"
         alt="/gat_gatv2/GATv2.png"
         title="GATv2-static attention" /></p>
-<p><strong>静态注意力的定义</strong>：已知一个key的集合$\mathbb{K}={k_1,k_2,&hellip;,k_n}\subset \mathbb{R}^d$与query集合$\mathbb{Q}={q_1,q_2,&hellip;,q_m}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对于$\forall f\in\mathcal{F}$，存在一个“最高分数”的key $j_f\in [n]$，使得对每个query $i\in [m]$与key $j\in [n]$有：$f ( q <em>{ i } , k</em> { j_f } ) \geq f ( q <em>{ i } , k</em> { j } )$恒成立，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的<strong>静态注意力的函数族</strong>。</p>
-<p><strong>动态注意力的定义</strong>：已知一个key的集合$\mathbb{K}={k_1,k_2,&hellip;,k_n}\subset \mathbb{R}^d$与query集合$\mathbb{Q}={q_1,q_2,&hellip;,q_m}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对任何的映射$\varphi : [ m ] \rightarrow [ n ]$存在$f\in\mathcal{F}$使得对任何的query $i\in [m]$与key $j_{\neq \varphi(i)}\in [n]$有$f ( q_ { i } , k <em>{\varphi (i)} ) \geq f ( q</em> { i } , k _ { j } )$，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的<strong>动态注意力的函数族</strong>。</p>
+<p><strong>静态注意力的定义</strong>：已知一个key的集合$\mathbb{K}={k_1,k_2,&hellip;,k_n}\subset \mathbb{R}^d$与query集合$\mathbb{Q}={q_1,q_2,&hellip;,q_m}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对于$\forall f\in\mathcal{F}$，存在一个“最高分数”的key $j_f\in [n]$，使得对每个query $i\in [m]$与key $j\in [n]$有：$f ( q_{ i } , k_{ j_f } ) \geq f ( q_{ i } , k_{ j } )$恒成立，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的<strong>静态注意力的函数族</strong>。</p>
+<p><strong>动态注意力的定义</strong>：已知一个key的集合$\mathbb{K}={k_1,k_2,&hellip;,k_n}\subset \mathbb{R}^d$与query集合$\mathbb{Q}={q_1,q_2,&hellip;,q_m}\subset \mathbb{R}^d$，对于一个打分函数族$\mathcal{F}\subseteq (\mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R})$，如果对任何的映射$\varphi : [ m ] \rightarrow [ n ]$存在$f\in\mathcal{F}$使得对任何的query $i\in [m]$与key $j_{\neq \varphi(i)}\in [n]$有$f ( q_{ i } , k_{\varphi (i)} ) \geq f ( q_{ i } , k_{ j } )$，则称该函数族为$\mathbb{K}$与$\mathbb{Q}$的<strong>动态注意力的函数族</strong>。</p>
 <p>GAT是静态注意力的证明比较简单，大致思路是将计算$e_{ij}$的$\overrightarrow{a}$进行分块：$\overrightarrow{a}=[a_1||a_2]$，则有：</p>
 <div>$$
 e_{ij} = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W} \overrightarrow{h_i}|| \mathbf{W} \overrightarrow{h_j} \Big] \Big)\\
@@ -273,7 +273,7 @@ e_{ij} = \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^\top \Big[\mathbf{W}
 $$</div>
 证明得到的结论是：$s_j=a_2^\top \mathbf{W} h_j$对于任何的query节点（$h_i$）来说，最大值都是不变的，$s_i=a_1^\top \mathbf{W} h_i$这一项仅仅表征了图像的陡峭程度（如图figure 1a）。
 <h4 id="gatv2的动态注意力">GATv2的动态注意力</h4>
-<p>GAT之所以会是静态的原因在于$W和a$是连乘的，会坍缩为一个先行层，进行如下的改进：</p>
+<p>GAT之所以会是静态的原因在于$W和a$是连乘的，会坍缩为一个线性层，进行如下的改进：</p>
 <table>
 <thead>
 <tr>
@@ -310,8 +310,8 @@ $$</div>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-10&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/dbac3f0e5be77669bbfeb989f81fce0bf5b3b3ab" target="_blank" title="commit by tabuless(2564801119@qq.com) dbac3f0e5be77669bbfeb989f81fce0bf5b3b3ab: 修改TGAT">
-                                    <i class="fas fa-hashtag fa-fw"></i>dbac3f0</a></span>
+                <span>更新于 2022-03-10&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/d3a697f2fccdbf1a6920bfeeb3b28b87235a5faa" target="_blank" title="commit by tabuless(2564801119@qq.com) d3a697f2fccdbf1a6920bfeeb3b28b87235a5faa: 更新GATv2">
+                                    <i class="fas fa-hashtag fa-fw"></i>d3a697f</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>
