@@ -11,12 +11,11 @@
 
 {{&lt; mermaid &gt;}}
 graph LR 
-A(transE) --&gt; B(将时间顺序作为限制)
-B --&gt; C(&#34;Jiang et al., 2016[1]&#34;)
-A --&gt; D(每个时间戳作为一个静态子图)
+A(transE) --&gt; D(每个时间戳作为一个静态子图)
 D --&gt; E(&#34;HyTE[2]&#34;)
 A --&gt; F(将时间嵌入关系中)
 F --&gt; G(&#34;TA_transE[4]&#34;)
+F --&gt; H(&#34;Trans-TAE[1]&#34;)
 {{&lt; /mermaid &gt;}}
 
 #### HyTE
@@ -56,36 +55,15 @@ $$
 
 上述的关系也称为带有时序信息的谓词（predicate sequence，$p_{seq}$）。
 
-### 评价指标mean rank 与filtered mean rank
+#### trans-TAE
 
-假设整个知识库中一共有n个实体，那么评价过程如下[^3]：
+该论文将时序作为一个限制，因此可以扩展到所有trans系列。
 
-&#43; 将一个正确的三元组a中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组。
-&#43; 分别对上述n个三元组计算其能量值，在transE中，就是计算h&#43;r-t的值。这样可以得到n个能量值，分别对应上述n个三元组。
-&#43; 对上述n个能量值进行升序排序。
-&#43; 记录三元组a的能量值排序后的序号。
-&#43; 对所有的正确的三元组重复上述过程。
-&#43; 每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Mean Rank。
-&#43; 计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Hits@10。
+思想：对于某个实体的两个关系$r_i$与$r_j$，构建一个时序打分函数：$g(r_{ i } , r_{ j } ) = ||r_{ i }M - r_{ j }||\_{1}$，当这两个关系对按时间顺序排列时，这是一个较低的分数，反之会很高。将该打分函数应用到各个trans系列方法中，以transE为例，要使$f(e_i,r,e_j)=| |e_i&#43;r-e_j| |_{1}$中的正确的三元组比错误的三元组得到更低的值，考虑时序关系，有如下损失函数：
 
-上述就是评价的过程，共有两个指标：Mean Rank和Hits@10。其中Mean Rank越小越好，Hits@10越大越好。
+![trans-TAE](trans-TAE.png)
 
-改进:
-
-但是上述过程存在一个不合理的地方：在将一个正确的三元组a的头或者尾实体替换成其它实体之后得到的这个三元组也有可能是正确的，在计算每个三元组的能量并排序之后，这类正确的三元组的能量有可能排在三元组a的前面。但是上面所说的基本评价过程并没有考虑这点。因此我们把上述基本评价过程得到的结果称为Raw Mean Rank和Raw Hits@10，把改进方法得到的结果称为Filtered Mean Rank和Filtered Hits@10。
-
-为了更好的评价embedding的质量，我们对上述方法进行改进。
-
-&#43; 将一个正确的三元组a中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组。
-&#43; 分别对上述n个三元组计算其能量值，在transE中，就是计算h&#43;r-t的值。这样可以得到n个能量值，分别对应上述n个三元组。
-&#43; 对上述n个能量值进行升序排序。
-&#43; 记录三元组a的能量值排序后的序号k。
-&#43; 如果前k-1个能量对应的三元组中有m个三元组也是正确的，那么三元组a的序号改为k-m。
-&#43; 对所有的正确的三元组重复上述过程。
-
-每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Filtered Mean Rank。
-
-计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Filtered Hits@10。
+其中第一项表示传统的transE的损失函数，第二项为trans-TAE考虑关系的时序性的损失函数，正例为$r_i$的时间小于$r_j$的时间，反例为$r_i$的时间大于$r_j$的时间。
 
 
 [^1]: Tingsong Jiang, Tianyu Liu, Tao Ge, Lei Sha, Sujian Li, Baobao Chang, and Zhifang Sui. 2016. Encoding temporal information for time-aware link prediction.In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, pages 2350–2354. Association for Computational Linguistics. 
