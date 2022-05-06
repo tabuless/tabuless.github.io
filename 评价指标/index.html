@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tabuless.github.io/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-08T09:34:12+08:00" />
-<meta property="article:modified_time" content="2022-03-19T16:49:46+08:00" />
+<meta property="article:modified_time" content="2022-05-07T00:13:13+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/tabuless.github.io\/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87\/"
-        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "评价指标","wordcount":  2970 ,
-        "url": "https:\/\/tabuless.github.io\/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87\/","datePublished": "2022-03-08T09:34:12+08:00","dateModified": "2022-03-19T16:49:46+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "评价指标","wordcount":  3424 ,
+        "url": "https:\/\/tabuless.github.io\/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87\/","datePublished": "2022-03-08T09:34:12+08:00","dateModified": "2022-05-07T00:13:13+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -106,8 +106,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">知识图谱常用评价指标</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2970 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3424 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -130,9 +130,11 @@
             <li><a href="#bleu">BLEU</a></li>
             <li><a href="#pplperplexity">PPL（Perplexity）</a></li>
             <li><a href="#知识图谱领域">知识图谱领域</a></li>
-            <li><a href="#hitxx与mrmean-rank">hit@XX与MR（mean rank）</a></li>
-            <li><a href="#filtered-hitxx与filtered-mr">filtered hit@XX与filtered MR</a></li>
+            <li><a href="#hitk与mrmean-rank">hit@K与MR（mean rank）</a></li>
+            <li><a href="#filtered-hitk与filtered-mr9">filtered hit@K与filtered MR</a></li>
             <li><a href="#mrr">MRR</a></li>
+            <li><a href="#filtered-mrr">filtered MRR</a></li>
+            <li><a href="#time-aware-filtered-mrr与time-aware-filtered-hitk8">time-aware filtered MRR与time-aware filtered hit@K</a></li>
           </ul>
         </li>
       </ul>
@@ -156,16 +158,16 @@ $$
 recall =\frac{TP}{P}= \frac{TP}{TP+FN}
 $$</p>
 <h3 id="精度">精度</h3>
-<p>precision or positive predictive value (PPV)</p>
-<div>$$
+<p>precision or positive predictive value (PPV)
+$$
 precision=\frac{TP}{TP+FP}
-$$</div>
+$$</p>
 <h3 id="精度与召回率结合">精度与召回率结合</h3>
 <h4 id="f1-score">F1-score</h4>
-<p>精度和召回率的调和平均数：</p>
-<div>$$
+<p>精度和召回率的调和平均数：
+$$
 F_1 = 2\times \frac{precision\times recall}{precision+recall}=\frac { 2 T P } { 2 T P + F P + F N }
-$$</div>
+$$</p>
 <h4 id="roc受试者特征曲线receiver-operating-characteristic-curve1">ROC（受试者特征曲线,Receiver Operating Characteristic curve）<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h4>
 <p>X轴为伪阳性率（<strong>false positive rate</strong>，错误命中率，假警报率 (false alarm rate)）:$FPR=\frac{FP}{N}=\frac{FP}{FP+TN}$，Y轴为真阳性率（<strong>true positive rate</strong>，又称命中率 (hit rate)、敏感度(sensitivity)）：$TPR=\frac{TP}{P}=\frac{TP}{TP+FN}$。</p>
 <p><img
@@ -183,7 +185,7 @@ $$</div>
 <li><strong>B</strong>方法的结果位于随机猜测线（对角线）上，在例子中我们可以看到<strong>B</strong>的准确度（ACC，定义见前面表格）是50%。</li>
 <li><strong>C</strong>虽然预测准确度最差，甚至劣于随机分类，也就是低于0.5（低于对角线）。然而，当将<strong>C</strong>以 (0.5, 0.5) 为中点作一个镜像后，<strong>C'<strong>的结果甚至要比</strong>A</strong>还要好。这个作镜像的方法，简单说，不管<strong>C</strong>（或任何ROC点低于对角线的情况）预测了什么，就做相反的结论。</li>
 </ul>
-<p><strong>AUC</strong>：ROC曲线下方的面积（英语：Area under the Curve of ROC (AUC ROC)），**AUC值越大的分类器，正确率越高。**从AUC判断分类器（预测模型）优劣的标准：</p>
+<p><strong>AUC</strong>：ROC曲线下方的面积（英语：Area under the Curve of ROC (AUC ROC)），<strong>AUC值越大的分类器,正确率越高</strong>。从AUC判断分类器（预测模型）优劣的标准：</p>
 <ul>
 <li>AUC = 1，是完美分类器，采用这个预测模型时，存在至少一个阈值能得出完美预测。绝大多数预测的场合，不存在完美分类器。</li>
 <li>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</li>
@@ -194,11 +196,11 @@ $$</div>
 <h4 id="bleu">BLEU</h4>
 <p>bilingual evaluation understudy是IBM在2002提出的<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，用于翻译任务的评价。BLEU算法的思想就是机器翻译的译文越接近人工翻译的结果，它的翻译质量就越高。</p>
 <p>首先根据n-gram划分一个短语包含单词的数量，如1-gram（unigram）就是将语料划分成1个单词的短语。然后统计这些短语出现在参考译文中的个数，最后除以划分总数，得到BLEU-1分数。Unigram的准确率可以用于衡量单词翻译的准确性，更高阶的n-gram 的准确率可以用来衡量句子的流畅性。</p>
-<p>计算方式如下<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>：</p>
-<div>$$
-bleu_n= \frac{\sum_{c\in candidates}\sum_{n\_gram\in c}Count_{clip}(n\_gram)} {\sum_{ c^\prime \in candidates} \sum_{n\_gram^\prime\in c^\prime}Count(n\_gram^\prime)}
-$$</div>
-candidate：神经网络生成的句子
+<p>计算方式如下<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>：
+$$
+bleu_n= \frac{\sum_{c\in candidates}\sum_{n_gram\in c}Count_{clip}(n_gram)} {\sum_{ c^\prime \in candidates} \sum_{n_gram^\prime\in c^\prime}Count(n_gram^\prime)}
+$$
+candidate：神经网络生成的句子</p>
 <p>reference：给定的标准译文</p>
 <p>$Count_{clip}(n_gram)$：某一个n−gram在reference中的个数</p>
 <p>$Count(n_gram')$：n−gram′在candidate中的个数</p>
@@ -215,10 +217,10 @@ candidate：神经网络生成的句子
 <li>它与人类的判断并不相符</li>
 </ul>
 <h4 id="pplperplexity">PPL（Perplexity）</h4>
-<div>$$
-P P ( S ) = P ( w _ { 1 } w _ { 2 } \cdots w_N ) ^ { - \frac { 1 } { N } } = \sqrt [ N ] { \frac { 1 } { P ( w _ { 1 } w _ { 2 } \cdots w _ { N }) } }\\
+<p>$$
+PP(S) = P(w_{1}w_{2}\cdots w_N)^{ - \frac { 1 } { N } } = \sqrt [ N ] { \frac { 1 } { P ( w _ { 1 } w _ { 2 } \cdots w _ { N }) } }\\
 = \sqrt [ N ] { \prod _ { i = 1 } ^ { N } \frac { 1 } { p ( w _ { i } | w _ { 1 } w _ { 2 } \cdot w _ { i -1} ) } }
-$$</div>
+$$</p>
 <p>S代表sentence，N是句子长度，p($w_i$)是第i个词的概率。</p>
 <p>特点<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>：</p>
 <ul>
@@ -227,7 +229,7 @@ $$</div>
 <li>预测语句中的“的，了”等词也对PPL有很大影响，可能“我借你的书”比“我借你书”的指标值小几十，但从语义上分析有没有这些停用词并不能完全代表句子生成的好坏。</li>
 </ul>
 <h4 id="知识图谱领域">知识图谱领域</h4>
-<h4 id="hitxx与mrmean-rank">hit@XX与MR（mean rank）</h4>
+<h4 id="hitk与mrmean-rank">hit@K与MR（mean rank）</h4>
 <p>常见于transE等trans系列用于知识图谱推理预测的论文中。</p>
 <p>假设整个知识库中一共有n个实体，那么评价过程如下<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>：</p>
 <ul>
@@ -237,28 +239,31 @@ $$</div>
 <li>记录三元组a的能量值排序后的序号。</li>
 <li>对所有的正确的三元组重复上述过程。</li>
 <li>每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Mean Rank。</li>
-<li>计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Hits@10。</li>
+<li>计算正确三元组的能量排序后的序号小于K的比例，得到的值我们称为Hits@K。</li>
 </ul>
 <p>上述就是评价的过程，共有两个指标：Mean Rank和Hits@10。其中Mean Rank越小越好，Hits@10越大越好。</p>
-<h4 id="filtered-hitxx与filtered-mr">filtered hit@XX与filtered MR</h4>
-<p>但是上述过程存在一个不合理的地方：在将一个正确的三元组a的头或者尾实体替换成其它实体之后得到的这个三元组也有可能是正确的，在计算每个三元组的能量并排序之后，这类正确的三元组的能量有可能排在三元组a的前面。但是上面所说的基本评价过程并没有考虑这点。因此我们把上述基本评价过程得到的结果称为Raw Mean Rank和Raw Hits@10，把改进方法得到的结果称为Filtered Mean Rank和Filtered Hits@10。</p>
+<h4 id="filtered-hitk与filtered-mr9">filtered hit@K与filtered MR<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></h4>
+<p>但是上述过程存在一个不合理的地方：在将一个正确的三元组$(h,r,t)$的头或者尾实体替换成其它实体之后得到的这个三元组$(h,r,t')$也有可能是正确的(比如在训练集中存在这些替换后的三元组，$(h,r,t')\in \text{training set}$，在计算每个三元组的能量并排序之后，这类正确的替换三元组原本应该作为负样本，排序却有可能排在作为正样本的三元组$(h,r,t)$的前面。但是上面所说的基本评价过程并没有考虑这点。因此我们把上述基本评价过程得到的结果称为Raw Mean Rank和Raw Hits@K，把改进方法得到的结果称为Filtered Mean Rank和Filtered Hits@K。</p>
 <p>为了更好的评价embedding的质量，我们对上述方法进行改进。</p>
 <ul>
-<li>将一个正确的三元组a中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组。</li>
-<li>分别对上述n个三元组计算其能量值，在transE中，就是计算h+r-t的值。这样可以得到n个能量值，分别对应上述n个三元组。</li>
+<li>将一个正确的三元组$(h,r,t)$中的头实体或者尾实体，依次替换为整个知识库中的所有其它实体，也就是会产生n个三元组$(h,r,t')$或$(h’,r,t)$。</li>
+<li>分别对上述n个三元组计算其能量值，在transE中，就是计算$||h+r-t||_2$的值。这样可以得到n个能量值，分别对应上述n个三元组。</li>
 <li>对上述n个能量值进行升序排序。</li>
-<li>记录三元组a的能量值排序后的序号k。</li>
-<li>如果前k-1个能量对应的三元组中有m个三元组也是正确的，那么三元组a的序号改为k-m。</li>
+<li>记录三元组$(h,r,t)$的能量值排序后的序号k。</li>
+<li>如果前k-1个能量对应的三元组中有m个三元组也是正确的，那么三元组$(h,r,t)$的序号改为k-m。</li>
 <li>对所有的正确的三元组重复上述过程。</li>
 </ul>
+<blockquote>
+<p>此处替换后的三元组正确指的是：替换后的三元组$(h,r,t')$在训练集/测试集/验证集中出现过</p>
+</blockquote>
 <p>每个正确三元组的能量值排序后的序号求平均，得到的值我们称为Filtered Mean Rank。</p>
-<p>计算正确三元组的能量排序后的序号小于10的比例，得到的值我们称为Filtered Hits@10。</p>
+<p>计算正确三元组的能量排序后的序号小于K的比例，得到的值我们称为Filtered Hits@K。</p>
 <h4 id="mrr">MRR</h4>
-<p>MRR（平均倒数排序，Mean reciprocal rank<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>）是一个国际上通用的对搜索算法进行评价的机制，即第一个结果匹配，分数为1，第二个匹配分数为0.5，第n个匹配分数为1/n，如果没有匹配的句子分数为0。最终的分数为所有得分之和。</p>
-<div>$$
-{\text{MRR}}={\frac  {1}{|Q|}}\sum _{{i=1}}^{{|Q|}}{\frac  {1}{{\text{rank}}_{i}}}.\!
-$$</div>
-wiki上一个MRR的例子：
+<p>MRR（平均倒数排序，Mean reciprocal rank<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>）是一个国际上通用的对搜索算法进行评价的机制，即第一个结果匹配，分数为1，第二个匹配分数为0.5，第n个匹配分数为1/n，如果没有匹配的句子分数为0。最终的分数为所有得分之和。
+$$
+{\text{MRR}}={\frac  {1}{|Q|}}\sum <em>{{i=1}}^{{|Q|}}{\frac  {1}{{\text{rank}}</em>{i}}}.!
+$$
+wiki上一个MRR的例子：</p>
 <p>假设我们有以下三个示例查询，用于尝试将英语单词翻译成复数形式的系统。在每种情况下，系统都会做出三个猜测，第一个是它认为最有可能正确的猜测：</p>
 <p><img
         class="lazyload"
@@ -269,6 +274,11 @@ wiki上一个MRR的例子：
         alt="/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/MRR_example.png"
         title="MRR的一个例子" /></p>
 <p>给定这三个样本，我们可以将平均倒数排名计算为 (1/3 + 1/2 + 1)/3 = 11/18。</p>
+<h4 id="filtered-mrr">filtered MRR</h4>
+<p>同理于filtered MR</p>
+<h4 id="time-aware-filtered-mrr与time-aware-filtered-hitk8">time-aware filtered MRR与time-aware filtered hit@K<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></h4>
+<p>如果用一般的filtered方法，那么做法是：如果测试四元组是(Barack Obama, visit, India, Jan. 25, 2015)  ，对其进行实体预测(Barack Obama, visit, ?, Jan. 25, 2015)  ，此外在训练集中已有(Barack Obama, visit, Germany, Jan. 18, 2013)   ，根据filtered方法，(Barack Obama, visit, Germany, Jan. 25, 2015)  是正确的，要被filter筛选。</p>
+<p>但是其实这个事件只在2013年1月18日才是正确的，因此time-aware的filtered方法将只在该时间刻的事件进行filter，得到了time-aware filtered方法。</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -288,10 +298,16 @@ wiki上一个MRR的例子：
 <p><a href="https://blog.csdn.net/index20001/article/details/78884646" target="_blank" rel="noopener noreffer">语言模型评价指标Perplexity_不眠旅行-CSDN博客_语言模型ppl</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:6" role="doc-endnote">
-<p><a href="https://xiangrongzeng.github.io/knowledge%20graph/transE-evaluation.html" target="_blank" rel="noopener noreffer">transE评价方法 - Sunder (xiangrongzeng.github.io)</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>[transE评价方法 - Sunder (xiangrongzeng.github.io)](<a href="https://xiangrongzeng.github.io/knowledge" target="_blank" rel="noopener noreffer">https://xiangrongzeng.github.io/knowledge</a> graph/transE-evaluation.html)&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:7" role="doc-endnote">
-<p><a href="https://www.wikiwand.com/en/Mean_reciprocal_rank" target="_blank" rel="noopener noreffer">Mean reciprocal rank - Wikiwand</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Bordes A, Usunier N, Garcia-Duran A, et al. Translating embeddings for modeling multi-relational data[J]. Advances in neural information processing systems, 2013, 26.&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p><a href="https://www.wikiwand.com/en/Mean_reciprocal_rank" target="_blank" rel="noopener noreffer">Mean reciprocal rank - Wikiwand</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p>Han Z, Ma Y, Wang Y, et al. Graph hawkes neural network for forecasting on temporal knowledge graphs[J]. arXiv preprint arXiv:2003.13432, 2020.&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
@@ -299,8 +315,8 @@ wiki上一个MRR的例子：
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-19&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/d60e61eb59313240d8e12b1308cdc4eb7eac8f88" target="_blank" title="commit by tabuless(2564801119@qq.com) d60e61eb59313240d8e12b1308cdc4eb7eac8f88: 更新时序图谱综述">
-                                    <i class="fas fa-hashtag fa-fw"></i>d60e61e</a></span>
+                <span>更新于 2022-05-07&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7" target="_blank" title="commit by tabuless(347276274@qq.com) ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7: 时序图谱两篇">
+                                    <i class="fas fa-hashtag fa-fw"></i>ab86e15</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>

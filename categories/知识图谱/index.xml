@@ -3,7 +3,21 @@
         <title>知识图谱 - 分类 - Tabuless</title>
         <link>https://tabuless.github.io/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</link>
         <description>知识图谱 - 分类 - Tabuless</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 08 Mar 2022 09:58:13 &#43;0800</lastBuildDate><atom:link href="https://tabuless.github.io/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 06 May 2022 23:39:11 &#43;0800</lastBuildDate><atom:link href="https://tabuless.github.io/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="self" type="application/rss+xml" /><item>
+    <title>xERTE</title>
+    <link>https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/</link>
+    <pubDate>Fri, 06 May 2022 23:39:11 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/</guid>
+    <description><![CDATA[<p>explainable subgraph reasoning for forecasting on temporal knowledge graphs<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
+</item><item>
+    <title>TiTer</title>
+    <link>https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/</link>
+    <pubDate>Fri, 06 May 2022 22:49:40 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/</guid>
+    <description><![CDATA[<p>TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
+</item><item>
     <title>CyGNet</title>
     <link>https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/</link>
     <pubDate>Tue, 08 Mar 2022 09:58:13 &#43;0800</pubDate>

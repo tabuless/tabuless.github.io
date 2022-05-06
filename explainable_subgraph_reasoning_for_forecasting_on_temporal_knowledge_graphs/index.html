@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>xERTE - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="xERTE" />
+<meta property="og:description" content="explainable subgraph reasoning for forecasting on temporal knowledge graphs1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-06T23:39:11+08:00" />
+<meta property="article:modified_time" content="2022-05-07T00:13:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="xERTE"/>
+<meta name="twitter:description" content="explainable subgraph reasoning for forecasting on temporal knowledge graphs1"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" /><link rel="prev" href="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "xERTE",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "时序图谱, 论文阅读","wordcount":  3572 ,
+        "url": "https:\/\/tabuless.github.io\/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs\/","datePublished": "2022-05-06T23:39:11+08:00","dateModified": "2022-05-07T00:13:13+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">xERTE</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a>&nbsp;<a href="/categories/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>时序图谱</a>&nbsp;<a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw"></i>论文阅读</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-06">2022-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3572 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#xerte">xERTE</a>
+      <ul>
+        <li><a href="#模型架构">模型架构</a></li>
+        <li><a href="#实验结果">实验结果</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>explainable subgraph reasoning for forecasting on temporal knowledge graphs<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<h2 id="xerte">xERTE</h2>
+<p>贡献：</p>
+<ul>
+<li>
+<p>第一个可解释的预测未来链接的时序知识图谱模型，该模型基于时序关系注意力机制，保留了时序多关系的因果性质的数据</p>
+</li>
+<li>
+<p>不像大多数黑盒基于嵌入的模型，xERTE将推理过程可视化并且提供了可解释的推理图突出重要的线索</p>
+</li>
+<li>
+<p>动态剪枝过程让模型能在大规模的时序图谱上推理</p>
+</li>
+<li>
+<p>对53名受访者进行调研，以评估所提取的证据是否符合人类的理解</p>
+</li>
+</ul>
+<p>符号定义：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\mathcal{E,P}$</td>
+<td>实体和谓词的集合</td>
+</tr>
+<tr>
+<td>$\mathcal{F}$</td>
+<td>已知事实的集合</td>
+</tr>
+<tr>
+<td>$\mathcal{G}_{inf}$</td>
+<td>一个推理图，图中的节点表示实体-时刻对$v=(e_i,t),e_i\in\mathcal{E}$</td>
+</tr>
+<tr>
+<td>$\mathcal{N}_{v}$</td>
+<td>节点v的单跳前驱邻居节点$\mathcal{N}_ {v=(e_{i},t)}=\{(e_{j},t^{\prime})|(e_{i},p_{k},e_{j},t^{\prime})\in\mathcal{F}\wedge(t^{\prime}\lt t)\}$，包括逆关系<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>得到的前驱节点</td>
+</tr>
+<tr>
+<td>$\overline{{{\mathcal{N}}}}_{v}$</td>
+<td>节点v的单跳后继邻居节点$\overline{{{\mathcal{N}}}}_ {v=(e_{i},t)}=\{(e_{j},t^{\prime})|(e_{j},p_{k},e_{i},t)\in{\mathcal{F}}\wedge(t^{\prime}&gt;t)\}$，包括逆关系得到的前驱节点</td>
+</tr>
+<tr>
+<td>$$\mathcal{Q}_ {v}$$与$q_v$</td>
+<td>$\mathcal{Q}_ {v}$是节点v和$\mathcal{N}_ {v}$之间边的集合，$q_v\in \mathcal{Q}_ {v}$</td>
+</tr>
+</tbody>
+</table>
+<h3 id="模型架构">模型架构</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="architecture.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/architecture.png, architecture.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/architecture.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/architecture.png"
+        title="架构" /></p>
+<blockquote>
+</blockquote>
+<p><strong>子图推理过程</strong></p>
+<ol>
+<li>
+<p>neighborhood sampling：给定查询$q=(e_{q},p_{q},?,t_{q})$，初始的$\mathcal{G}_ {inf}$为只有一个节点$v_{q}\ =\ (e_{q},t_{q})$的图，通过对$v_q$的前驱节点进行取样来扩大$\mathcal{G}_ {inf}$:比如存在事实$(e_{q},p_{k},e_{j},t^{\prime}),t^{\prime}&lt;t_q$，那么将节点$v_{1}=\left(e_{j},t^{\prime}\right)$加入$\mathcal{G}_ {inf}$,并把其与$v_q$进行连接,从$v_q$到$v_1$，标签为$p_k$。</p>
+</li>
+<li>
+<p>embedding  module：使用一个<strong>嵌入模型</strong>（embedding module）来使$\mathcal{G}_ {inf}$中的节点和谓词分配一个时序的嵌入，嵌入模型的主要思想是让节点得到查询无关的信息，并且得到图结构的整体信息，因为接下来的时序关系图神经层（temporal relational graph attention，<strong>TRGA</strong>）只在局部执行查询无关的消息传递。</p>
+</li>
+<li>
+<p>TRGA layer：将节点和谓词的嵌入作为输入，在小的推理图上通过消息传递给每个节点产生一个查询无关的表示。</p>
+</li>
+<li>
+<p>attention propagate：通过边的注意力分数将每个节点的注意力传递给前驱节点。</p>
+</li>
+<li>
+<p>subgraph pruning：通过对$\mathcal{G}_ {inf}$的前驱节点采样扩张$\mathcal{G}_ {inf}$,为了防止推理图在不断扩张后快速增长，需要对边进行剪枝。</p>
+</li>
+</ol>
+<p>在进行L次推理步骤后，模型会选择最高注意力分数的实体作为查询中缺失的客实体，同时推理图本身会作为一个图形化的对推理的解释。</p>
+<p>子图推理过程如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="inference.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/inference.png, inference.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/inference.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/inference.png"
+        title="inference step by step" /></p>
+<p>初始化图为查询节点(a)，通过采样前驱节点进行扩张推理图(b)，为防止指数级扩张，对图进行剪枝(c)，接下来再次对剪枝后剩余的节点同样进一步扩张(d)，经过L次这样的迭代，模型选择得到图中最高注意力得分的节点作为缺失查询的客实体，而图本身则可以作为一个解释的图形化。</p>
+<p><strong>neighborhood sampling</strong></p>
+<p>为了降低复杂度，每步推理都对前向边的进行取样，得到子集$\hat{\mathcal{Q}}_ {v}\in{\mathcal{Q}}_ {v}$，将采样得到的节点v的前驱邻居与后继邻居记为${\hat{\mathcal{N}}}_ {v}$和$\overline {\hat{\mathcal{N}}_ {v}}$，注意：由于可能存在多个谓词，因此节点v和前驱节点u之间可能有多个边。</p>
+<p>采样有三个策略：</p>
+<ul>
+<li>
+<p>均一采样：每个被采样的概率都是一样的：$\mathbb{P}(q_{v})=1\ {\big/} |\mathcal{Q} _{v}|$</p>
+</li>
+<li>
+<p>时序感知的指数重采样：通过指数分布分配概率：</p>
+<div>
+$$
+  \mathbb{P}(q_{v}=(e_{i},p_{k},e_{j},t^{\prime}))\\\\
+  =\frac{\exp(t^{\prime}-t)}{\sum_{(e_{i},p_{l},e_{m},t^{\prime\prime}){\in}{\mathcal Q}_{v}}\exp(t^{\prime\prime}-t)}
+$$
+</div>
+<p>其中$t^{\prime}$和$t^{\prime\prime}$都小于$t$。</p>
+</li>
+<li>
+<p>时序感知的线性权重采样：久远的事件有更大的可能被采样，明显不合理。</p>
+</li>
+</ul>
+<p>后续消融实验表明第二个采样策略效果最好。</p>
+<p><strong>embedding module</strong></p>
+<p>使用了TGAT<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>的思想，使用相对时间建模。每个实体的嵌入为：${\mathbf{e}}_ {i}(t)=[\bar{{\mathbf{e}}}_ {i}]\mathbf{\Phi(t)}]^{T}\in\mathbb{R}^{d_{S}+d_{T}}$,其中$\bar{\mathbf{e}}_{i}\ \in\ R^{d_S}$表示时序不变的静态嵌入信息以及全局依赖。</p>
+<p><strong>TRGA layer</strong></p>
+<p>输入：节点的嵌入$\mathbf{e}_i(t)$以及边$\mathbf{p}_k$的嵌入。</p>
+<p>TRGA层给每个边查询无关的注意力并将新隐藏表示作为输出。与graphSAGE和GAT相似，TRGA层使用了本地表示的汇聚。为了防止错误使用未来信息，只允许前驱结点向后驱节点的消息传递：即对于结点v，汇聚函数只使用节点v以及${\hat{\mathcal N}}_{v}$的表示来汇聚。</p>
+<p>由于每个节点的谓语不一样可能会导致节点不同的含义，所以在注意力函数中加入谓语的嵌入来引入关系信息。将查询信息引入,并计算查询无关的注意力分数来对不同前驱节点$u\in{\hat{\mathcal N}}_ {v}$分配不同的重要程度:</p>
+<div>
+$$
+e_{v u}^{l}(q,p_{k})={\bf W}_{s u b}^{l}({\bf h}_{v}^{l-1}||{\bf p}_{k}^{l-1}||{\bf h}_{e_{q}}^{l-1}||{\bf p}_{q}^{l-1}){\bf w}_{o b j}^{l}({\bf h}_{u}^{l-1}||{\bf p}_{k}^{l-1}||{\bf h}_{e_{q}}^{l-1}||{\bf p}_{q}^{l-1})
+$$
+</div>
+$e_{v u}^{l}(q,p_{k})$是边$(v,p_k,u)$的注意力得分，$\mathbf{h}_{v}^{l-1}$表示节点v第l-1步推理的隐藏表示，当l=1，即最开始一层${\bf h}_{v}^{0}={\bf W}_{v}{\bf e}_{i}(t)+{\bf b}_{v}$，$v=(e_i,t)$，注意力得分$\alpha_{v u}^{l}(q,p_{k})$由其softmax得到：
+<div>
+$$
+\alpha_{v u}^{l}(q,p_{k})=\frac{\exp(e_{v u}^{l}(q,p_{k}))}{\sum_{u\in\hat{N}_{v}}\sum_{p_{z}\in{\mathcal P}_{v w}}\exp(e_{v w}^{l}(q,p_{z}))},
+$$
+</div>
+$\mathcal{P}_{vw}$表示连接节点v，w的边的标签，接下来用softmax归一化后的注意力得分更新前驱节点的表示：
+<div>
+$$
+\tilde{\bf h}_{v}^{l}(q) =\sum_{u\in\hat{\mathcal{N}}_{v}}\sum_{p_{k}\in{\mathcal P}_{v u}}^{l}\alpha_{v u}^{l}(q,p_{k}){\bf h}_{u}^{l-1}(q).
+$$
+</div>
+接下来将${\bf h}_{u}^{l-1}(q)$和$\tilde{\bf h}_{v}^{l}(q)$结合：
+$$
+\mathrm{h}_{v}^{l}(q)=\sigma(\mathbf{W}_{h}^{l}(\gamma\mathbf{h}_{v}^{l-1}(q)+(1-\gamma)\tilde{\mathbf{h}}_{v}^{l}(q)+\mathbf{b}_{h}^{l})),
+$$
+另外，使用同样的TRGA更新关系的嵌入，利用${\mathbf{p}}_{k}^{l}\ =\mathbf{W}_{h}^{l}\mathbf{p}_{k}^{l-1}+\mathbf{b}_{h}^{l}$使得关系被投影到与节点相同的嵌入空间。
+<p><strong>attention propagation and subgraph pruning</strong></p>
+<p>接下来计算在l步推理中结点v与查询q的注意力得分：</p>
+<div>
+$$
+a_{v,q}^{l}=\sum_{u\in\overline{\hat{N}}_{v}}\sum_{p_{z}\in{\mathcal P}_{u v}}\alpha_{u v}^{l}(q,p_{z})a_{u,q}^{l-1}.
+$$
+</div>
+接着将每个节点传递给的注意力传递给前驱节点，因为每个节点都是实体-时刻对，为了给每个实体一个独特的注意力得分，节点中实体相同的节点进行统一的注意力汇聚：
+<div>
+$$
+a_{e_{i,q}}^{l}= g(a_{v,q}^{l}|v(e)= e_{i}),\ \ \mathrm{for}\,v\in\mathcal{V}_{\mathcal{G}_{i n f}},
+$$
+</div>
+$a_{e_{i,q}}^{l}$表示实体$e_i$的注意力得分，$v(e)$表示节点v的实体，论文尝试了加和汇聚和平均汇聚，消融实验表明加和汇聚表现更好。
+<p>为了表明哪个事实证据对推理过程重要，论文给推理图中的每个边$(v,p_k,u)$一个贡献分:$c_{v u}^{\phantom{a}}(q,p_{k}),=,\alpha_{v u}^{l}(q,p_{k})a_{v,q}^{l}$，u为v的在$p_k$前驱节点，在每一步只保留贡献值最大的K个边来对图进行剪枝。对于$\mathcal{G}_{i n f}$中不存在的实体，将其注意力得分设置为0,最后将候选实体进行排序取最高得分实体作为预测。</p>
+<p><strong>reverse representation update mechanism</strong></p>
+<p>为了模仿人类推理的行为，我们需要确保$\mathcal{G}_ {inf}$所有节点能考虑到新加入的节点的消息，然而因为每步推理都会扩张$\mathcal{G}_ {inf}$，所以在第l步可能会包含查询节点l跳的邻居节点如果直接沿着路径进行，那么计算量就会指数级上升，因此采用反向的表示更新机制，具体的算法如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="reverse_update.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update.png, reverse_update.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update.png"
+        title="reverse update" /></p>
+<p><strong>训练学习过程</strong></p>
+<p>通过时间段的不同将数据集分为三部分，训练集的时间点&lt;验证集的时间点&lt;测试集的时间点，使用交叉熵来作为损失函数：</p>
+<div>
+$$
+{\mathcal{L}}=-{\frac{1}{|\mathcal{Q}|}}\sum_{q\in\mathcal{Q}}{\frac{1}{|{\mathcal{E}}_{q}^{i n f}|}}\sum_{e_{i}\in{\mathcal{E}}_{q}^{i n f}}\left(y_{e_i,q}\log({\frac{a_{e_i,q}^{L}}{\sum_{e_{j}\in{\mathcal{E}}_{q}^{i n f}}a_{e_{j,q}}^{L}}})+(1-y_{e_i,q})\log(1-{\frac{a_{e,q}^{L}}{\sum_{e_{j}\in{\mathcal{E}}_{q}^{i u f}\,a_{e_i,q}^{L}}}})\right),
+$$
+</div>
+其中$\mathcal{E}_q^{inf}$表示查询q的推理图中实体的集合，$y_{e_i,q}$表示$e_i$是否为q的答案的二元标签，Q代表训练集四元组，所有模型参数如下表所示：
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="parameters.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/parameters.png, parameters.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/parameters.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/parameters.png"
+        title="parameters" /></p>
+<h3 id="实验结果">实验结果</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="results.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/results.png, results.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/results.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/results.png"
+        title="results" /></p>
+<p>使用了time-aware filtered评价指标<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>作为依据。</p>
+<p><strong>消融实验</strong></p>
+<p><strong>反向表示更新机制</strong>的影响如下图(a)(b)，当一个查询主体只有很少的邻居时影响会很大；<strong>相对时间编码</strong>的影响如图(c)(d)所示；<strong>推理步数</strong>对训练时间和精度影响如(d)(e)所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="reverse_update_compare.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update_compare.png, reverse_update_compare.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update_compare.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/reverse_update_compare.png"
+        title="ablation study" /></p>
+<p><strong>采样策略</strong>对精度的影响：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="sample.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/sample.png, sample.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/sample.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/sample.png"
+        title="sampling policy" /></p>
+<p><strong>可解释性的图像化</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="explainable.png"
+        data-srcset="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/explainable.png, explainable.png 1.5x, /explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/explainable.png 2x"
+        data-sizes="auto"
+        alt="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/explainable.png"
+        title="explainable" /></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Han Z, Chen P, Ma Y, et al. Explainable subgraph reasoning for forecasting on temporal knowledge graphs[C]//International Conference on Learning Representations. 2020.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>在主流的时序图谱上本论文增加了逆关系：即对于四元组$(e_{s},p,e_{o},t)$​，加入$(e_{o},p^{-1},e_{s},t)$​，这样客实体的识别就不会失去一般性。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Xu D, Ruan C, Korpeoglu E, et al. Inductive representation learning on temporal graphs[J]. arXiv preprint arXiv:2002.07962, 2020.https://tabuless.github.io/tgat/&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://tabuless.github.io/%e8%af%84%e4%bb%b7%e6%8c%87%e6%a0%87/" target="_blank" rel="noopener noreffer">知识图谱常用评价指标 - Tabuless</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-07&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7" target="_blank" title="commit by tabuless(347276274@qq.com) ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7: 时序图谱两篇">
+                                    <i class="fas fa-hashtag fa-fw"></i>ab86e15</a></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" data-title="xERTE" data-hashtags="时序图谱,论文阅读"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" data-hashtag="时序图谱"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" data-title="xERTE"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/">时序图谱</a>,&nbsp;<a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" class="prev" rel="prev" title="TiTer"><i class="fas fa-angle-left fa-fw"></i>TiTer</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["tabuless"],"clientID":"b7d8ed424e09262a8719","clientSecret":"5624a7e968dac00542e9b709139cf8ab77fa4602","id":"2022-05-06T23:39:11+08:00","owner":"tabuless","repo":"github_blog_gitalk_repo","title":"xERTE"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"$$","right":"$$"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

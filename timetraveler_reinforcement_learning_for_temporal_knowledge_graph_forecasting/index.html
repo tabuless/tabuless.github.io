@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>TiTer - Tabuless</title><meta name="Description" content="个人阅读笔记"><meta property="og:title" content="TiTer" />
+<meta property="og:description" content="TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" /><meta property="og:image" content="https://tabuless.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-06T22:49:40+08:00" />
+<meta property="article:modified_time" content="2022-05-07T00:13:13+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tabuless.github.io/logo.png"/>
+
+<meta name="twitter:title" content="TiTer"/>
+<meta name="twitter:description" content="TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting1"/>
+<meta name="application-name" content="tabuless">
+<meta name="apple-mobile-web-app-title" content="tabuless"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" /><link rel="prev" href="https://tabuless.github.io/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" /><link rel="next" href="https://tabuless.github.io/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TiTer",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/tabuless.github.io\/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting\/"
+        },"image": ["https:\/\/tabuless.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "时序图谱, 论文阅读","wordcount":  3532 ,
+        "url": "https:\/\/tabuless.github.io\/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting\/","datePublished": "2022-05-06T22:49:40+08:00","dateModified": "2022-05-07T00:13:13+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tabuless","logo": "https:\/\/tabuless.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "tabuless"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friends/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank">  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Tabuless">Tabuless&#39; Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friends/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/tabuless" title="GitHub" rel="noopener noreffer" target="_blank"></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">TiTer</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://tabuless.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>tabuless</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>知识图谱</a>&nbsp;<a href="/categories/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/"><i class="far fa-folder fa-fw"></i>时序图谱</a>&nbsp;<a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw"></i>论文阅读</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-06">2022-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3532 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#强化学习框架">强化学习框架</a></li>
+        <li><a href="#策略网络">策略网络</a></li>
+        <li><a href="#优化与训练">优化与训练</a></li>
+        <li><a href="#归纳平均inductive-mean表示">归纳平均(Inductive Mean)表示</a></li>
+        <li><a href="#实验分析">实验分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>贡献：</p>
+<ul>
+<li>第一个基于时序路径的强化学习模型，用于在时序图谱上进行extrapolate预测</li>
+<li>使用相对路径编码函数</li>
+<li>对没有见到的实体的表示机制，在不提高计算花销的情况稳定的提升表现</li>
+<li>扩展实验表明比已有方法计算量更小</li>
+</ul>
+<h3 id="强化学习框架">强化学习框架</h3>
+<p>符号：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\mathcal{E},\mathcal{R},\mathcal{T}$</td>
+<td>实体，关系，时间的集合</td>
+</tr>
+<tr>
+<td>$\mathcal{F}$</td>
+<td>事实的集合，一个事实表示一个四元组</td>
+</tr>
+<tr>
+<td>$e_i^t$</td>
+<td>t时刻的实体i</td>
+</tr>
+</tbody>
+</table>
+<p>定义：</p>
+<ul>
+<li>
+<p>解决的问题：已知事实组${(e_{si},r_i,e_{oi},t_i)|t_i&lt;t_q}$，对查询$(e_q,r_q,?,t_q)$或者$(?,r_q,e_q,t_q)$进行预测</p>
+</li>
+<li>
+<p>逆关系：对每个四元组$(e_s,r,e_o,t)$加入逆向四元组$(e_o,r^{-1},e_s,t)$</p>
+</li>
+<li>
+<p>自环边：自环允许agent停在某个地方作为一个停留操作</p>
+</li>
+<li>
+<p>时序边：如果有四元组$(e_s,r,e_o,t_i)$，且$t_i&lt;t_j\le t_q$，agent可以通过边r从$e_s^{t_j}$转移到$e_o^{t_i}$</p>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="temporalEdge.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/temporalEdge.png, temporalEdge.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/temporalEdge.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/temporalEdge.png"
+        title="时序边" /></p>
+<p>TiTER可以被看做是一个马尔科夫决策过程（MDP），其中的元素如下：</p>
+<p><strong>状态</strong>：$\mathcal{S}$表示状态空间，一个状态表示五元组$s _ { l } = ( e _ { l } , t _ { l } , e _ { q } , t _ { q } , r _ { q } )\in \mathcal{S}$，$(e_l,t_l)$表示第l步访问的节点，$( e _ { q } , t _ { q } , r _ { q } )$表示查询中的元素，查询可以看做是全局信息，$(e_l,t_l)$可以看做是本地信息。初始状态是$s _ { 0 } = ( e _ { q } , t _ { q } , e _ { q } , t _ { q } , r _ { q } )$。</p>
+<p><strong>行动</strong>：$\mathcal{A}$表示行动空间，$\mathcal{A_l}$表示第l步的可选行动集合，$\mathcal{A_l}\sub \mathcal{A}$包含节点$e_l^{tl}$所有的出边，具体地说，$\mathcal{A}_l$应该满足${ ( r ^ { \prime } , e ^ { \prime } , t ^ { \prime } ) | ( e_l , r ^ { \prime } , e ^ { \prime } , t ^ { \prime } ) \in \mathcal{F}, t ^ { \prime } \leq t _ { 1 } , t ^ { \prime } \lt t _ { q } }$，由于有很多历史相关的行动。因此最后的行动选项是从出边中进行采样得到的。</p>
+<p><strong>转移</strong>：agent选择了边后就会转移状态，转移方程为：$\delta:\mathcal{S}\times\mathcal{A}\rightarrow \mathcal{S}$，$\delta ( s _ { l } , \mathcal{A} _ { l } ) = s _ { l + 1 } = ( e _ { l + 1 } , t _ { l + 1 } , e _ { q } , t _ { q } , r _ { q } )$</p>
+<p><strong>奖励（time-shaped）</strong>：当agent到达了正确的目标实体那么奖励为1，否则为0，即如果最终状态是$s _ { L } = ( e_L , t _ { L } , e _ { q } , t _ { q } , r _ { q } )$，$( e_q , r _ { q } , e _ { g t } , t _ { q } )$是事实（ground truth），那么奖励函数则是：$R ( s_L ) = \mathbb{I} { e_L = = e _ { g t } }$。然而相同实体的四元组常常集中在一个特定的时期，导致了时序上的多样化与稀疏，因此查询的结果会有时间上的一个分布，可以引入这个先验知识来促进agent的学习，time-shaped的奖励能让agent更好的找到答案。修改奖励函数为Dirichlet分布：
+$$
+\left. \begin{array}  { l  }  { \tilde{R} ( s_L ) = ( 1 + p _ {\Delta t L } ) R ( s_L ) } \ { \Delta t _ { L } = t _ { q } - t _ { L } } \ { ( p _ { 1 } \cdots , p_K ) \sim Di r i c h l e t  ( \alpha _ { r_q } ) } \end{array} \right.
+$$
+其中$\alpha <em>{r_q}\in \mathbb{R}^K$是关系$r_q$的Dirichlet分布，可以从训练集中进行估计：对于训练集中的每个包含关系$r_q$的四元组，得到在最近K个历史快照中客实体出现的次数，然后获取多项式分布$x_i$和$D={x_1,\cdots,x_N}$,进行极大似然估计：
+$$
+p ( D | \alpha _ { r_q } ) = \prod _ { i } ( p ( x _ { i } | \alpha _ { r_q } ) )
+$$
+这样就可以估计得到$\alpha</em>{r_q}$(具体见原文附录A.5)。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="architecture.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/architecture.png, architecture.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/architecture.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/architecture.png"
+        title="整体架构" /></p>
+<h3 id="策略网络">策略网络</h3>
+<p>定义策略网络为$\pi(a_l|s_l)=P(a_l|s_l;\theta)$，$a_l\in \mathcal{A}_l$，$\theta$是模型的参数。网络包含以下三个模型：</p>
+<p><strong>动态嵌入</strong>：用向量$\textbf{r}\in\mathbb{R}^{d_r},\textbf{e}\in\mathbb{R}^{d_e}$分别表示关系r和实体$e_i^t$的嵌入，另外使用相对时间编码的方式进行时间嵌入：
+$$
+\mathbf{\Phi}(\Delta t)=\sigma(\mathbf{w} \Delta t+\mathbf{b})
+$$
+其中$\Delta t=t_{q}-t$，将相对编码结合就得到实体的嵌入$e_i^t:\mathbf{e}_{i}^{t}=\lbrack \mathbf{e} _{i};\mathbf{\Phi}(\Delta t)\rbrack$。</p>
+<p><strong>路径编码</strong>：搜索历史$h_l=((e_{q},t_{q}),r_{1},(e_{1},t_{1}),\ldots,r_{l},(e_{l},t_{l}))$是采取的动作序列，agent通过LSTM来解码历史序列：
+$$
+\mathbf{h}_ {l}=\mathrm{LSTM}(\mathbf{h}_ {l-1},[\mathbf{r}_ {l-1};\mathbf{e}_ {l-1}^{t_{l-1}}]),\\
+{\bf h}_{0}=\mathrm{LSTM}({\bf 0},[{\bf r} _{0};{\bf e} _{q}^{t _{q}}]).
+$$
+$\mathbf{r}_0$是开始关系，另外如果是自环边的话LSTM的状态是不变的。</p>
+<p><strong>动作得分</strong>：$a_{n}=\left (e_{n},t_{n},r_{n}\right)\mathop{\in}\mathcal{A}_ {l}$代表在第l步的动作选项。由于未来的时间通常充满不确定性，数据集中没有足够的信息，使得有很强的因果关系，因此实体和查询之间的相关关系更加重要。因此使用加权动作得分函数来帮助agent更加关注目标节点和不同类型的边,这里使用两个MLP来进行加权：</p>
+<div>
+$$
+\phi(a_{n},s_{l})=\beta_{n}\left\langle\widetilde{{{\bf e}}},\mathbf{e}_ {n}^{t_{n}}\right\rangle+\left(1-\beta_{n}\right)\left\langle\widetilde{{{\bf e}}},\mathbf{r}_{n}\right\rangle
+$$
+$$
+\widetilde{\mathbf{e}}={\bf W}_{e}\mathrm{ReLU}({\bf W}_{1}[{\bf h}_ {l};{\bf e}_{q}^{t_{q}};{\bf r}_{q}]),\\\\
+\widetilde{\mathbf{r}}=\mathbf{W}_ {r}\mathrm{ReLU}(\mathbf{W}_ {1}[\mathbf{h}_ {l};\mathbf{e}_ {q}^{t_{q}};\mathbf{r}_ {q}]),
+$$
+</div>
+<p>其中权重为：</p>
+<div>
+$$
+\beta_{n}=\mathrm{sigmoid}(\mathrm{W}_{\beta}[\mathrm{h}_{l};\mathrm{e}_{q}^{t_{q}};\mathrm{r}_{q};\mathrm{e}_{n}^{t_{n}};\mathrm{r}_{n}]),
+$$
+</div>
+<p>变量含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目标节点嵌入</td>
+<td>$\widetilde{e}$</td>
+</tr>
+<tr>
+<td>目标出边嵌入</td>
+<td>$\widetilde{r}$</td>
+</tr>
+<tr>
+<td>候选动作得分函数</td>
+<td>$\phi(a_{n},s_{l})$</td>
+</tr>
+<tr>
+<td>节点的权重</td>
+<td>$\beta_{n}$</td>
+</tr>
+</tbody>
+</table>
+<h3 id="优化与训练">优化与训练</h3>
+<p>将搜索路径长度修整为L，那么有策略网络生成的路径为$\pi_ {\theta} : \{ a_{1},a_{2},&hellip;,a_{L}\}$，策略网络将在所有训练样本$\cal{F}_{train}$中进行训练来达到最大期望奖励值：</p>
+<div>
+$$
+J(\theta)=\mathbb{E}_{(e_{s},r,e_{o},t)\sim{\mathcal{F}}_{train}}\left[\mathbb{E}_{a_{1},...,a_{L}\sim\pi_{\theta}}\left[{\widetilde{R}}(s_{L}|e_{s},r,t)\right]\right ]
+$$
+</div>
+使用策略梯度来对策略优化：通过下面的随机梯度不断迭代$\cal{F}_{train}$中的四元组，更新$\theta$：
+<div>
+$$
+\nabla_{\theta}J(\theta)\approx\nabla_{\theta}\sum_{m\in[1,L]}\widetilde{R}(s_{L}|e_{S},r,t)l o g\pi_\theta(a_{l}|s_{l})
+$$
+</div>
+<h3 id="归纳平均inductive-mean表示">归纳平均(Inductive Mean)表示</h3>
+<p>为了解决未观测过的实体的预测问题，前人工作一般通过邻居的信息汇聚<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>$^,$<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>进行实体的表示预测,然而新出现的实体一般只有很少的边，只有很少的信息，对于一个查询$(Evan_{-}Mobley,play_{-}f o r,?,2022)$，实体Evan_Mobley在之前的时间中从未出现，但是可以从“plays_for”关系推断出其为运动员，从此给“Evan_Mobley”分配一个更加合理的初始嵌入值，更加有利于推理。基于此思想，作者利用查询信息以及训练集中的实体提出了新的方法：归纳平均(Inductive Mean，IM)来表示未观测的实体。</p>
+<p>${\mathcal{G}}_ {(t_{j},t_{q}-1)}$表示TKG测试集中的某个时刻，查询的实体$e_q$在${\mathcal{G}}_ {t_{j}}$首次出现且随机初始化表示向量。如果有四元组中有$(e_q,r)$，那么将r称为实体$e_q$的<em>共现关系</em>（co-occurrence relation）。定义$R_t(e_q)$为$e_q$在时刻t共现关系集合，$E_r$表示训练集中共现关系是r的所有实体的集合。由此得到有相同共现关系的实体的归纳表示：
+$$
+\overline{{{\mathbf{e}^{r}}}}=\frac{\sum_{e\in E_{r}}\mathbf{e}}{|E_{r}|}
+$$
+<strong>表示更新</strong>（representation update）：有相同的关系r的实体有相似的特点，所以IM能使用$\overline{{{\mathbf{e}^{r}}}}$来在时间流上逐渐更新$e_q$的表示：</p>
+<div>
+$$
+\mathrm{e}_ {q,t}=\mu\mathbf{e}_ {q,t-1}+(1-\mu)\frac{\sum_ {r\in R_{t}}(e_{q})\,\overline{{{\mathbf{e}^ {r}}}}}{|R_{t}(e_{q})|}
+$$
+</div>
+<p>其中$\mu$是一个超参数。</p>
+<p><strong>预测位移</strong>（prediction shift）：对于关系$r_q$，基于${\overline{{\mathbf{e}^{r}q}}}$做一个预测的位移：</p>
+<div>
+$$
+{\bf e}_{q,t_{q},r_{q}}=\mu{\bf e}_{q,t_{q}-1}+(1-\mu)\overline{{{\bf e}^{r_{q}}}}
+$$
+</div>
+<p>整体流程如下图所示。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="IM.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/IM.png, IM.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/IM.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/IM.png"
+        title="Inductive Mean" /></p>
+<h3 id="实验分析">实验分析</h3>
+<p>实验对比如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="table1.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/table1.png, table1.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/table1.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/table1.png"
+        title="对比" /></p>
+<p><strong>可以看到TiTer在WIKI和YAGO上比其他baseline好很多，原因有：</strong></p>
+<ol>
+<li>
+<p>WIKI 和 YAGO 的特点是节点通常只有少量的邻居节点，这使得邻居搜索算法具有优势。</p>
+</li>
+<li>
+<p>WIKI和YAGO测试集中有大量的未观测到的实体，这些方法无法解决这个问题：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="unseenEnt.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/unseenEnt.png, unseenEnt.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/unseenEnt.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/unseenEnt.png"
+        title="unseen entity" /></p>
+</li>
+</ol>
+<p><strong>IM机制对性能的提升</strong>：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="WO_IM.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/WO_IM.png, WO_IM.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/WO_IM.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/WO_IM.png"
+        title="IM" /></p>
+<p>cygnet和renet没有对未知实体预测的功能因此比随机三跳搜索的性能还差，xERTE可以基于动态的消息聚合更新新实体的表示，而TiTer可以通过基于时序路径的强化学习来得到预测。不管使用还是没使用IM，TiTer都比xERTE表现更好一点。</p>
+<p><strong>消融实验：</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="ablation.png"
+        data-srcset="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/ablation.png, ablation.png 1.5x, /timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/ablation.png 2x"
+        data-sizes="auto"
+        alt="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/ablation.png"
+        title="消融实验" /></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Sun H, Zhong J, Ma Y, et al. TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting[C]//Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing. 2021: 8306-8319.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Bhowmik R, Melo G. Explainable link prediction for emerging entities in knowledge graphs[C]//International Semantic Web Conference. Springer, Cham, 2020: 39-55.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Han Z, Chen P, Ma Y, et al. Explainable subgraph reasoning for forecasting on temporal knowledge graphs[C]//International Conference on Learning Representations. 2020.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-07&nbsp;<a class="git-hash" href="https://github.com/tabuless/myBlog/commit/ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7" target="_blank" title="commit by tabuless(347276274@qq.com) ab86e15937ac98b7954b4dcb4d7b9e0fdd48caa7: 时序图谱两篇">
+                                    <i class="fas fa-hashtag fa-fw"></i>ab86e15</a></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" data-title="TiTer" data-hashtags="时序图谱,论文阅读"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" data-hashtag="时序图谱"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://tabuless.github.io/timetraveler_reinforcement_learning_for_temporal_knowledge_graph_forecasting/" data-title="TiTer"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%97%B6%E5%BA%8F%E5%9B%BE%E8%B0%B1/">时序图谱</a>,&nbsp;<a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/learning_from_history_modeling_temporal_knowledge_graphs_with_sequential_copy-generation_networks/" class="prev" rel="prev" title="CyGNet"><i class="fas fa-angle-left fa-fw"></i>CyGNet</a>
+            <a href="/explainable_subgraph_reasoning_for_forecasting_on_temporal_knowledge_graphs/" class="next" rel="next" title="xERTE">xERTE<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tabuless</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["tabuless"],"clientID":"b7d8ed424e09262a8719","clientSecret":"5624a7e968dac00542e9b709139cf8ab77fa4602","id":"2022-05-06T22:49:40+08:00","owner":"tabuless","repo":"github_blog_gitalk_repo","title":"TiTer"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"$$","right":"$$"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
